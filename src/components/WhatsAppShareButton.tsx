@@ -63,7 +63,6 @@ Saya tertarik dengan simulasi kredit kendaraan berikut:
 ⏰ Tenor: ${tenor} tahun (${tenor * 12} bulan)
 🛡️ Asuransi: ${getInsuranceTypeDisplay()} (${insuranceRate.toFixed(2)}%)
 
-
 Mohon informasi lebih lanjut mengenai proses kredit ini.
 
 Terima kasih!`;
