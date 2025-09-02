@@ -37,28 +37,29 @@ const ResultsWhatsAppShare: React.FC<ResultsWhatsAppShareProps> = ({
   tenor
 }) => {
   const generateWhatsAppMessage = () => {
-    const message = `SIMULASI KREDIT KENDARAAN
+    const message = `Halo Willy,
 
-Harga OTR: ${formatRupiah(otrPrice)}
-Total DP: ${formatRupiah(results.totalDp)}
-Angsuran per Bulan: ${formatRupiah(results.monthlyInstallment)}
-Tenor: ${tenor} tahun (${tenor * 12} bulan)
-Asuransi: ${results.insuranceType} (${results.insuranceRate?.toFixed(2)}%)
+Saya tertarik dengan simulasi kredit kendaraan berikut:
 
-Detail DP:
+📋 *SIMULASI KREDIT KENDARAAN*
+
+💰 Harga OTR: ${formatRupiah(otrPrice)}
+💳 Total DP: ${formatRupiah(results.totalDp)}
+📅 Angsuran per Bulan: ${formatRupiah(results.monthlyInstallment)}
+⏰ Tenor: ${tenor} tahun (${tenor * 12} bulan)
+🛡️ Asuransi: ${results.insuranceType} (${results.insuranceRate?.toFixed(2)}%)
+
+📝 *Detail DP:*
 • DP Murni (${dpPercent}%): ${formatRupiah(results.dpAmount)}
 • Angsuran ke-1: ${formatRupiah(results.monthlyInstallment)}
 • Asuransi: ${formatRupiah(results.insuranceAmount)}
 
+Mohon informasi lebih lanjut mengenai proses kredit ini.
 
-Willy Arsal
-0813-8723-1127
-www.hyundaifatmawati.com
-
-#KreditKendaraan #SimulasiKredit`;
+Terima kasih!`;
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/6281387231127?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
   };
 
