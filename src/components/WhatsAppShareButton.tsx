@@ -63,12 +63,6 @@ Saya tertarik dengan simulasi kredit kendaraan berikut:
 ⏰ Tenor: ${tenor} tahun (${tenor * 12} bulan)
 🛡️ Asuransi: ${getInsuranceTypeDisplay()} (${insuranceRate.toFixed(2)}%)
 
-📝 Detail Simulasi:
-• DP yang diperlukan: ${dpPercentage.toFixed(2)}%
-• DP Murni: ${formatRupiah(dpAmount)}
-• Pokok Hutang: ${formatRupiah(loanPrincipal)}
-• Total Pinjaman: ${formatRupiah(totalLoanAmount)}
-• Biaya Asuransi: ${formatRupiah(insuranceAmount)}
 
 Mohon informasi lebih lanjut mengenai proses kredit ini.
 
