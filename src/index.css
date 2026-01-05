@@ -15,7 +15,7 @@
 
     /* BYD Colors */
     --byd-primary: 174 77% 40%;
-    /* #18b6a5 - Bright Teal */
+    /* #0B1C2E - Bright Teal */
     --byd-dark: 211 61% 11%;
     /* #0B1C2E - Dark Navy */
     --byd-light: 174 50% 95%;
@@ -245,7 +245,7 @@
 }
 
 .byd-teal {
-  background-color: #18b6a5;
+  background-color: #0B1C2E;
   color: white;
 }
 
@@ -255,6 +255,6 @@
 }
 
 .byd-gradient {
-  background: linear-gradient(135deg, #0B1C2E 0%, #18b6a5 100%);
+  background: linear-gradient(135deg, #0B1C2E 0%, #0B1C2E 100%);
   color: white;
 }

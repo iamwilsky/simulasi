@@ -115,7 +115,7 @@ const ResultsSummaryCards: React.FC<ResultsSummaryCardsProps> = ({
       {/* Insurance Type - Full width */}
       <div className="md:col-span-2 bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
         <div className="flex items-center mb-1">
-          <Shield className="w-4 h-4 text-[#18b6a5] mr-2" />
+          <Shield className="w-4 h-4 text-[#0B1C2E] mr-2" />
           <span className="text-sm text-gray-500">Asuransi</span>
         </div>
         <div className="text-xl font-semibold text-[#0B1C2E]">
