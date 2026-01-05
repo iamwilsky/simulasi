@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,8 +13,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 210 20% 15%;
 
-    /* BYD Blue */
-    --primary: 214 89% 19%;
+    /* BYD Teal */
+    --primary: 174 77% 40%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 193 100% 41%;
@@ -32,13 +31,13 @@
 
     --border: 214 10% 90%;
     --input: 214 10% 90%;
-    --ring: 214 89% 19%;
+    --ring: 174 77% 40%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 214 89% 19%;
+    --sidebar-background: 174 77% 40%;
     --sidebar-foreground: 210 20% 98%;
-    --sidebar-primary: 214 89% 19%;
+    --sidebar-primary: 174 77% 40%;
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 214 89% 30%;
     --sidebar-accent-foreground: 0 0% 98%;
@@ -56,8 +55,8 @@
     --popover: 222 47% 14%;
     --popover-foreground: 210 20% 98%;
 
-    /* BYD Blue */
-    --primary: 214 89% 19%;
+    /* BYD Teal */
+    --primary: 174 77% 40%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 193 100% 41%;
@@ -74,11 +73,11 @@
 
     --border: 217 33% 20%;
     --input: 217 33% 20%;
-    --ring: 214 89% 19%;
+    --ring: 174 77% 40%;
 
     --sidebar-background: 222 47% 11%;
     --sidebar-foreground: 210 20% 96%;
-    --sidebar-primary: 214 89% 19%;
+    --sidebar-primary: 174 77% 40%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 222 47% 17%;
     --sidebar-accent-foreground: 210 20% 96%;
@@ -103,7 +102,7 @@
     -webkit-appearance: none;
     margin: 0;
   }
-  
+
   input[type="number"] {
     -moz-appearance: textfield;
   }
@@ -118,6 +117,7 @@
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -148,6 +148,7 @@
     opacity: 0;
     transform: scaleY(0.95);
   }
+
   100% {
     opacity: 1;
     transform: scaleY(1);
@@ -226,16 +227,16 @@
 
 /* BYD colors for cards */
 .byd-blue {
-  background-color: #002c5f;
+  background-color: #18b6a5;
   color: white;
 }
 
 .byd-light-blue {
-  background-color: #00aad2;
-  color: white;
+  background-color: #5edecf;
+  color: #0f3d38;
 }
 
 .byd-gradient {
-  background: linear-gradient(135deg, #002c5f 0%, #00aad2 100%);
+  background: linear-gradient(135deg, #18b6a5 0%, #0d8a7c 100%);
   color: white;
 }
