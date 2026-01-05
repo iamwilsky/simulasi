@@ -14,7 +14,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-pattern dark:from-gray-900 dark:to-gray-800">
       <Navbar />
-      
+
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-8 sm:mb-10 animate-fade-up">
@@ -28,7 +28,7 @@ const Index = () => {
               Hitung simulasi kredit mobil Anda berdasarkan harga OTR, uang muka, dan tenor pinjaman. Dapatkan estimasi lengkap termasuk biaya asuransi.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div className="frosted-glass rounded-2xl p-4 hover-lift">
               <div className="flex items-center">
@@ -41,7 +41,7 @@ const Index = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="frosted-glass rounded-2xl p-4 hover-lift">
               <div className="flex items-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center bg-accent/10 text-accent mr-4">
@@ -53,7 +53,7 @@ const Index = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="frosted-glass rounded-2xl p-4 hover-lift">
               <div className="flex items-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center bg-green-500/10 text-green-500 mr-4">
@@ -66,7 +66,7 @@ const Index = () => {
               </div>
             </div>
           </div>
-          
+
           <Tabs defaultValue="loan" className="w-full mb-8 sm:mb-10">
             <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto frosted-glass p-1 rounded-lg">
               <TabsTrigger value="loan" className="flex items-center justify-center">
@@ -78,27 +78,27 @@ const Index = () => {
                 <span className="text-xs sm:text-sm">Simulasi Budget</span>
               </TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="loan" className="mt-6 sm:mt-8">
               <div className="frosted-glass p-6 rounded-2xl shadow-md">
-                <LoanCalculator 
-                  defaultOtr={undefined} 
-                  defaultDpPercent={dpPercent} 
-                  defaultTenor={tenor} 
+                <LoanCalculator
+                  defaultOtr={undefined}
+                  defaultDpPercent={dpPercent}
+                  defaultTenor={tenor}
                 />
               </div>
             </TabsContent>
-            
+
             <TabsContent value="budget" className="mt-6 sm:mt-8">
               <div className="frosted-glass p-6 rounded-2xl shadow-md">
-                <BudgetCalculator 
-                  defaultOtr={undefined} 
+                <BudgetCalculator
+                  defaultOtr={undefined}
                   defaultTenor={tenor}
                 />
               </div>
             </TabsContent>
           </Tabs>
-          
+
           <div className="frosted-glass rounded-2xl p-6 sm:p-8 animate-fade-in mt-8 sm:mt-10">
             <div className="flex items-center mb-4 sm:mb-5">
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
@@ -106,7 +106,7 @@ const Index = () => {
               </div>
               <h2 className="text-xl sm:text-2xl font-semibold">Informasi Penting</h2>
             </div>
-            
+
             <div className="space-y-4 sm:space-y-5 text-sm text-gray-600 dark:text-gray-400">
               <p className="leading-relaxed">
                 Simulasi kredit ini hanya merupakan perkiraan. Biaya sesungguhnya dapat berbeda sesuai dengan ketentuan dari perusahaan pembiayaan dan dealer.
@@ -143,7 +143,7 @@ const Index = () => {
           </div>
         </div>
       </main>
-      
+
       <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-8 sm:py-10 mt-10 sm:mt-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="md:flex md:justify-between">
@@ -153,7 +153,7 @@ const Index = () => {
                 Alat bantu simulasi kredit dan asuransi mobil terpercaya untuk membantu Anda merencanakan pembelian kendaraan.
               </p>
             </div>
-            
+
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
               <div>
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Layanan</h3>
@@ -163,7 +163,7 @@ const Index = () => {
                   <li><a href="#" className="hover:text-primary">Simulasi Asuransi</a></li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Bantuan</h3>
                 <ul className="text-gray-500 dark:text-gray-400 text-sm space-y-2">
@@ -174,13 +174,13 @@ const Index = () => {
               </div>
             </div>
           </div>
-          
+
           <hr className="my-6 border-gray-200 dark:border-gray-700" />
-          
+
           <div className="text-center text-sm text-gray-500 dark:text-gray-400">
             <p>&copy; 2024 Kredit Simulators. All rights reserved.</p>
             <p className="mt-2 text-xs">
-              Developed by Willy Arsal from Hyundai Fatmawati for the Sales Team
+              Developed by <a href="http://webchain.id/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">webchain</a>
             </p>
           </div>
         </div>

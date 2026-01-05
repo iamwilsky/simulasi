@@ -23,12 +23,9 @@ const Navbar: React.FC = () => {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <img 
-                src="/lovable-uploads/fd2dea6c-8bd7-465f-bbad-5127eed31324.png" 
-                alt="Hyundai Utama" 
-                className="h-5 sm:h-7 w-auto" 
-              />
-              <span className="hidden">Kredit Simulators</span>
+              <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                BYD Simulasi Kredit
+              </span>
             </Link>
           </div>
           
