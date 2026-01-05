@@ -47,7 +47,7 @@ const BudgetResults: React.FC<BudgetResultsProps> = ({
         {/* Kolom kanan - Hasil Detail (50% width) */}
         <div className="w-full md:w-1/2">
           <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 border border-gray-200 dark:border-gray-700 h-full">
-            <h3 className="text-base font-semibold text-[#18b6a5] dark:text-[#5edecf] mb-3">Hasil Simulasi</h3>
+            <h3 className="text-base font-semibold text-[#0f5951] dark:text-[#5edecf] mb-3">Hasil Simulasi</h3>
             <div className="space-y-2">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600 dark:text-gray-400">DP yang diperlukan:</span>

@@ -68,7 +68,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
           {/* Info Note */}
           <div className="flex items-start p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
             <Info className="w-4 h-4 text-[#5edecf] mt-0.5 mr-2 flex-shrink-0" />
-            <p className="text-sm text-[#18b6a5] dark:text-blue-300">
+            <p className="text-sm text-[#0f5951] dark:text-blue-300">
               Hasil simulasi ini merupakan estimasi.
               {!showFullDetails && " Klik tombol di kanan atas untuk melihat detail lengkap."}
             </p>

@@ -82,9 +82,9 @@ const ResultsDetailBreakdown: React.FC<ResultsDetailBreakdownProps> = ({
                 <div className="text-sm font-semibold">{formatRupiah(results.totalLoanAmount)}</div>
               </div>
 
-              <div className="table-row-alternate bg-[#18b6a5]/5 p-3 flex flex-col hover:bg-[#18b6a5]/10 transition-colors">
+              <div className="table-row-alternate bg-[#0f5951]/5 p-3 flex flex-col hover:bg-[#0f5951]/10 transition-colors">
                 <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Angsuran per Bulan</div>
-                <div className="text-sm font-semibold text-[#18b6a5]">{formatRupiah(results.monthlyInstallment)}</div>
+                <div className="text-sm font-semibold text-[#0f5951]">{formatRupiah(results.monthlyInstallment)}</div>
               </div>
             </div>
           </div>
@@ -147,9 +147,9 @@ const ResultsDetailBreakdown: React.FC<ResultsDetailBreakdownProps> = ({
                 </div>
               )}
 
-              <div className="table-row-alternate bg-[#18b6a5]/5 p-3 flex flex-col hover:bg-[#18b6a5]/10 transition-colors">
+              <div className="table-row-alternate bg-[#0f5951]/5 p-3 flex flex-col hover:bg-[#0f5951]/10 transition-colors">
                 <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Total DP</div>
-                <div className="text-sm font-semibold text-[#18b6a5]">{formatRupiah(results.totalDp)}</div>
+                <div className="text-sm font-semibold text-[#0f5951]">{formatRupiah(results.totalDp)}</div>
               </div>
             </div>
           </div>
