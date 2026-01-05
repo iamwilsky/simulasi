@@ -127,7 +127,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                       </span>
                     </td>
                     <td className="py-3.5 text-right pr-4">
-                      <span className="text-[#5edecf] font-medium text-sm">
+                      <span className="text-[#105950] font-medium text-sm">
                         {formatRupiah(data.monthlyInstallment)}
                       </span>
                     </td>
@@ -153,7 +153,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
 
             {/* Total DP Card - KEDUA */}
-            <div className="bg-[#5edecf] rounded-xl p-4 flex justify-between items-center text-white shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+            <div className="bg-[#105950] rounded-xl p-4 flex justify-between items-center text-white shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                   <Wallet className="h-5 w-5" />

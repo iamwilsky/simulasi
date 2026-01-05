@@ -45,7 +45,7 @@ const BudgetSummaryCards: React.FC<BudgetSummaryCardsProps> = ({
         </div>
 
         {/* Total DP Card */}
-        <div className="bg-[#5edecf] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+        <div className="bg-[#105950] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           <div className="px-3 py-3 text-white">
             <div className="flex items-center">
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">

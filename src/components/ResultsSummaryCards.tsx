@@ -51,7 +51,7 @@ const ResultsSummaryCards: React.FC<ResultsSummaryCardsProps> = ({
 
       {/* Total DP */}
       <div
-        className="bg-[#5edecf] text-white rounded-xl p-4 cursor-pointer hover:bg-[#009abf] transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
+        className="bg-[#105950] text-white rounded-xl p-4 cursor-pointer hover:bg-[#009abf] transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
         onClick={() => setShowDpDetails(!showDpDetails)}
       >
         <div className="flex items-center justify-between">
