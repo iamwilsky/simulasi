@@ -18,7 +18,7 @@ const BudgetSummaryCards: React.FC<BudgetSummaryCardsProps> = ({
   insuranceType
 }) => {
   const getInsuranceTypeDisplay = () => {
-    switch(insuranceType) {
+    switch (insuranceType) {
       case 'kombinasi': return 'Kombinasi';
       case 'allrisk': return 'All Risk';
       case 'allriskPerluasan': return 'All Risk Perluasan';
@@ -30,7 +30,7 @@ const BudgetSummaryCards: React.FC<BudgetSummaryCardsProps> = ({
     <div className="w-full md:w-1/2">
       <div className="grid grid-cols-1 gap-2 h-full">
         {/* Harga OTR Card */}
-        <div className="bg-[#002c5f] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+        <div className="bg-[#18b6a5] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           <div className="px-3 py-3 text-white">
             <div className="flex items-center">
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
@@ -43,9 +43,9 @@ const BudgetSummaryCards: React.FC<BudgetSummaryCardsProps> = ({
             </div>
           </div>
         </div>
-        
+
         {/* Total DP Card */}
-        <div className="bg-[#00aad2] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+        <div className="bg-[#5edecf] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           <div className="px-3 py-3 text-white">
             <div className="flex items-center">
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
@@ -58,9 +58,9 @@ const BudgetSummaryCards: React.FC<BudgetSummaryCardsProps> = ({
             </div>
           </div>
         </div>
-        
+
         {/* Angsuran Card */}
-        <div className="bg-[#002c5f] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+        <div className="bg-[#18b6a5] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           <div className="px-3 py-3 text-white">
             <div className="flex items-center">
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
@@ -73,7 +73,7 @@ const BudgetSummaryCards: React.FC<BudgetSummaryCardsProps> = ({
             </div>
           </div>
         </div>
-        
+
         {/* Tenor Card */}
         <div className="bg-gray-500 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           <div className="px-3 py-3 text-white">
@@ -88,17 +88,17 @@ const BudgetSummaryCards: React.FC<BudgetSummaryCardsProps> = ({
             </div>
           </div>
         </div>
-        
+
         {/* Asuransi Card */}
         <div className="bg-gray-100 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           <div className="px-3 py-3">
             <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-[#002c5f] flex items-center justify-center mr-3">
+              <div className="w-8 h-8 rounded-full bg-[#18b6a5] flex items-center justify-center mr-3">
                 <Shield className="h-4 w-4 text-white" />
               </div>
               <div>
-                <p className="text-xs opacity-90 font-medium text-[#002c5f]">Asuransi</p>
-                <p className="text-base font-bold text-[#002c5f]">{getInsuranceTypeDisplay()}</p>
+                <p className="text-xs opacity-90 font-medium text-[#18b6a5]">Asuransi</p>
+                <p className="text-base font-bold text-[#18b6a5]">{getInsuranceTypeDisplay()}</p>
               </div>
             </div>
           </div>
