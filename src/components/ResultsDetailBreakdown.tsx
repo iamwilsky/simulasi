@@ -82,9 +82,9 @@ const ResultsDetailBreakdown: React.FC<ResultsDetailBreakdownProps> = ({
                 <div className="text-sm font-semibold">{formatRupiah(results.totalLoanAmount)}</div>
               </div>
 
-              <div className="table-row-alternate bg-[#0f5951]/5 p-3 flex flex-col hover:bg-[#0f5951]/10 transition-colors">
+              <div className="table-row-alternate bg-[#0B1C2E]/5 p-3 flex flex-col hover:bg-[#0B1C2E]/10 transition-colors">
                 <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Angsuran per Bulan</div>
-                <div className="text-sm font-semibold text-[#0f5951]">{formatRupiah(results.monthlyInstallment)}</div>
+                <div className="text-sm font-semibold text-[#0B1C2E]">{formatRupiah(results.monthlyInstallment)}</div>
               </div>
             </div>
           </div>

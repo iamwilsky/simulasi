@@ -15,9 +15,9 @@
 
     /* BYD Colors */
     --byd-primary: 174 77% 40%;
-    /* #18b6a5 */
-    --byd-dark: 173 70% 20%;
-    /* #0f5951 - Deep Teal */
+    /* #18b6a5 - Bright Teal */
+    --byd-dark: 211 61% 11%;
+    /* #0B1C2E - Dark Navy */
     --byd-light: 174 50% 95%;
     /* #e0f5f3 */
 
@@ -239,8 +239,8 @@
 
 /* BYD colors for cards */
 .byd-blue {
-  background-color: #0f5951;
-  /* Changed to Dark Teal for contrast */
+  background-color: #0B1C2E;
+  /* Dark Navy */
   color: white;
 }
 
@@ -250,11 +250,11 @@
 }
 
 .byd-light-blue {
-  background-color: #105950;
-  color: #003832;
+  background-color: #E0F2F1;
+  color: #0B1C2E;
 }
 
 .byd-gradient {
-  background: linear-gradient(135deg, #0f5951 0%, #18b6a5 100%);
+  background: linear-gradient(135deg, #0B1C2E 0%, #18b6a5 100%);
   color: white;
 }

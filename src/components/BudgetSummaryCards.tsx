@@ -30,7 +30,7 @@ const BudgetSummaryCards: React.FC<BudgetSummaryCardsProps> = ({
     <div className="w-full md:w-1/2">
       <div className="grid grid-cols-1 gap-2 h-full">
         {/* Harga OTR Card */}
-        <div className="bg-[#0f5951] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+        <div className="bg-[#0B1C2E] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           <div className="px-3 py-3 text-white">
             <div className="flex items-center">
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
@@ -45,7 +45,7 @@ const BudgetSummaryCards: React.FC<BudgetSummaryCardsProps> = ({
         </div>
 
         {/* Total DP Card */}
-        <div className="bg-[#105950] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+        <div className="bg-[#0B1C2E] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           <div className="px-3 py-3 text-white">
             <div className="flex items-center">
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
@@ -60,7 +60,7 @@ const BudgetSummaryCards: React.FC<BudgetSummaryCardsProps> = ({
         </div>
 
         {/* Angsuran Card */}
-        <div className="bg-[#0f5951] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+        <div className="bg-[#0B1C2E] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           <div className="px-3 py-3 text-white">
             <div className="flex items-center">
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
@@ -93,11 +93,11 @@ const BudgetSummaryCards: React.FC<BudgetSummaryCardsProps> = ({
         <div className="bg-gray-100 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           <div className="px-3 py-3">
             <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-[#0f5951] flex items-center justify-center mr-3">
+              <div className="w-8 h-8 rounded-full bg-[#18b6a5] flex items-center justify-center mr-3">
                 <Shield className="h-4 w-4 text-white" />
               </div>
               <div>
-                <p className="text-xs opacity-90 font-medium text-[#0f5951]">Asuransi</p>
+                <p className="text-xs opacity-90 font-medium text-[#0B1C2E]">Asuransi</p>
                 <p className="text-base font-bold text-[#0f5951]">{getInsuranceTypeDisplay()}</p>
               </div>
             </div>

@@ -95,7 +95,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
         <div className="lg:w-1/2 w-full flex">
           <div className="rounded-xl shadow-md overflow-hidden bg-white dark:bg-gray-800/80 w-full h-full flex flex-col">
             <table className="w-full border-collapse flex-grow">
-              <thead className="bg-[#0f5951] text-white">
+              <thead className="bg-[#0B1C2E] text-white">
                 <tr>
                   <th className="font-semibold py-3 text-left text-xs pl-4 w-[25%]">
                     TENOR
@@ -122,12 +122,12 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                       </div>
                     </td>
                     <td className="py-3.5 text-center">
-                      <span className="text-[#0f5951] font-medium text-sm">
+                      <span className="text-[#0B1C2E] font-medium text-sm">
                         {formatRupiah(data.totalDp)}
                       </span>
                     </td>
                     <td className="py-3.5 text-right pr-4">
-                      <span className="text-[#105950] font-medium text-sm">
+                      <span className="text-[#0B1C2E] font-medium text-sm">
                         {formatRupiah(data.monthlyInstallment)}
                       </span>
                     </td>
@@ -142,7 +142,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
         <div className="lg:w-1/2 w-full flex">
           <div className="flex flex-col space-y-4 w-full h-full justify-between">
             {/* Harga OTR Card - PERTAMA */}
-            <div className="bg-[#0f5951] rounded-xl p-4 flex justify-between items-center text-white shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+            <div className="bg-[#0B1C2E] rounded-xl p-4 flex justify-between items-center text-white shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                   <Car className="h-5 w-5" />
@@ -153,7 +153,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
 
             {/* Total DP Card - KEDUA */}
-            <div className="bg-[#105950] rounded-xl p-4 flex justify-between items-center text-white shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+            <div className="bg-[#0B1C2E] rounded-xl p-4 flex justify-between items-center text-white shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                   <Wallet className="h-5 w-5" />
@@ -166,7 +166,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
 
             {/* Angsuran Bulanan Card - KETIGA */}
-            <div className="bg-[#0f5951] rounded-xl p-4 flex justify-between items-center text-white shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+            <div className="bg-[#0B1C2E] rounded-xl p-4 flex justify-between items-center text-white shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                   <CreditCard className="h-5 w-5" />
@@ -192,12 +192,12 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             {/* Jenis Asuransi Card - KELIMA */}
             <div className="bg-gray-100 rounded-xl p-4 flex justify-between items-center shadow-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               <div className="flex items-center">
-                <div className="bg-[#0f5951] rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                <div className="bg-[#0B1C2E] rounded-full w-10 h-10 flex items-center justify-center mr-3">
                   <Shield className="h-5 w-5 text-white" />
                 </div>
-                <div className="text-sm font-medium text-[#0f5951]">Jenis Asuransi</div>
+                <div className="text-sm font-medium text-[#0B1C2E]">Jenis Asuransi</div>
               </div>
-              <div className="text-lg font-bold text-[#0f5951]">{insuranceTypeDisplay}</div>
+              <div className="text-lg font-bold text-[#0B1C2E]">{insuranceTypeDisplay}</div>
             </div>
           </div>
         </div>
