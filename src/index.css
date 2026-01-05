@@ -14,7 +14,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 210 20% 15%;
 
-    /* Hyundai Blue */
+    /* BYD Blue */
     --primary: 214 89% 19%;
     --primary-foreground: 0 0% 100%;
 
@@ -56,7 +56,7 @@
     --popover: 222 47% 14%;
     --popover-foreground: 210 20% 98%;
 
-    /* Hyundai Blue */
+    /* BYD Blue */
     --primary: 214 89% 19%;
     --primary-foreground: 0 0% 100%;
 
@@ -224,18 +224,18 @@
   background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
-/* Hyundai colors for cards */
-.hyundai-blue {
+/* BYD colors for cards */
+.byd-blue {
   background-color: #002c5f;
   color: white;
 }
 
-.hyundai-light-blue {
+.byd-light-blue {
   background-color: #00aad2;
   color: white;
 }
 
-.hyundai-gradient {
+.byd-gradient {
   background: linear-gradient(135deg, #002c5f 0%, #00aad2 100%);
   color: white;
 }
