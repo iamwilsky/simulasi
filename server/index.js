@@ -82,6 +82,7 @@ app.post('/api/webhook/mayar', async (req, res) => {
                     console.log(`[Webhook Success] Activated subscription for ${customerEmail}`);
                 } else {
                     console.error(`[Webhook Error] User with email ${customerEmail} not found in database.`);
+                    console.error(`[Supabase Detail] Profile Error:`, profileError ? JSON.stringify(profileError) : 'No error object returned, user simply does not exist.');
                 }
             }
         } catch (error) {
