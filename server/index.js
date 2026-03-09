@@ -15,63 +15,59 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 const MAYAR_API_KEY = process.env.MAYAR_API_KEY;
 
-// Endpoint Verifikasi Lisensi (Dipanggil dari Frontend setelah user memasukkan license key / dari webhook)
-app.post('/api/verify-license', async (req, res) => {
-    const { license_key, user_id, product_id } = req.body;
+// Endpoint Webhook Mayar (Dipanggil otomatis oleh Mayar setelah user membayar)
+app.post('/api/webhook/mayar', async (req, res) => {
+    const payload = req.body;
 
-    if (!license_key || !user_id || !product_id) {
-        return res.status(400).json({ error: 'License key, user_id, and product_id are required' });
-    }
+    // Berdasarkan dokumentasi Mayar:
+    // Field: event.received, type: String, value: "payment.received"
+    const eventType = payload['event.received'] || payload.event;
+    const data = payload.data || {};
 
-    try {
-        console.log(`Verifying license: ${license_key} for product: ${product_id}`);
-        // 1. Verifikasi lisensi ke Mayar API
-        const mayarResponse = await axios.post('https://api.mayar.id/saas/v1/license/verify',
-            {
-                licenseCode: license_key,
-                productId: product_id
-            },
-            { headers: { 'Authorization': `Bearer ${MAYAR_API_KEY}` } }
-        );
+    console.log(`[Webhook] Event: ${eventType}, Email: ${data.customerEmail}, Status: ${data.status}`);
 
-        const data = mayarResponse.data;
-        const licenseData = data.licenseCode;
+    // Kita selalu res.status(200) di akhir agar Mayar tidak melakukan spam retry
+    // Tapi kita tetap memproses jika trigger nya sesuai:
+    if (eventType === 'payment.received' && data.status === true) {
+        try {
+            const customerEmail = data.customerEmail;
 
-        // Cek validitas berdasarkan rule: isLicenseActive === true AND status === "ACTIVE" AND expiredAt di masa depan
-        const now = new Date();
-        const expiredAt = new Date(licenseData.expiredAt);
-        const isActiveAndNotExpired = data.isLicenseActive === true &&
-            licenseData.status === "ACTIVE" &&
-            expiredAt > now;
+            if (customerEmail) {
+                // 1. Cari user_id berdasarkan email kembalian webhook di tabel profiles
+                const { data: userProfile, error: profileError } = await supabase
+                    .from('profiles')
+                    .select('id')
+                    .eq('email', customerEmail)
+                    .single();
 
-        if (isActiveAndNotExpired) {
-            console.log(`License valid, expiration: ${expiredAt}`);
-            // 2. Update status subscription di Supabase
-            const { error } = await supabase
-                .from('subscriptions')
-                .upsert({
-                    user_id: user_id,
-                    license_key: license_key,
-                    status: 'active',
-                    current_period_end: expiredAt.toISOString(),
-                    updated_at: new Date().toISOString()
-                }, { onConflict: 'user_id' });
+                if (userProfile && !profileError) {
+                    // 2. Aktifkan langganan (Tambahkan 30 hari ke depan)
+                    const expiredAt = new Date();
+                    expiredAt.setDate(expiredAt.getDate() + 30);
 
-            if (error) {
-                console.error("Supabase error:", error);
-                throw error;
+                    const { error: updateError } = await supabase
+                        .from('subscriptions')
+                        .upsert({
+                            user_id: userProfile.id,
+                            status: 'active',
+                            current_period_end: expiredAt.toISOString(),
+                            updated_at: new Date().toISOString() // Trigger frontend untuk fetch ulang
+                        }, { onConflict: 'user_id' });
+
+                    if (updateError) throw updateError;
+
+                    console.log(`[Webhook Success] Activated subscription for ${customerEmail}`);
+                } else {
+                    console.error(`[Webhook Error] User with email ${customerEmail} not found in database.`);
+                }
             }
-
-            return res.json({ success: true, message: 'License verified & activated', expired_at: expiredAt });
-        } else {
-            console.log("License is invalid or expired.");
-            return res.status(403).json({ error: 'Invalid or expired license' });
+        } catch (error) {
+            console.error('[Webhook Exception]:', error.message);
         }
-
-    } catch (error) {
-        console.error('License verification error:', error.response?.data || error.message);
-        return res.status(500).json({ error: 'Failed to verify license' });
     }
+
+    // Acknowledge the event
+    res.status(200).send('Webhook Processed');
 });
 
 const PORT = process.env.PORT || 3000;

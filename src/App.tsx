@@ -13,7 +13,6 @@ import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Pricing from "./pages/Pricing";
-import Activation from "./pages/Activation";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ProtectedRoute } from "./components/guards/ProtectedRoute";
 import { SubscriptionGuard } from "./components/guards/SubscriptionGuard";
@@ -37,8 +36,6 @@ const App = () => (
 
               {/* Protected Routes (Require Login) */}
               <Route element={<ProtectedRoute />}>
-                <Route path="/activation" element={<Activation />} />
-
                 {/* Core Features - Require Active Subscription */}
                 <Route element={<SubscriptionGuard />}>
                   <Route path="/dashboard" element={<Index />} />

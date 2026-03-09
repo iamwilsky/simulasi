@@ -6,8 +6,8 @@ export const SubscriptionGuard = () => {
 
     if (isLoading) return <div>Loading...</div>;
 
-    // Redirect ke halaman activation/pricing jika tidak ada subs aktif
-    if (!hasActiveSubscription) return <Navigate to="/activation" replace />;
+    // Redirect ke halaman pricing jika tidak ada subs aktif
+    if (!hasActiveSubscription) return <Navigate to="/pricing" replace />;
 
     return <Outlet />;
 };

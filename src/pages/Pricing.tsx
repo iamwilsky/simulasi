@@ -44,7 +44,7 @@ const Pricing = () => {
                         </ul>
 
                         {user ? (
-                            <a href="https://arsalelegance.myr.id/m/express" target="_blank" rel="noopener noreferrer">
+                            <a href={`https://arsalelegance.myr.id/m/express?email=${encodeURIComponent(user.email || '')}`} target="_blank" rel="noopener noreferrer">
                                 <Button className="w-full" size="lg">Bayar Langganan via Mayar</Button>
                             </a>
                         ) : (
@@ -54,11 +54,9 @@ const Pricing = () => {
                         )}
 
                         {user && (
-                            <div className="mt-4 text-center">
-                                <p className="text-sm text-gray-500 mb-2">Sudah bayar?</p>
-                                <Link to="/activation">
-                                    <Button variant="outline" className="w-full">Masukkan License Key</Button>
-                                </Link>
+                            <div className="mt-6 text-center text-sm text-gray-500 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+                                <p><strong>Catatan:</strong> Setelah pembayaran berhasil, sistem akan otomatis melakukan aktivasi akun Anda di latar belakang.</p>
+                                <p className="mt-1">Silakan buka kembali aplikasi ini dan muat ulang halaman (refresh).</p>
                             </div>
                         )}
                     </div>
