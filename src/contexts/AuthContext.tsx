@@ -36,7 +36,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             }
         });
 
-        return () => authListener.unsubscribe();
+        // 3. Listen for window focus to re-verify subscription if webhook triggered in background
+        const handleFocus = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session?.user) {
+                fetchUserData(session.user.id);
+            }
+        };
+        window.addEventListener('focus', handleFocus);
+
+        return () => {
+            authListener.unsubscribe();
+            window.removeEventListener('focus', handleFocus);
+        };
     }, []);
 
     const fetchUserData = async (userId: string) => {

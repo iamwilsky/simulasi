@@ -24,13 +24,15 @@ app.post('/api/webhook/mayar', async (req, res) => {
     const eventType = payload['event.received'] || payload.event;
     const data = payload.data || {};
 
-    console.log(`[Webhook] Event: ${eventType}, Email: ${data.customerEmail}, Status: ${data.status}`);
+    console.log(`[Webhook] Event: ${eventType}, Email: ${data.customerEmail}`);
 
     // Kita selalu res.status(200) di akhir agar Mayar tidak melakukan spam retry
-    // Tapi kita tetap memproses jika trigger nya sesuai:
-    if (eventType === 'payment.received' && data.status === true) {
+    // Event `payment.received` untuk sekali bayar, `membership.newMemberRegistered` untuk subscription/trial
+    const validEvents = ['payment.received', 'membership.newMemberRegistered', 'membership.changeTierMemberRegistered'];
+
+    if (validEvents.includes(eventType)) {
         try {
-            const customerEmail = data.customerEmail;
+            const customerEmail = data.customerEmail || data.merchantEmail; // Btw bisa jadi merchant email utk trial sendiri
 
             if (customerEmail) {
                 // 1. Cari user_id berdasarkan email kembalian webhook di tabel profiles
