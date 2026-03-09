@@ -32,7 +32,10 @@ app.post('/api/webhook/mayar', async (req, res) => {
 
     if (validEvents.includes(eventType)) {
         try {
-            const customerEmail = data.customerEmail || data.merchantEmail; // Btw bisa jadi merchant email utk trial sendiri
+            // Extract customer email safely from different possible payload structures in Mayar
+            const customerEmail = data.customer?.email || data.customerEmail || payload.customer?.email;
+
+            console.log(`[Webhook Details] Extracted Email to Activate: ${customerEmail}`);
 
             if (customerEmail) {
                 // 1. Cari user_id berdasarkan email kembalian webhook di tabel profiles
