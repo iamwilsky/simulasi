@@ -32,17 +32,30 @@ app.post('/api/webhook/mayar', async (req, res) => {
 
     if (validEvents.includes(eventType)) {
         try {
-            // Extract customer email safely from different possible payload structures in Mayar
-            const customerEmail = data.customer?.email || data.customerEmail || payload.customer?.email;
+            // Extract customer email safely from different possible payload structures in Mayar (Trial uses merchantEmail)
+            let customerEmail = '';
+
+            if (data.customer && data.customer.email) {
+                customerEmail = data.customer.email;
+            } else if (data.merchantEmail) {
+                customerEmail = data.merchantEmail;
+            } else if (data.customerEmail) {
+                customerEmail = data.customerEmail;
+            } else if (payload.customer && payload.customer.email) {
+                customerEmail = payload.customer.email;
+            }
 
             console.log(`[Webhook Details] Extracted Email to Activate: ${customerEmail}`);
 
             if (customerEmail) {
+                // Bersihkan spasi atau karakter aneh yang mungkin ada
+                const cleanEmail = customerEmail.trim().toLowerCase();
+
                 // 1. Cari user_id berdasarkan email kembalian webhook di tabel profiles
                 const { data: userProfile, error: profileError } = await supabase
                     .from('profiles')
                     .select('id')
-                    .eq('email', customerEmail)
+                    .eq('email', cleanEmail)
                     .single();
 
                 if (userProfile && !profileError) {
