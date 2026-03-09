@@ -21,52 +21,59 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-50 border-b border-gray-200 dark:border-gray-800">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center">
-              <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                SimulasiKredit Pro
-              </span>
-            </Link>
-          </div>
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4">
+      <div className="w-full max-w-5xl bg-white/60 dark:bg-gray-950/60 backdrop-blur-2xl rounded-2xl border border-gray-200/50 dark:border-white/10 shadow-lg shadow-black/[0.03] px-5 py-2.5">
+        <div className="flex items-center justify-between">
+          <Link to="/" className="flex items-center">
+            <span className="text-[15px] font-bold text-gray-900 dark:text-white tracking-tight">
+              SimulasiKredit Pro
+            </span>
+          </Link>
 
-          <nav className="flex items-center space-x-4">
+          <nav className="flex items-center gap-1">
             <Link
               to="/pricing"
-              className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="px-3 py-1.5 text-[13px] font-medium text-gray-600 dark:text-gray-300 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
             >
-              <span className="hidden sm:inline">Harga</span>
+              Harga
             </Link>
             {user ? (
               <>
                 <Link
                   to="/dashboard"
-                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  className="flex items-center px-3 py-1.5 text-[13px] font-medium text-gray-600 dark:text-gray-300 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
                 >
-                  <LayoutDashboard className="mr-2 h-4 w-4" />
+                  <LayoutDashboard className="mr-1.5 h-3.5 w-3.5" />
                   <span className="hidden sm:inline">Dashboard</span>
                 </Link>
                 <Link
                   to="/settings"
-                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  className="flex items-center px-3 py-1.5 text-[13px] font-medium text-gray-600 dark:text-gray-300 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
                 >
-                  <Settings className="mr-2 h-4 w-4" />
+                  <Settings className="mr-1.5 h-3.5 w-3.5" />
                   <span className="hidden sm:inline">Setting</span>
                 </Link>
-                <Button variant="ghost" size="sm" onClick={handleLogout} className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/50">
-                  <LogOut className="h-4 w-4 sm:mr-2" />
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="text-red-500 hover:text-red-600 hover:bg-red-50/80 dark:hover:bg-red-950/30 text-[13px] h-auto py-1.5 px-3 rounded-lg"
+                >
+                  <LogOut className="h-3.5 w-3.5 sm:mr-1.5" />
                   <span className="hidden sm:inline">Logout</span>
                 </Button>
               </>
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="ghost" size="sm">Login</Button>
+                  <Button variant="ghost" size="sm" className="text-[13px] text-gray-600 dark:text-gray-300 h-auto py-1.5 px-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/10">
+                    Masuk
+                  </Button>
                 </Link>
                 <Link to="/register">
-                  <Button size="sm">Daftar</Button>
+                  <Button size="sm" className="text-[13px] h-auto py-1.5 px-4 rounded-lg bg-gray-900 dark:bg-white dark:text-gray-900 text-white hover:bg-gray-800 dark:hover:bg-gray-100">
+                    Daftar
+                  </Button>
                 </Link>
               </>
             )}

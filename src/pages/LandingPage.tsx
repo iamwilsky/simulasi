@@ -1,113 +1,191 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Calculator, Shield, TrendingUp, ChevronRight } from 'lucide-react';
+import { Calculator, Shield, TrendingUp, ArrowRight, Sparkles, BarChart3, Zap } from 'lucide-react';
 
 const LandingPage = () => {
     return (
-        <div className="min-h-screen bg-[#FBFBFD] dark:bg-[#050505] flex flex-col font-sans selection:bg-blue-200">
-            <main className="flex-1">
-                {/* Hero Section */}
-                <section className="relative pt-32 pb-40 lg:pt-52 lg:pb-56 overflow-hidden flex flex-col items-center justify-center text-center px-4">
-                    <div className="max-w-5xl mx-auto z-10 animate-fade-up">
-                        <h1 className="text-5xl md:text-7xl lg:text-[7rem] font-extrabold tracking-tighter text-slate-900 dark:text-white mb-8 leading-[1.05]">
-                            Presisi.<br />Tanpa Kompromi.
-                        </h1>
-                        <p className="text-xl md:text-2xl font-light text-slate-500 dark:text-slate-400 max-w-3xl mx-auto mb-16 leading-relaxed tracking-wide">
-                            Kalkulator pembiayaan kendaraan kelas enterprise. Didesain untuk memberikan akurasi maksimal dalam setiap simulasi kredit Anda.
+        <div className="min-h-screen flex flex-col selection:bg-blue-100 dark:selection:bg-blue-900/40">
+
+            {/* ─── Hero Section ─── */}
+            <section className="relative pt-40 pb-32 lg:pt-56 lg:pb-44 overflow-hidden">
+                {/* Ambient Glow */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-gradient-to-br from-blue-400/20 via-violet-300/10 to-transparent rounded-full blur-[120px] pointer-events-none" />
+                <div className="absolute top-40 right-0 w-[400px] h-[400px] bg-gradient-to-bl from-emerald-300/10 to-transparent rounded-full blur-[100px] pointer-events-none" />
+
+                <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+                    {/* Pill badge */}
+                    <div className="inline-flex items-center gap-2 rounded-full bg-white dark:bg-white/10 border border-gray-200/80 dark:border-white/10 px-4 py-1.5 text-[13px] font-medium text-gray-600 dark:text-gray-300 shadow-sm mb-10">
+                        <Sparkles className="h-3.5 w-3.5 text-blue-500" />
+                        Simulasi pembiayaan kelas enterprise
+                    </div>
+
+                    <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-[-0.035em] text-gray-950 dark:text-white leading-[1.08] mb-8">
+                        Hitung kredit.<br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-500 dark:from-blue-400 dark:to-violet-400">Tanpa tebakan.</span>
+                    </h1>
+
+                    <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 font-normal max-w-2xl mx-auto mb-14 leading-relaxed">
+                        Platform kalkulasi otomotif yang mengintegrasikan provisi, asuransi, dan DP dalam satu dashboard. Presisi. Cepat. Profesional.
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <Link to="/register">
+                            <Button size="lg" className="h-12 px-8 rounded-xl bg-gray-950 dark:bg-white text-white dark:text-gray-950 hover:bg-gray-800 dark:hover:bg-gray-100 text-[15px] font-medium shadow-lg shadow-gray-950/10 transition-all duration-200 hover:shadow-xl group flex items-center">
+                                Mulai gratis
+                                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                            </Button>
+                        </Link>
+                        <Link to="/pricing">
+                            <Button variant="outline" size="lg" className="h-12 px-8 rounded-xl border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 text-[15px] font-medium">
+                                Lihat harga
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
+
+                {/* Abstract UI Mockup */}
+                <div className="relative z-10 max-w-5xl mx-auto mt-24 px-6">
+                    <div className="rounded-2xl border border-gray-200/60 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-sm shadow-2xl shadow-gray-200/40 dark:shadow-black/30 overflow-hidden">
+                        {/* Mockup browser chrome */}
+                        <div className="flex items-center gap-2 px-5 py-3 bg-gray-50/80 dark:bg-white/5 border-b border-gray-100 dark:border-white/5">
+                            <div className="flex gap-1.5">
+                                <div className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
+                                <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
+                                <div className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
+                            </div>
+                            <div className="flex-1 flex justify-center">
+                                <div className="bg-gray-100 dark:bg-white/10 rounded-md px-12 py-1 text-[11px] text-gray-400 dark:text-gray-500 font-mono">
+                                    simulasikredit.pro/dashboard
+                                </div>
+                            </div>
+                        </div>
+                        {/* Mockup Dashboard Content */}
+                        <div className="p-6 md:p-10 space-y-5">
+                            {/* Row 1: Metrics */}
+                            <div className="grid grid-cols-3 gap-4">
+                                <div className="bg-gray-50 dark:bg-white/[0.04] rounded-xl p-5 border border-gray-100 dark:border-white/5">
+                                    <div className="text-[11px] text-gray-400 dark:text-gray-500 font-medium uppercase tracking-wider mb-2">Harga OTR</div>
+                                    <div className="text-2xl font-bold text-gray-900 dark:text-white">Rp 389jt</div>
+                                </div>
+                                <div className="bg-gray-50 dark:bg-white/[0.04] rounded-xl p-5 border border-gray-100 dark:border-white/5">
+                                    <div className="text-[11px] text-gray-400 dark:text-gray-500 font-medium uppercase tracking-wider mb-2">DP Murni</div>
+                                    <div className="text-2xl font-bold text-gray-900 dark:text-white">Rp 77.8jt</div>
+                                </div>
+                                <div className="bg-gray-50 dark:bg-white/[0.04] rounded-xl p-5 border border-gray-100 dark:border-white/5">
+                                    <div className="text-[11px] text-gray-400 dark:text-gray-500 font-medium uppercase tracking-wider mb-2">Cicilan/Bulan</div>
+                                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">Rp 7.2jt</div>
+                                </div>
+                            </div>
+                            {/* Row 2: Chart placeholder */}
+                            <div className="bg-gray-50 dark:bg-white/[0.04] rounded-xl p-6 border border-gray-100 dark:border-white/5 flex items-end gap-1.5 h-28">
+                                {[40, 55, 35, 70, 60, 80, 50, 65, 75, 90, 70, 85].map((h, i) => (
+                                    <div
+                                        key={i}
+                                        className="flex-1 bg-gradient-to-t from-blue-500/80 to-blue-400/40 dark:from-blue-500/60 dark:to-blue-400/20 rounded-sm"
+                                        style={{ height: `${h}%` }}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* ─── Features Bento Grid ─── */}
+            <section className="py-32 lg:py-40 px-6">
+                <div className="max-w-6xl mx-auto">
+                    <div className="text-center mb-20">
+                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-950 dark:text-white mb-5">
+                            Semua yang Anda butuhkan.
+                        </h2>
+                        <p className="text-lg text-gray-500 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
+                            Tiga modul kalkulasi terintegrasi untuk setiap skenario pembiayaan otomotif.
                         </p>
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-6 gap-5 auto-rows-[320px]">
+
+                        {/* Card 1: Simulasi Akurat — spans 4 cols */}
+                        <div className="md:col-span-4 relative overflow-hidden rounded-2xl bg-white dark:bg-white/[0.03] border border-gray-200/60 dark:border-white/[0.06] p-8 md:p-10 flex flex-col justify-between group hover:shadow-lg hover:shadow-gray-100/80 dark:hover:shadow-none transition-all duration-300">
+                            <div className="flex items-start justify-between">
+                                <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center">
+                                    <Calculator className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                                </div>
+                                <Zap className="h-5 w-5 text-gray-300 dark:text-gray-600 group-hover:text-blue-400 transition-colors" />
+                            </div>
+                            <div>
+                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">Simulasi Akurat</h3>
+                                <p className="text-gray-500 dark:text-gray-400 leading-relaxed max-w-md">
+                                    Hitung kredit lengkap termasuk provisi, asuransi, biaya admin, dan sisa pokok hutang. Semua dalam hitungan detik.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Card 2: Budget DP — spans 2 cols */}
+                        <div className="md:col-span-2 relative overflow-hidden rounded-2xl bg-white dark:bg-white/[0.03] border border-gray-200/60 dark:border-white/[0.06] p-8 flex flex-col justify-between group hover:shadow-lg hover:shadow-gray-100/80 dark:hover:shadow-none transition-all duration-300">
+                            <div className="w-12 h-12 rounded-xl bg-violet-50 dark:bg-violet-500/10 flex items-center justify-center">
+                                <TrendingUp className="h-6 w-6 text-violet-600 dark:text-violet-400" />
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">Target Budget DP</h3>
+                                <p className="text-[15px] text-gray-500 dark:text-gray-400 leading-relaxed">
+                                    Masukkan batas DP, temukan nilai pinjaman optimal secara otomatis.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Card 3: Batas Cicilan — spans 2 cols */}
+                        <div className="md:col-span-2 relative overflow-hidden rounded-2xl bg-white dark:bg-white/[0.03] border border-gray-200/60 dark:border-white/[0.06] p-8 flex flex-col justify-between group hover:shadow-lg hover:shadow-gray-100/80 dark:hover:shadow-none transition-all duration-300">
+                            <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center">
+                                <Shield className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">Batas Cicilan</h3>
+                                <p className="text-[15px] text-gray-500 dark:text-gray-400 leading-relaxed">
+                                    Tentukan batas bayar bulanan, temukan pagu kredit yang realistis.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Card 4: CTA — spans 4 cols */}
+                        <div className="md:col-span-4 relative overflow-hidden rounded-2xl bg-gray-950 dark:bg-white/[0.06] p-8 md:p-10 flex flex-col justify-center items-center text-center group transition-all duration-300">
+                            <BarChart3 className="h-8 w-8 text-gray-500 dark:text-gray-400 mb-5" />
+                            <h3 className="text-2xl md:text-3xl font-bold text-white dark:text-gray-100 mb-3 tracking-tight">
+                                Siap tingkatkan konversi?
+                            </h3>
+                            <p className="text-gray-400 dark:text-gray-500 mb-7 max-w-sm">
+                                Bergabung dengan ratusan sales dealer yang sudah menggunakan SimulasiKredit Pro.
+                            </p>
                             <Link to="/register">
-                                <Button size="lg" className="w-full sm:w-auto text-lg px-12 py-7 rounded-full bg-[#0066CC] hover:bg-[#005bb5] text-white shadow-2xl shadow-blue-600/30 transition-all duration-300 hover:scale-[1.03] active:scale-95 flex items-center group">
-                                    <span>Mulai Simulasi</span>
-                                    <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                                <Button size="lg" className="h-11 px-8 rounded-xl bg-white text-gray-950 hover:bg-gray-100 text-[15px] font-medium group-hover:shadow-lg transition-all">
+                                    Mulai sekarang
+                                    <ArrowRight className="ml-2 h-4 w-4" />
                                 </Button>
                             </Link>
-                            <Link to="/pricing" className="group">
-                                <div className="text-lg font-medium text-[#0066CC] hover:text-[#005bb5] dark:text-blue-400 dark:hover:text-blue-300 transition-colors cursor-pointer flex items-center">
-                                    <span>Lihat Harga</span>
-                                    <ChevronRight className="ml-1 h-5 w-5 opacity-70 group-hover:translate-x-1 transition-transform" />
-                                </div>
-                            </Link>
                         </div>
+
                     </div>
-                    {/* Subtle background glow */}
-                    <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-400/10 dark:bg-blue-600/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
-                </section>
+                </div>
+            </section>
 
-                {/* Features Section - Bento Grid */}
-                <section className="py-32 px-4 md:px-8 bg-white dark:bg-[#0A0A0A] border-t border-slate-100 dark:border-slate-800/50">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="text-center mb-24 md:mb-32">
-                            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white mb-6">
-                                Fitur Unggulan.
-                            </h2>
-                            <p className="text-xl md:text-2xl font-light text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                                Arsitektur kalkulasi rumit yang dikemas dalam antarmuka yang memukau.
-                            </p>
-                        </div>
-
-                        {/* Bento Grid Container */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[400px] max-w-6xl mx-auto">
-
-                            {/* Card 1: Simulasi Akurat (Large spanning 2 columns) */}
-                            <div className="md:col-span-2 relative overflow-hidden rounded-[2.5rem] bg-[#F5F5F7] dark:bg-white/[0.03] border border-white/50 dark:border-white/10 p-10 md:p-14 flex flex-col justify-end group transition-all duration-500 hover:shadow-2xl hover:shadow-slate-200/50 dark:hover:shadow-none backdrop-blur-xl">
-                                <div className="absolute top-10 left-10 md:top-14 md:left-14 w-20 h-20 bg-white dark:bg-gray-800/80 rounded-[1.5rem] shadow-xl shadow-slate-200/50 dark:shadow-black/50 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 ease-out z-20">
-                                    <Calculator className="h-10 w-10 text-[#0066CC] drop-shadow-sm" />
-                                </div>
-                                <div className="relative z-20 w-full md:w-3/4">
-                                    <h3 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">Simulasi Akurat</h3>
-                                    <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 font-light leading-relaxed">
-                                        Perhitungan komprehensif mengintegrasikan provisi, asuransi, biaya admin, dan total down payment dengan presisi matematis tinggi.
-                                    </p>
-                                </div>
-                                {/* Decorative geometric element */}
-                                <div className="absolute -right-20 -top-20 w-96 h-96 bg-gradient-to-br from-blue-100 to-purple-50 dark:from-blue-900/20 dark:to-transparent rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none"></div>
-                            </div>
-
-                            {/* Card 2: Target DP (Standard) */}
-                            <div className="relative overflow-hidden rounded-[2.5rem] bg-[#F5F5F7] dark:bg-white/[0.03] border border-white/50 dark:border-white/10 p-10 flex flex-col justify-between group transition-all duration-500 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none backdrop-blur-xl">
-                                <div className="w-16 h-16 bg-white dark:bg-gray-800/80 rounded-2xl shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-500 ease-out z-20">
-                                    <TrendingUp className="h-8 w-8 text-[#0066CC]" />
-                                </div>
-                                <div className="relative z-20">
-                                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">Target Budget DP</h3>
-                                    <p className="text-slate-500 dark:text-slate-400 font-light leading-relaxed">
-                                        Tentukan batasan Uang Muka, biarkan sistem mencari nilai pinjaman optimal.
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* Card 3: Batas Cicilan (Standard) */}
-                            <div className="relative overflow-hidden rounded-[2.5rem] bg-[#F5F5F7] dark:bg-white/[0.03] border border-white/50 dark:border-white/10 p-10 flex flex-col justify-between group transition-all duration-500 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none backdrop-blur-xl">
-                                <div className="w-16 h-16 bg-white dark:bg-gray-800/80 rounded-2xl shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-500 ease-out z-20">
-                                    <Shield className="h-8 w-8 text-[#0066CC]" />
-                                </div>
-                                <div className="relative z-20">
-                                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">Batas Cicilan</h3>
-                                    <p className="text-slate-500 dark:text-slate-400 font-light leading-relaxed">
-                                        Sesuaikan batas bayar bulanan. Kalkulasi mundur menemukan pagu kredit realistis.
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* Card 4: Seamless UI (Large spanning 2 columns) */}
-                            <div className="md:col-span-2 relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-slate-900 to-black dark:from-slate-800 dark:to-[#050505] p-10 flex flex-col justify-center items-center text-center group transition-all duration-500 hover:shadow-2xl">
-                                <h3 className="text-3xl md:text-5xl font-bold text-white mb-8 tracking-tight z-20">
-                                    Mulai Tingkatkan Konversi Anda.
-                                </h3>
-                                <Link to="/register" className="z-20">
-                                    <Button size="lg" className="text-lg px-10 py-7 rounded-full bg-white text-slate-900 hover:bg-gray-100 hover:scale-[1.03] active:scale-95 transition-all duration-300">
-                                        Daftar Gratis
-                                    </Button>
-                                </Link>
-                                <div className="absolute inset-0 bg-blue-500/10 dark:bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none"></div>
-                            </div>
-
-                        </div>
+            {/* ─── Footer ─── */}
+            <footer className="border-t border-gray-100 dark:border-white/5 py-10 px-6">
+                <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="text-[13px] text-gray-400 dark:text-gray-600">
+                        © 2024 SimulasiKredit Pro. Developed by{' '}
+                        <a href="http://webchain.id/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 dark:hover:text-gray-400 transition-colors">
+                            webchain
+                        </a>
                     </div>
-                </section>
-            </main>
+                    <div className="flex items-center gap-6 text-[13px] text-gray-400 dark:text-gray-600">
+                        <Link to="/pricing" className="hover:text-gray-600 dark:hover:text-gray-400 transition-colors">Harga</Link>
+                        <Link to="/login" className="hover:text-gray-600 dark:hover:text-gray-400 transition-colors">Masuk</Link>
+                        <Link to="/register" className="hover:text-gray-600 dark:hover:text-gray-400 transition-colors">Daftar</Link>
+                    </div>
+                </div>
+            </footer>
+
         </div>
     );
 };
