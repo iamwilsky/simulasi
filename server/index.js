@@ -70,12 +70,12 @@ app.post('/api/webhook/mayar', async (req, res) => {
 
                     const { error: updateError } = await supabase
                         .from('subscriptions')
-                        .upsert({
-                            user_id: userProfile.id,
+                        .update({
                             status: 'active',
                             current_period_end: expiredAt.toISOString(),
                             updated_at: new Date().toISOString() // Trigger frontend untuk fetch ulang
-                        }, { onConflict: 'user_id' });
+                        })
+                        .eq('user_id', userProfile.id);
 
                     if (updateError) throw updateError;
 
