@@ -35,14 +35,19 @@ app.post('/api/webhook/mayar', async (req, res) => {
             // Extract customer email safely from different possible payload structures in Mayar (Trial uses merchantEmail)
             let customerEmail = '';
 
+            // PRIORITAS 1: Coba ambil dari object customer
             if (data.customer && data.customer.email) {
                 customerEmail = data.customer.email;
-            } else if (data.merchantEmail) {
-                customerEmail = data.merchantEmail;
-            } else if (data.customerEmail) {
-                customerEmail = data.customerEmail;
             } else if (payload.customer && payload.customer.email) {
                 customerEmail = payload.customer.email;
+            }
+            // PRIORITAS 2: Coba ambil dari text literal customerEmail
+            else if (data.customerEmail) {
+                customerEmail = data.customerEmail;
+            }
+            // PRIORITAS 3 (FALLBACK): Ambil dari merchantEmail hanya kalau benar-benar tidak ada yang lain (contoh Quick Link)
+            else if (data.merchantEmail) {
+                customerEmail = data.merchantEmail;
             }
 
             console.log(`[Webhook Details] Extracted Email to Activate: ${customerEmail}`);
