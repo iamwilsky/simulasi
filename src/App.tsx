@@ -16,6 +16,7 @@ import Pricing from "./pages/Pricing";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ProtectedRoute } from "./components/guards/ProtectedRoute";
 import { SubscriptionGuard } from "./components/guards/SubscriptionGuard";
+import AppLayout from "./components/layout/AppLayout";
 
 const queryClient = new QueryClient();
 
@@ -28,23 +29,26 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/pricing" element={<Pricing />} />
+              {/* Wrap everything in AppLayout so Navbar is always present */}
+              <Route element={<AppLayout />}>
+                {/* Public Routes */}
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/pricing" element={<Pricing />} />
 
-              {/* Protected Routes (Require Login) */}
-              <Route element={<ProtectedRoute />}>
-                {/* Core Features - Require Active Subscription */}
-                <Route element={<SubscriptionGuard />}>
-                  <Route path="/dashboard" element={<Index />} />
-                  <Route path="/settings" element={<Settings />} />
+                {/* Protected Routes (Require Login) */}
+                <Route element={<ProtectedRoute />}>
+                  {/* Core Features - Require Active Subscription */}
+                  <Route element={<SubscriptionGuard />}>
+                    <Route path="/dashboard" element={<Index />} />
+                    <Route path="/settings" element={<Settings />} />
+                  </Route>
                 </Route>
-              </Route>
 
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Route>
             </Routes>
           </BrowserRouter>
         </TooltipProvider>

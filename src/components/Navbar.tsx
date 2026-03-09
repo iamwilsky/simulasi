@@ -33,6 +33,12 @@ const Navbar: React.FC = () => {
           </div>
 
           <nav className="flex items-center space-x-4">
+            <Link
+              to="/pricing"
+              className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              <span className="hidden sm:inline">Harga</span>
+            </Link>
             {user ? (
               <>
                 <Link

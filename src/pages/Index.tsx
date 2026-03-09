@@ -1,6 +1,5 @@
 
 import React, { useState } from "react";
-import Navbar from "@/components/Navbar";
 import LoanCalculator from "@/components/LoanCalculator";
 import BudgetCalculator from "@/components/BudgetCalculator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,8 +12,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-pattern dark:from-gray-900 dark:to-gray-800">
-      <Navbar />
-
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-8 sm:mb-10 animate-fade-up">

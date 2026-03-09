@@ -35,11 +35,7 @@ const Pricing = () => {
                             </li>
                             <li className="flex items-center">
                                 <CheckCircle2 className="h-5 w-5 text-green-500 mr-3" />
-                                <span>Akses Fitur CRM & Lead Management</span>
-                            </li>
-                            <li className="flex items-center">
-                                <CheckCircle2 className="h-5 w-5 text-green-500 mr-3" />
-                                <span>Sinkronisasi Google Sheets</span>
+                                <span>Kalkulasi Presisi Target DP & Cicilan</span>
                             </li>
                         </ul>
 
@@ -60,10 +56,6 @@ const Pricing = () => {
                             </div>
                         )}
                     </div>
-                </div>
-
-                <div className="mt-8">
-                    <Link to="/" className="text-primary hover:underline">Kembali ke Beranda</Link>
                 </div>
             </div>
         </div>
