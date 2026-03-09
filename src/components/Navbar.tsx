@@ -1,22 +1,25 @@
-
-import React, { useState } from "react";
-import { Calculator, Settings } from "lucide-react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import PinDialog from "./PinDialog";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/lib/supabaseClient";
+import { Button } from "@/components/ui/button";
+import { Settings, LogOut, LayoutDashboard } from "lucide-react";
+import { toast } from "sonner";
 
 const Navbar: React.FC = () => {
-  const [isPinDialogOpen, setIsPinDialogOpen] = useState(false);
+  const { user } = useAuth();
   const navigate = useNavigate();
-  
-  const handleSettingsClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsPinDialogOpen(true);
+
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      toast.success("Berhasil logout");
+      navigate("/login");
+    } catch (error) {
+      toast.error("Gagal logout");
+    }
   };
-  
-  const handlePinSuccess = () => {
-    navigate("/settings");
-  };
-  
+
   return (
     <header className="w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-50 border-b border-gray-200 dark:border-gray-800">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,30 +27,46 @@ const Navbar: React.FC = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
               <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                BYD Simulasi Kredit
+                SimulasiKredit Pro
               </span>
             </Link>
           </div>
-          
+
           <nav className="flex items-center space-x-4">
-            <a
-              href="#"
-              onClick={handleSettingsClick}
-              className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            >
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Setting</span>
-            </a>
+            {user ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                >
+                  <LayoutDashboard className="mr-2 h-4 w-4" />
+                  <span className="hidden sm:inline">Dashboard</span>
+                </Link>
+                <Link
+                  to="/settings"
+                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                >
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span className="hidden sm:inline">Setting</span>
+                </Link>
+                <Button variant="ghost" size="sm" onClick={handleLogout} className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/50">
+                  <LogOut className="h-4 w-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Logout</span>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="ghost" size="sm">Login</Button>
+                </Link>
+                <Link to="/register">
+                  <Button size="sm">Daftar</Button>
+                </Link>
+              </>
+            )}
           </nav>
         </div>
       </div>
-      
-      <PinDialog 
-        isOpen={isPinDialogOpen}
-        onClose={() => setIsPinDialogOpen(false)}
-        correctPin="082788"
-        onSuccess={handlePinSuccess}
-      />
     </header>
   );
 };
