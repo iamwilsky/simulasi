@@ -39,8 +39,8 @@ const Navbar: React.FC = () => {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center group">
-              <span className={`text-xl sm:text-2xl tracking-tighter transition-all duration-300 ${isTransparentPage ? 'text-white' : 'text-[#002C5F] dark:text-white'}`} style={{ fontFamily: "'Outfit', sans-serif" }}>
-                <span className="font-extrabold uppercase tracking-[0.02em]">kredit</span>ara
+              <span className={`text-xl sm:text-2xl font-bold tracking-tight transition-all duration-300 ${isTransparentPage ? 'text-white' : 'text-[#002C5F] dark:text-white'}`} style={{ fontFamily: "'Outfit', sans-serif" }}>
+                kreditara.com
               </span>
             </Link>
           </div>
