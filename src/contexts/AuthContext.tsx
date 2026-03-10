@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             clearInterval(sessionInterval);
             window.removeEventListener('focus', handleFocus);
         };
-    }, [user?.id]); // Restart interval if user changes
+    }, [user?.id]);
 
     const fetchUserData = async (userId: string) => {
         const [profileRes, subRes] = await Promise.all([
@@ -66,26 +66,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             supabase.from('subscriptions').select('*').eq('user_id', userId).single()
         ]);
 
-        if (profileRes.data?.last_session_id) {
+        if (profileRes.data) {
             const localSessionId = localStorage.getItem('simulasi_session_id');
+            const dbSessionId = profileRes.data.last_session_id;
 
-            // Jika local pending atau match, izinkan
-            if (localSessionId === 'PENDING') {
-                // Jangan lakukan apa-apa, biarkan Login.tsx nanti yang update
-            } else if (profileRes.data.last_session_id !== localSessionId) {
+            // STRATEGI: Autonomic Session Claiming
+            // Jika user login tapi perangkat ini belum punya ID, maka KLAIM sesi ini
+            if (!localSessionId || localSessionId === 'PENDING') {
+                const newId = Math.random().toString(36).substring(2, 15);
+                localStorage.setItem('simulasi_session_id', newId);
+
+                await supabase
+                    .from('profiles')
+                    .update({ last_session_id: newId })
+                    .eq('id', userId);
+
+                profileRes.data.last_session_id = newId;
+            }
+            // Jika sudah punya ID tapi TIDAK COCOK dengan DB, baru Logout (karena sudah ada perangkat lain yang klaim)
+            else if (dbSessionId && dbSessionId !== localSessionId) {
                 handleSessionMismatch();
                 return;
             }
-        }
 
-        setProfile(profileRes.data);
+            setProfile(profileRes.data);
+        }
 
         setSubscription(subRes.data);
         setIsLoading(false);
     };
 
     const checkSingleSession = async (userId: string) => {
-        const { data: profile } = await supabase
+        const { data: profileRes } = await supabase
             .from('profiles')
             .select('last_session_id')
             .eq('id', userId)
@@ -93,28 +105,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         const localSessionId = localStorage.getItem('simulasi_session_id');
 
-        // Jika status pending, abaikan pengecekan dulu agar proses login selesai
-        if (localSessionId === 'PENDING') return;
-
-        if (profile?.last_session_id && localSessionId && profile.last_session_id !== localSessionId) {
-            handleSessionMismatch();
+        if (profileRes?.last_session_id && localSessionId && localSessionId !== 'PENDING') {
+            if (profileRes.last_session_id !== localSessionId) {
+                handleSessionMismatch();
+            }
         }
     };
 
     const handleSessionMismatch = async () => {
-        const currentLocal = localStorage.getItem('simulasi_session_id');
-        // Double check localSessionId inside mismatch in case it changed to pending or just finished
-        if (currentLocal === 'PENDING') {
-            console.log("Session Check: Pending state detected, skipping logout.");
-            return;
-        }
-
-        console.log("Session Check: Mismatch detected. Current local:", currentLocal);
+        // Redundant safety check
+        if (localStorage.getItem('simulasi_session_id') === 'PENDING') return;
 
         await supabase.auth.signOut();
         localStorage.removeItem('simulasi_session_id');
 
-        // Use dynamic import to show toast without circular dep issues
         import('sonner').then(({ toast }) => {
             toast.error('Akun Anda masuk di perangkat lain. Akses di perangkat ini telah dihentikan.', {
                 duration: 10000,
@@ -122,7 +126,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             });
         });
 
-        // Force state reset
         setUser(null);
         setProfile(null);
         setSubscription(null);

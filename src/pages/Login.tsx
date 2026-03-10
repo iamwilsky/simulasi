@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/lib/supabaseClient';
@@ -20,28 +21,18 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            // Tandai sesi sebagai pending agar tidak ter-logout otomatis saat proses transisi
+            // Tandai sebagai pending agar AuthContext tahu ini perangkat baru yang akan klaim sesi
             localStorage.setItem('simulasi_session_id', 'PENDING');
 
-            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+            const { error } = await supabase.auth.signInWithPassword({ email, password });
             if (error) throw error;
-
-            // Perbarui last_session_id untuk pembatasan satu perangkat
-            if (data.session) {
-                const sessionId = Math.random().toString(36).substring(2, 15);
-
-                await supabase
-                    .from('profiles')
-                    .update({ last_session_id: sessionId })
-                    .eq('id', data.session.user.id);
-
-                localStorage.setItem('simulasi_session_id', sessionId);
-            }
 
             toast.success('Login berhasil!');
             navigate(from, { replace: true });
         } catch (error: any) {
             toast.error(error.message || 'Gagal login');
+            // Bersihkan pending jika gagal
+            localStorage.removeItem('simulasi_session_id');
         } finally {
             setLoading(false);
         }
