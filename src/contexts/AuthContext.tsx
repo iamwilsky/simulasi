@@ -66,16 +66,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             supabase.from('subscriptions').select('*').eq('user_id', userId).single()
         ]);
 
-        if (profileRes.data) {
-            // Verify session on initial fetch
+        if (profileRes.data?.last_session_id) {
             const localSessionId = localStorage.getItem('simulasi_session_id');
-            if (profileRes.data.last_session_id && localSessionId && profileRes.data.last_session_id !== localSessionId) {
+            if (profileRes.data.last_session_id !== localSessionId) {
                 handleSessionMismatch();
                 return;
             }
-
-            setProfile(profileRes.data);
         }
+
+        setProfile(profileRes.data);
 
         setSubscription(subRes.data);
         setIsLoading(false);
