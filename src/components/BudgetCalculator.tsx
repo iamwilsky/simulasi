@@ -39,12 +39,12 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
 
   const handleBudgetAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^\d]/g, '');
-    
+
     if (value === '') {
       setBudgetAmount('');
       return;
     }
-    
+
     const numericValue = parseInt(value, 10);
     setBudgetAmount(numericValue.toLocaleString('id-ID'));
   };
@@ -52,41 +52,41 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
   const findClosestDpPercentage = (targetAmount: number, forInstallment: boolean): number => {
     let closestDp = 20; // Start from minimum DP
     let smallestDiff = Number.MAX_VALUE;
-    
+
     for (let testDp = 20; testDp <= 90; testDp += 0.00001) { // Increment yang jauh lebih kecil
       const dpAmount = otrPrice * (testDp / 100);
       const loanPrincipal = otrPrice - dpAmount;
       const provisionFee = loanPrincipal * (provisionRate / 100);
       const loanWithProvision = loanPrincipal + provisionFee;
-      
+
       const interestRate = getInterestRateFromTable(tenor);
       const interestAmount = loanWithProvision * (interestRate / 100) * tenor;
       const totalLoanAmount = loanWithProvision + interestAmount;
       const monthlyInstallment = Math.round(totalLoanAmount / (tenor * 12));
-      
+
       const insuranceRate = getInsuranceRateFromTable(otrPrice, insuranceType, tenor);
       const insuranceAmount = otrPrice * (insuranceRate / 100);
-      
+
       const adminFee = getAdminFee(tenor);
       const totalAdminFee = adminFee + additionalAdminFee;
-      
+
       const creditProtection = loanPrincipal * (fees.creditProtectionRate / 100);
-      
+
       const totalDp = Math.round(dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + fees.tpiFee + creditProtection);
-      
+
       const currentAmount = forInstallment ? monthlyInstallment : totalDp;
       const diff = Math.abs(currentAmount - targetAmount);
-      
+
       if (diff < smallestDiff) {
         smallestDiff = diff;
         closestDp = testDp;
-        
+
         if (diff < 1) { // Lebih ketat untuk mendapatkan hasil yang lebih presisi
           break;
         }
       }
     }
-    
+
     return Number(closestDp.toFixed(5)); // Mengembalikan dengan 5 angka di belakang koma
   };
 
@@ -126,36 +126,36 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
 
     const dpAmount = otrPrice * (calculatedDpPercent / 100);
     const roundedDpAmount = Math.round(dpAmount / 1000) * 1000;
-    
+
     const loanPrincipal = otrPrice - roundedDpAmount;
     const roundedLoanPrincipal = Math.round(loanPrincipal / 1000) * 1000;
-    
+
     const provisionFee = roundedLoanPrincipal * (provisionRate / 100);
     const roundedProvisionFee = Math.round(provisionFee / 1000) * 1000;
-    
+
     const loanWithProvision = roundedLoanPrincipal + roundedProvisionFee;
     const roundedLoanWithProvision = Math.round(loanWithProvision / 1000) * 1000;
-    
+
     const interestRate = getInterestRateFromTable(tenor);
     const interestAmount = roundedLoanWithProvision * (interestRate / 100) * tenor;
     const roundedInterestAmount = Math.round(interestAmount / 1000) * 1000;
-    
+
     const totalLoanAmount = roundedLoanWithProvision + roundedInterestAmount;
     const roundedTotalLoanAmount = Math.round(totalLoanAmount / 1000) * 1000;
-    
+
     const monthlyInstallment = Math.round((roundedTotalLoanAmount / (tenor * 12)) / 1000) * 1000;
-    
+
     const insuranceRate = getInsuranceRateFromTable(otrPrice, insuranceType, tenor);
     const insuranceAmount = otrPrice * (insuranceRate / 100);
     const roundedInsuranceAmount = Math.round(insuranceAmount / 1000) * 1000;
-    
+
     const adminFee = getAdminFee(tenor);
     const totalAdminFee = adminFee + additionalAdminFee;
     const roundedTotalAdminFee = Math.round(totalAdminFee / 1000) * 1000;
-    
+
     const creditProtection = roundedLoanPrincipal * (fees.creditProtectionRate / 100);
     const roundedCreditProtection = Math.round(creditProtection / 1000) * 1000;
-    
+
     const totalDp = Math.round((roundedDpAmount + monthlyInstallment + roundedInsuranceAmount + roundedTotalAdminFee + fees.tpiFee + roundedCreditProtection) / 1000) * 1000;
 
     return {
@@ -172,39 +172,47 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
   const results = calculatedDpPercent !== null ? calculateResults() : null;
 
   return (
-    <div className="glass-card dark:glass-card-dark p-4 sm:p-6 rounded-2xl animate-fade-in">
-      <div className="flex items-center mb-4 sm:mb-5">
-        <Wallet className="h-5 w-5 text-primary mr-2 flex-shrink-0" />
-        <h2 className="text-lg sm:text-xl font-semibold">Simulasi Budget</h2>
-      </div>
+    <div className="w-full animate-fade-in space-y-12">
+      <div className="bg-white/[0.03] backdrop-blur-3xl border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden group transition-all hover:border-white/10">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-[100px] pointer-events-none" />
 
-      <BudgetForm
-        otrPrice={otrPrice}
-        tenor={tenor}
-        insuranceType={insuranceType}
-        budgetType={budgetType}
-        budgetAmount={budgetAmount}
-        isCalculating={isCalculating}
-        onOtrChange={handleOtrChange}
-        onTenorChange={handleTenorChange}
-        onInsuranceTypeChange={setInsuranceType}
-        onBudgetTypeChange={setBudgetType}
-        onBudgetAmountChange={handleBudgetAmountChange}
-        onCalculate={handleCalculate}
-      />
-
-      {isCalculating ? (
-        <div className="text-center py-4">
-          <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-primary mx-auto"></div>
-          <p className="text-sm text-gray-500 mt-2">Menghitung simulasi...</p>
+        <div className="flex items-center gap-4 mb-10">
+          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center">
+            <Wallet className="h-5 w-5 text-gray-400" />
+          </div>
+          <h2 className="text-2xl font-bold tracking-tight">Optimasi <span className="text-gray-500">Anggaran.</span></h2>
         </div>
-      ) : results ? (
-        <BudgetResults
-          results={results}
+
+        <BudgetForm
           otrPrice={otrPrice}
           tenor={tenor}
           insuranceType={insuranceType}
+          budgetType={budgetType}
+          budgetAmount={budgetAmount}
+          isCalculating={isCalculating}
+          onOtrChange={handleOtrChange}
+          onTenorChange={handleTenorChange}
+          onInsuranceTypeChange={setInsuranceType}
+          onBudgetTypeChange={setBudgetType}
+          onBudgetAmountChange={handleBudgetAmountChange}
+          onCalculate={handleCalculate}
         />
+      </div>
+
+      {isCalculating ? (
+        <div className="text-center py-20 animate-pulse">
+          <div className="w-16 h-16 border-4 border-white/5 border-t-white rounded-full animate-spin mx-auto mb-6"></div>
+          <p className="text-[10px] uppercase font-bold tracking-[0.3em] text-gray-600">Menganalisis matriks kredit...</p>
+        </div>
+      ) : results ? (
+        <div className="results-appear">
+          <BudgetResults
+            results={results}
+            otrPrice={otrPrice}
+            tenor={tenor}
+            insuranceType={insuranceType}
+          />
+        </div>
       ) : null}
     </div>
   );

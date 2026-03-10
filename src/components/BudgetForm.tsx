@@ -2,6 +2,8 @@
 import React from "react";
 import FormInput from "./FormInput";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Calculator } from "lucide-react";
 
 interface BudgetFormProps {
@@ -34,128 +36,111 @@ const BudgetForm: React.FC<BudgetFormProps> = ({
   onCalculate
 }) => {
   return (
-    <div className="space-y-4 sm:space-y-6">
-      <FormInput
-        label="Harga OTR"
-        type="text"
-        prefix="Rp"
-        value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
-        onChange={onOtrChange}
-        placeholder="Masukkan harga OTR"
-        description="Harga On The Road kendaraan"
-      />
-
-      <div className="space-y-1.5">
-        <label className="input-label block">Tenor</label>
-        <Select 
-          value={tenor.toString()} 
-          onValueChange={onTenorChange}
-        >
-          <SelectTrigger className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md">
-            <SelectValue placeholder="Pilih tenor" />
-          </SelectTrigger>
-          <SelectContent className="bg-white dark:bg-gray-800">
-            <SelectItem value="1">1 tahun</SelectItem>
-            <SelectItem value="2">2 tahun</SelectItem>
-            <SelectItem value="3">3 tahun</SelectItem>
-            <SelectItem value="4">4 tahun</SelectItem>
-            <SelectItem value="5">5 tahun</SelectItem>
-            <SelectItem value="6">6 tahun</SelectItem>
-            <SelectItem value="7">7 tahun</SelectItem>
-          </SelectContent>
-        </Select>
-        <p className="text-xs text-gray-500 dark:text-gray-400">Jangka waktu kredit (1-7 tahun)</p>
-      </div>
-
-      <div className="space-y-1.5">
-        <label className="input-label block">Jenis Asuransi</label>
-        <div className="grid grid-cols-3 gap-2">
-          <button
-            type="button"
-            onClick={() => onInsuranceTypeChange('kombinasi')}
-            className={`px-2 sm:px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
-              insuranceType === 'kombinasi'
-                ? 'bg-primary text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-            }`}
-          >
-            Kombinasi
-          </button>
-          <button
-            type="button"
-            onClick={() => onInsuranceTypeChange('allrisk')}
-            className={`px-2 sm:px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
-              insuranceType === 'allrisk'
-                ? 'bg-primary text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-            }`}
-          >
-            All Risk
-          </button>
-          <button
-            type="button"
-            onClick={() => onInsuranceTypeChange('allriskPerluasan')}
-            className={`px-2 sm:px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
-              insuranceType === 'allriskPerluasan'
-                ? 'bg-primary text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-            }`}
-          >
-            AR Perluasan
-          </button>
+    <div className="space-y-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="space-y-3">
+          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Harga OTR Kendaraan</label>
+          <div className="relative group">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium text-sm">Rp</div>
+            <Input
+              type="text"
+              value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
+              onChange={onOtrChange}
+              placeholder="Masukkan harga"
+              className="h-14 pl-12 bg-white/5 border-white/5 text-white placeholder:text-gray-800 transition-all rounded-2xl focus:border-white/20 focus:ring-0 text-lg font-medium"
+            />
+          </div>
         </div>
-        <p className="text-xs text-gray-500 dark:text-gray-400">Pilih jenis asuransi kendaraan</p>
-      </div>
 
-      <div className="space-y-1.5">
-        <label className="input-label block">Jenis Budget</label>
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            type="button"
-            onClick={() => onBudgetTypeChange('tdp')}
-            className={`px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
-              budgetType === 'tdp'
-                ? 'bg-primary text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-            }`}
-          >
-            Budget Total DP
-          </button>
-          <button
-            type="button"
-            onClick={() => onBudgetTypeChange('installment')}
-            className={`px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
-              budgetType === 'installment'
-                ? 'bg-primary text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-            }`}
-          >
-            Budget Angsuran
-          </button>
+        <div className="space-y-3">
+          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Masa Tenor</label>
+          <Select value={tenor.toString()} onValueChange={onTenorChange}>
+            <SelectTrigger className="h-14 bg-white/5 border-white/5 text-white focus:ring-0 focus:border-white/20 transition-all rounded-2xl text-lg">
+              <SelectValue placeholder="Tenor" />
+            </SelectTrigger>
+            <SelectContent className="bg-[#1A1A1A] border-white/10 text-white rounded-2xl">
+              {[1, 2, 3, 4, 5, 6, 7].map((t) => (
+                <SelectItem key={t} value={t.toString()} className="focus:bg-white/10 rounded-lg m-1 py-3">
+                  {t} Tahun
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
-      <FormInput
-        label={budgetType === 'tdp' ? "Budget Total DP" : "Budget Angsuran"}
-        type="text"
-        prefix="Rp"
-        value={budgetAmount}
-        onChange={onBudgetAmountChange}
-        placeholder={budgetType === 'tdp' ? "Masukkan budget DP" : "Masukkan budget angsuran"}
-        description={`Masukkan budget ${budgetType === 'tdp' ? 'Total DP' : 'angsuran'} yang Anda inginkan`}
-      />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="space-y-3">
+          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Jenis Asuransi</label>
+          <div className="grid grid-cols-3 gap-2 p-1 bg-white/5 rounded-2xl border border-white/5">
+            {[
+              { id: 'kombinasi', label: 'Kombinasi' },
+              { id: 'allrisk', label: 'All Risk' },
+              { id: 'allriskPerluasan', label: 'AR Perluasan' }
+            ].map((type) => (
+              <button
+                key={type.id}
+                type="button"
+                onClick={() => onInsuranceTypeChange(type.id as any)}
+                className={`py-2.5 px-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${insuranceType === type.id
+                  ? 'bg-white text-black shadow-xl'
+                  : 'text-gray-500 hover:text-white hover:bg-white/5'
+                  }`}
+              >
+                {type.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
-      <button
+        <div className="space-y-3">
+          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Kategori Budget</label>
+          <div className="grid grid-cols-2 gap-2 p-1 bg-white/5 rounded-2xl border border-white/5">
+            {[
+              { id: 'tdp', label: 'Total DP' },
+              { id: 'installment', label: 'Angsuran' }
+            ].map((type) => (
+              <button
+                key={type.id}
+                type="button"
+                onClick={() => onBudgetTypeChange(type.id as any)}
+                className={`py-2.5 px-3 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${budgetType === type.id
+                  ? 'bg-white text-black shadow-xl'
+                  : 'text-gray-500 hover:text-white hover:bg-white/5'
+                  }`}
+              >
+                {type.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">
+          Budget {budgetType === 'tdp' ? "Total DP" : "Angsuran"} Maksimal
+        </label>
+        <div className="relative group">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium text-sm">Rp</div>
+          <Input
+            type="text"
+            value={budgetAmount}
+            onChange={onBudgetAmountChange}
+            placeholder={budgetType === 'tdp' ? "Masukkan budget DP" : "Masukkan budget angsuran"}
+            className="h-16 pl-12 bg-white/5 border-white/5 text-white placeholder:text-gray-800 transition-all rounded-2xl focus:border-white/20 focus:ring-0 text-xl font-bold"
+          />
+        </div>
+      </div>
+
+      <Button
         type="button"
         onClick={onCalculate}
-        className="w-full bg-primary hover:bg-primary/90 text-white py-2.5 sm:py-3 rounded-md font-medium flex items-center justify-center transition-colors"
         disabled={!budgetAmount || isCalculating || otrPrice <= 0}
+        className="w-full h-16 bg-white text-black hover:bg-gray-200 border-0 shadow-[0_10px_30px_rgba(255,255,255,0.05)] px-8 rounded-2xl font-bold uppercase tracking-widest text-[11px] transition-all duration-500 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-3"
       >
-        <Calculator className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
-        <span className="text-sm sm:text-base">
-          {isCalculating ? "Sedang Menghitung..." : "Hitung Simulasi"}
-        </span>
-      </button>
+        <Calculator className="h-5 w-5" />
+        {isCalculating ? "Mencari Optimalisasi..." : "Hitung Struktur Kredit"}
+      </Button>
     </div>
   );
 };

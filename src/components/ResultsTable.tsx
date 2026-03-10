@@ -37,18 +37,23 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
 
   return (
     <div className="w-full">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
-        <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-700">
-          <h2 className="text-lg font-semibold">Hasil Simulasi</h2>
+      <div className="bg-white/[0.03] backdrop-blur-3xl border border-white/5 rounded-3xl overflow-hidden shadow-2xl transition-all hover:border-white/10">
+        <div className="flex items-center justify-between p-8 border-b border-white/5">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center border border-emerald-500/20">
+              <ChevronDown className="h-4 w-4 text-emerald-400" />
+            </div>
+            <h2 className="text-xl font-bold tracking-tight">Kalkulasi <span className="text-gray-500">Rinci.</span></h2>
+          </div>
           <button
             onClick={() => setShowFullDetails(!showFullDetails)}
-            className="text-primary hover:bg-primary/10 p-1.5 rounded-lg transition-colors"
+            className="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
           >
             {showFullDetails ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
           </button>
         </div>
 
-        <div className="p-4 space-y-4">
+        <div className="p-8 space-y-8">
           {/* Main Summary Cards */}
           <ResultsSummaryCards
             results={results}
@@ -58,30 +63,33 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
           />
 
           {/* Share WhatsApp Button */}
-          <ResultsWhatsAppShare
-            results={results}
-            otrPrice={otrPrice}
-            dpPercent={dpPercent}
-            tenor={tenor}
-          />
+          <div className="pt-4 border-t border-white/5">
+            <ResultsWhatsAppShare
+              results={results}
+              otrPrice={otrPrice}
+              dpPercent={dpPercent}
+              tenor={tenor}
+            />
+          </div>
 
-          {/* Info Note */}
-          <div className="flex items-start p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-            <Info className="w-4 h-4 text-[#0B1C2E] mt-0.5 mr-2 flex-shrink-0" />
-            <p className="text-sm text-[#0B1C2E] dark:text-blue-300">
-              Hasil simulasi ini merupakan estimasi.
-              {!showFullDetails && " Klik tombol di kanan atas untuk melihat detail lengkap."}
+          <div className="flex items-start gap-4 p-4 bg-white/5 border border-white/5 rounded-2xl">
+            <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
+              <Info className="w-4 h-4 text-gray-500" />
+            </div>
+            <p className="text-xs text-gray-500 font-light leading-relaxed">
+              Hasil simulasi ini merupakan estimasi awal. Untuk memproses penawaran resmi, silakan bagikan hasil ini ke konsultan kami melalui tombol di atas.
             </p>
           </div>
         </div>
 
-        {/* Full Details Section */}
         {showFullDetails && (
-          <ResultsDetailBreakdown
-            results={results}
-            dpPercent={dpPercent}
-            tenor={tenor}
-          />
+          <div className="animate-fade-in">
+            <ResultsDetailBreakdown
+              results={results}
+              dpPercent={dpPercent}
+              tenor={tenor}
+            />
+          </div>
         )}
       </div>
     </div>

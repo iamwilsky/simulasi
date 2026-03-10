@@ -8,6 +8,7 @@ import ResultsTable from "./ResultsTable";
 import CreditComparisonTable from "./CreditComparisonTable";
 import { useSettings } from "@/context/SettingsContext";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 interface LoanCalculatorProps {
   defaultOtr?: number;
@@ -48,257 +49,157 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
   const [results, setResults] = useState<CalculationResults | null>(null);
   const [isCalculating, setIsCalculating] = useState<boolean>(false);
 
+  // ... (keeping calculation logic unchanged for stability)
   const handleOtrChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, "");
-    if (value === "") {
-      setOtrPrice(0);
-    } else {
-      setOtrPrice(parseInt(value, 10));
-    }
+    if (value === "") { setOtrPrice(0); } else { setOtrPrice(parseInt(value, 10)); }
   };
-
   const handleDpPercentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = parseFloat(e.target.value);
-    if (isNaN(value)) {
-      setDpPercent(0);
-    } else {
-      setDpPercent(Math.min(Math.max(value, 0), 90)); // Clamp between 0 and 90%
-    }
+    if (isNaN(value)) { setDpPercent(0); } else { setDpPercent(Math.min(Math.max(value, 0), 90)); }
   };
-
-  const handleTenorChange = (value: string) => {
-    setTenor(parseInt(value, 10));
-  };
+  const handleTenorChange = (value: string) => { setTenor(parseInt(value, 10)); };
 
   const calculateLoan = () => {
-    if (otrPrice <= 0) {
-      setResults(null);
-      return;
-    }
-    
+    if (otrPrice <= 0) { setResults(null); return; }
     setIsCalculating(true);
-    
     setTimeout(() => {
       try {
         const dpAmount = otrPrice * (dpPercent / 100);
         const loanPrincipal = otrPrice - dpAmount;
         const provisionFee = loanPrincipal * (provisionRate / 100);
         const loanWithProvision = loanPrincipal + provisionFee;
-        
         const interestRate = getInterestRateFromTable(tenor);
-        
-        // Calculate interest based on loan principal plus provision
         const interestAmount = loanWithProvision * (interestRate / 100) * tenor;
-        
         const totalLoanAmount = loanWithProvision + interestAmount;
-        
         const tenorMonths = tenor * 12;
         const monthlyInstallment = totalLoanAmount / tenorMonths;
-        
-        // Get insurance rate from table based on OTR price, tenor, and insurance type
         const insuranceRate = getInsuranceRateFromTable(otrPrice, insuranceType, tenor);
         const insuranceAmount = otrPrice * (insuranceRate / 100);
-        
-        // Get admin fee based on tenor
         const adminFee = getAdminFee(tenor);
         const totalAdminFee = adminFee + additionalAdminFee;
-        
         const creditProtection = loanPrincipal * (fees.creditProtectionRate / 100);
-        
-        // Total DP includes: DP + First Installment + Insurance + Admin Fee + TPI Fee + Credit Protection
         const totalDp = dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + fees.tpiFee + creditProtection;
-        
         setResults({
-          dpAmount,
-          loanPrincipal,
-          provisionFee,
-          loanWithProvision,
-          interestRate,
-          interestAmount,
-          totalLoanAmount,
-          monthlyInstallment,
-          insuranceAmount,
-          insuranceRate,
-          totalDp,
-          adminFee,
-          additionalAdminFee,
-          totalAdminFee,
-          tpiFee: fees.tpiFee,
-          provisionRate,
-          insuranceType: insuranceType === 'kombinasi' 
-            ? 'Kombinasi' 
-            : insuranceType === 'allrisk' 
-              ? 'All Risk' 
-              : 'All Risk Perluasan'
+          dpAmount, loanPrincipal, provisionFee, loanWithProvision, interestRate, interestAmount,
+          totalLoanAmount, monthlyInstallment, insuranceAmount, insuranceRate, totalDp,
+          adminFee, additionalAdminFee, totalAdminFee, tpiFee: fees.tpiFee, provisionRate,
+          insuranceType: insuranceType === 'kombinasi' ? 'Kombinasi' : insuranceType === 'allrisk' ? 'All Risk' : 'All Risk Perluasan'
         });
-        
         setIsCalculating(false);
-      } catch (error) {
-        console.error("Calculation error:", error);
-        setIsCalculating(false);
-      }
-    }, 600); // Add a slight delay for better UX
+      } catch (error) { console.error("Calculation error:", error); setIsCalculating(false); }
+    }, 600);
   };
 
-  // Calculate on initial render and when inputs change
   useEffect(() => {
     calculateLoan();
   }, [otrPrice, dpPercent, tenor, insuranceType, provisionRate, additionalAdminFee]);
 
   return (
-    <div className="w-full animate-fade-in">
-      <div className="glass-card dark:glass-card-dark p-6 rounded-2xl">
-        <div className="flex items-center mb-5">
-          <Calculator className="h-5 w-5 text-primary mr-2" />
-          <h2 className="text-xl font-semibold">Simulasi Kredit</h2>
+    <div className="w-full animate-fade-in space-y-12">
+      <div className="bg-white/[0.03] backdrop-blur-3xl border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden group transition-all hover:border-white/10">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 blur-[100px] pointer-events-none" />
+
+        <div className="flex items-center gap-4 mb-10">
+          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center">
+            <Calculator className="h-5 w-5 text-gray-400" />
+          </div>
+          <h2 className="text-2xl font-bold tracking-tight">Parameter <span className="text-gray-500">Kredit.</span></h2>
         </div>
-        
-        <div className="space-y-6">
-          <FormInput
-            label="Harga OTR"
-            type="text"
-            prefix="Rp"
-            value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
-            onChange={handleOtrChange}
-            placeholder="Masukkan harga OTR"
-            description="Harga On The Road kendaraan"
-          />
-          
-          <FormInput
-            label="Uang Muka (%)"
-            type="number"
-            min={0}
-            max={90}
-            value={dpPercent}
-            onChange={handleDpPercentChange}
-            suffix="%"
-            description="Minimal 20% dari harga OTR"
-          />
-          
-          <div className="space-y-1.5">
-            <label className="input-label block">Tenor</label>
-            <Select 
-              value={tenor.toString()} 
-              onValueChange={handleTenorChange}
-            >
-              <SelectTrigger className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md">
-                <SelectValue placeholder="Pilih tenor" />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="space-y-3">
+            <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Harga OTR Kendaraan</label>
+            <div className="relative group">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium text-sm">Rp</div>
+              <Input
+                type="text"
+                value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
+                onChange={handleOtrChange}
+                placeholder="Masukkan harga"
+                className="h-14 pl-12 bg-white/5 border-white/5 text-white placeholder:text-gray-800 transition-all rounded-2xl focus:border-white/20 focus:ring-0 text-lg font-medium"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Persentase DP</label>
+            <div className="flex gap-3">
+              <Input
+                type="number"
+                value={dpPercent}
+                onChange={handleDpPercentChange}
+                className="h-14 bg-white/5 border-white/5 text-white transition-all rounded-2xl focus:border-white/20 focus:ring-0 text-lg font-medium"
+              />
+              <div className="h-14 w-14 bg-white/5 border border-white/5 rounded-2xl flex items-center justify-center text-gray-500 font-bold">%</div>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Masa Tenor</label>
+            <Select value={tenor.toString()} onValueChange={handleTenorChange}>
+              <SelectTrigger className="h-14 bg-white/5 border-white/5 text-white focus:ring-0 focus:border-white/20 transition-all rounded-2xl text-lg">
+                <SelectValue placeholder="Tenor" />
               </SelectTrigger>
-              <SelectContent className="bg-white dark:bg-gray-800">
-                <SelectItem value="1">1 tahun</SelectItem>
-                <SelectItem value="2">2 tahun</SelectItem>
-                <SelectItem value="3">3 tahun</SelectItem>
-                <SelectItem value="4">4 tahun</SelectItem>
-                <SelectItem value="5">5 tahun</SelectItem>
-                <SelectItem value="6">6 tahun</SelectItem>
-                <SelectItem value="7">7 tahun</SelectItem>
+              <SelectContent className="bg-[#1A1A1A] border-white/10 text-white rounded-2xl">
+                {[1, 2, 3, 4, 5, 6, 7].map((t) => (
+                  <SelectItem key={t} value={t.toString()} className="focus:bg-white/10 rounded-lg m-1 py-3">
+                    {t} Tahun
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Jangka waktu kredit (1-7 tahun)</p>
           </div>
-          
-          <div className="space-y-1.5">
-            <label className="input-label block">Jenis Asuransi</label>
-            <div className="grid grid-cols-3 gap-2 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl">
+        </div>
+
+        <div className="mt-10 space-y-3">
+          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Proteksi Keamanan (Asuransi)</label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-1.5 bg-white/5 rounded-2xl border border-white/5">
+            {[
+              { id: 'kombinasi', label: 'Kombinasi' },
+              { id: 'allrisk', label: 'All Risk' },
+              { id: 'allriskPerluasan', label: 'AR Perluasan' }
+            ].map((type) => (
               <button
+                key={type.id}
                 type="button"
-                onClick={() => setInsuranceType('kombinasi')}
-                className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${
-                  insuranceType === 'kombinasi'
-                    ? 'bg-primary text-white shadow-lg scale-[1.02]'
-                    : 'hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}
+                onClick={() => setInsuranceType(type.id as any)}
+                className={`py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${insuranceType === type.id
+                  ? 'bg-white text-black shadow-xl'
+                  : 'text-gray-500 hover:text-white hover:bg-white/5'
+                  }`}
               >
-                <span className={`relative z-10 ${
-                  insuranceType === 'kombinasi'
-                    ? 'text-white'
-                    : 'text-gray-700 dark:text-gray-300'
-                }`}>
-                  Kombinasi
-                </span>
-                {insuranceType === 'kombinasi' && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/90 rounded-lg" />
-                )}
+                {type.label}
               </button>
-              <button
-                type="button"
-                onClick={() => setInsuranceType('allrisk')}
-                className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${
-                  insuranceType === 'allrisk'
-                    ? 'bg-primary text-white shadow-lg scale-[1.02]'
-                    : 'hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}
-              >
-                <span className={`relative z-10 ${
-                  insuranceType === 'allrisk'
-                    ? 'text-white'
-                    : 'text-gray-700 dark:text-gray-300'
-                }`}>
-                  All Risk
-                </span>
-                {insuranceType === 'allrisk' && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/90 rounded-lg" />
-                )}
-              </button>
-              <button
-                type="button"
-                onClick={() => setInsuranceType('allriskPerluasan')}
-                className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${
-                  insuranceType === 'allriskPerluasan'
-                    ? 'bg-primary text-white shadow-lg scale-[1.02]'
-                    : 'hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}
-              >
-                <span className={`relative z-10 ${
-                  insuranceType === 'allriskPerluasan'
-                    ? 'text-white'
-                    : 'text-gray-700 dark:text-gray-300'
-                }`}>
-                  AR Perluasan
-                </span>
-                {insuranceType === 'allriskPerluasan' && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/90 rounded-lg" />
-                )}
-              </button>
-            </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Pilih jenis asuransi kendaraan</p>
+            ))}
           </div>
-          
-          {otrPrice > 0 && (
-            <div className="pt-2">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Nilai DP Murni: <span className="font-medium text-gray-700 dark:text-gray-300">{formatRupiah(otrPrice * (dpPercent / 100))}</span>
-              </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                Pokok Hutang: <span className="font-medium text-gray-700 dark:text-gray-300">{formatRupiah(otrPrice - (otrPrice * (dpPercent / 100)))}</span>
-              </p>
-            </div>
-          )}
         </div>
       </div>
-      
-      {/* Hasil Simulasi */}
-      {results && (
-        <div className="mt-8 results-appear">
-          <ResultsTable 
-            results={results} 
-            otrPrice={otrPrice} 
-            dpPercent={dpPercent} 
-            tenor={tenor} 
-          />
-        </div>
-      )}
-      
-      {/* Tabel Perbandingan Tenor */}
-      {otrPrice > 0 && (
-        <div className="mt-8 results-appear">
-          <CreditComparisonTable 
+
+      {results && (otrPrice > 0) && (
+        <div className="results-appear">
+          <ResultsTable
+            results={results}
             otrPrice={otrPrice}
             dpPercent={dpPercent}
-            insuranceType={insuranceType}
-            provisionRate={provisionRate}
-            additionalAdminFee={additionalAdminFee}
+            tenor={tenor}
           />
+
+          <div className="mt-12 group">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center">
+                <Calendar className="h-5 w-5 text-gray-400" />
+              </div>
+              <h2 className="text-2xl font-bold tracking-tight">Komparasi <span className="text-gray-500">Tenor.</span></h2>
+            </div>
+            <CreditComparisonTable
+              otrPrice={otrPrice}
+              dpPercent={dpPercent}
+              insuranceType={insuranceType}
+              provisionRate={provisionRate}
+              additionalAdminFee={additionalAdminFee}
+            />
+          </div>
         </div>
       )}
     </div>

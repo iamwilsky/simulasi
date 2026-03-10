@@ -39,91 +39,64 @@ const ResultsSummaryCards: React.FC<ResultsSummaryCardsProps> = ({
   const [showDpDetails, setShowDpDetails] = useState(false);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* OTR Price */}
-      <div className="bg-[#0B1C2E] text-white rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
-        <div className="flex items-center mb-1">
-          <Car className="w-4 h-4 text-white/80 mr-2" />
-          <span className="text-sm text-white/80">Harga OTR</span>
-        </div>
-        <div className="text-xl font-semibold">{formatRupiah(otrPrice)}</div>
+      <div className="bg-white/5 backdrop-blur-2xl border border-white/5 rounded-2xl p-6 shadow-2xl transition-all hover:border-white/10 group">
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4">Harga OTR</p>
+        <p className="text-2xl font-bold text-white tracking-tight">{formatRupiah(otrPrice)}</p>
+        <div className="mt-4 h-1 w-12 bg-white/10 rounded-full" />
       </div>
 
       {/* Total DP */}
       <div
-        className="bg-[#0B1C2E] text-white rounded-xl p-4 cursor-pointer hover:bg-[#009abf] transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
+        className="bg-white/5 backdrop-blur-2xl border border-white/5 rounded-2xl p-6 shadow-2xl cursor-pointer transition-all hover:border-white/20 group"
         onClick={() => setShowDpDetails(!showDpDetails)}
       >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center mb-1">
-            <Wallet className="w-4 h-4 text-white/80 mr-2" />
-            <span className="text-sm text-white/80">Total DP</span>
-          </div>
-          <ChevronDown className={`w-4 h-4 text-white/80 transition-transform ${showDpDetails ? 'rotate-180' : ''}`} />
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">Total Uang Muka</p>
+          <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${showDpDetails ? 'rotate-180' : ''}`} />
         </div>
-        <div className="text-xl font-semibold">{formatRupiah(results.totalDp)}</div>
+        <p className="text-2xl font-bold text-white tracking-tight">{formatRupiah(results.totalDp)}</p>
+        <div className="mt-4 h-1 w-12 bg-emerald-500/30 rounded-full group-hover:bg-emerald-500 transition-all" />
 
-        {/* DP Breakdown */}
         {showDpDetails && (
-          <div className="mt-3 pt-3 border-t border-white/20 space-y-2 animate-fade-in">
-            <div className="flex justify-between text-sm">
-              <span className="text-white/80">DP Murni ({dpPercent}%)</span>
-              <span>{formatRupiah(results.dpAmount)}</span>
+          <div className="mt-6 pt-6 border-at border-white/5 space-y-3 animate-fade-in text-xs">
+            <div className="flex justify-between items-center bg-white/5 p-2 rounded-lg">
+              <span className="text-gray-400">DP Murni ({dpPercent}%)</span>
+              <span className="text-white font-medium">{formatRupiah(results.dpAmount)}</span>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-white/80">Angsuran ke-1</span>
-              <span>{formatRupiah(results.monthlyInstallment)}</span>
+            <div className="flex justify-between items-center p-2">
+              <span className="text-gray-500">Angsuran ke-1</span>
+              <span className="text-gray-300">{formatRupiah(results.monthlyInstallment)}</span>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-white/80">Asuransi</span>
-              <span>{formatRupiah(results.insuranceAmount)}</span>
+            <div className="flex justify-between items-center p-2">
+              <span className="text-gray-500">Asuransi (Th.1)</span>
+              <span className="text-gray-300">{formatRupiah(results.insuranceAmount)}</span>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-white/80">Admin</span>
-              <span>{formatRupiah(results.totalAdminFee || results.adminFee)}</span>
+            <div className="flex justify-between items-center p-2">
+              <span className="text-gray-500">Administrasi</span>
+              <span className="text-gray-300">{formatRupiah(results.totalAdminFee || results.adminFee)}</span>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-white/80">TPI</span>
-              <span>{formatRupiah(results.tpiFee)}</span>
+            <div className="flex justify-between items-center p-2">
+              <span className="text-gray-500">Biaya TPI</span>
+              <span className="text-gray-300">{formatRupiah(results.tpiFee)}</span>
             </div>
           </div>
         )}
       </div>
 
       {/* Monthly Payment */}
-      <div className="bg-[#0B1C2E] text-white rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
-        <div className="flex items-center mb-1">
-          <CreditCard className="w-4 h-4 text-white/80 mr-2" />
-          <span className="text-sm text-white/80">Angsuran per Bulan</span>
-        </div>
-        <div className="text-xl font-semibold">
-          {formatRupiah(results.monthlyInstallment)}
-        </div>
+      <div className="bg-white/5 backdrop-blur-2xl border border-white/5 rounded-2xl p-6 shadow-2xl transition-all hover:border-white/10 group">
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4">Angsuran / Bulan</p>
+        <p className="text-2xl font-bold text-emerald-400 tracking-tight">{formatRupiah(results.monthlyInstallment)}</p>
+        <div className="mt-4 h-1 w-12 bg-emerald-400 rounded-full shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
       </div>
 
       {/* Tenor */}
-      <div className="bg-gray-500 text-white rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
-        <div className="flex items-center mb-1">
-          <Calendar className="w-4 h-4 text-white/80 mr-2" />
-          <span className="text-sm text-white/80">Tenor</span>
-        </div>
-        <div className="text-xl font-semibold">
-          {tenor} tahun <span className="text-sm font-normal text-white/80">({tenor * 12} bulan)</span>
-        </div>
-      </div>
-
-      {/* Insurance Type - Full width */}
-      <div className="md:col-span-2 bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
-        <div className="flex items-center mb-1">
-          <Shield className="w-4 h-4 text-[#0B1C2E] mr-2" />
-          <span className="text-sm text-gray-500">Asuransi</span>
-        </div>
-        <div className="text-xl font-semibold text-[#0B1C2E]">
-          {results.insuranceType}
-          <span className="text-sm font-normal text-gray-500 ml-1">
-            ({results.insuranceRate?.toFixed(2)}%)
-          </span>
-        </div>
+      <div className="bg-white/5 backdrop-blur-2xl border border-white/5 rounded-2xl p-6 shadow-2xl transition-all hover:border-white/10 group">
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 mb-4">Masa Tenor</p>
+        <p className="text-2xl font-bold text-white tracking-tight">{tenor} <span className="text-sm font-light text-gray-500 ml-1">Tahun</span></p>
+        <div className="mt-4 h-1 w-12 bg-blue-500/30 rounded-full" />
       </div>
     </div>
   );

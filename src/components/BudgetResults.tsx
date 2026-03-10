@@ -3,6 +3,7 @@ import React from "react";
 import { formatRupiah } from "@/lib/calculations";
 import BudgetSummaryCards from "./BudgetSummaryCards";
 import WhatsAppShareButton from "./WhatsAppShareButton";
+import { Info } from "lucide-react";
 
 interface BudgetResultsData {
   dpPercentage: number;
@@ -28,77 +29,74 @@ const BudgetResults: React.FC<BudgetResultsProps> = ({
   insuranceType
 }) => {
   return (
-    <div className="mt-6">
-      <h3 className="text-base font-semibold text-center text-gray-800 dark:text-gray-200 mb-4">
-        Ringkasan Simulasi Kredit
-      </h3>
+    <div className="mt-12 animate-fade-in space-y-10">
+      <div className="flex items-center gap-4">
+        <div className="h-[1px] flex-1 bg-white/5" />
+        <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-600 whitespace-nowrap">
+          Optimalisasi Hasil Budget
+        </h3>
+        <div className="h-[1px] flex-1 bg-white/5" />
+      </div>
 
-      {/* Layout 2 kolom: cards di kiri, hasil detail di kanan */}
-      <div className="flex flex-col md:flex-row gap-6">
-        {/* Kolom kiri - Info Cards (50% width) */}
-        <BudgetSummaryCards
+      <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex-1">
+          <BudgetSummaryCards
+            otrPrice={otrPrice}
+            totalDp={results.totalDp}
+            monthlyInstallment={results.monthlyInstallment}
+            tenor={tenor}
+            insuranceType={insuranceType}
+          />
+        </div>
+
+        <div className="w-full lg:w-[400px]">
+          <div className="bg-white/5 backdrop-blur-3xl border border-white/5 rounded-3xl p-8 shadow-2xl h-full relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/[0.02] blur-3xl pointer-events-none" />
+            <h3 className="text-sm font-bold text-white mb-6 flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              Matriks Pembayaran
+            </h3>
+            <div className="space-y-4">
+              {[
+                { label: 'Struktur DP (%)', value: `${results.dpPercentage.toFixed(2)}%`, highlight: true },
+                { label: 'Uang Muka Murni', value: formatRupiah(results.dpAmount) },
+                { label: 'Total Bayar Awal', value: formatRupiah(results.totalDp), green: true },
+                { label: 'Angsuran / Bulan', value: formatRupiah(results.monthlyInstallment) },
+                { label: 'Pokok Hutang', value: formatRupiah(results.loanPrincipal) },
+                { label: 'Total Pinjaman', value: formatRupiah(results.totalLoanAmount) },
+                { label: 'Premi Asuransi', value: formatRupiah(results.insuranceAmount) },
+              ].map((item, idx) => (
+                <div key={idx} className={`flex justify-between items-center py-1 ${item.highlight ? 'bg-white/5 -mx-4 px-4 rounded-lg' : ''}`}>
+                  <span className="text-xs text-gray-500">{item.label}</span>
+                  <span className={`text-sm font-bold ${item.green ? 'text-emerald-400' : 'text-white'}`}>{item.value}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex items-start gap-4 p-4 bg-white/5 border border-white/5 rounded-2xl">
+              <Info className="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" />
+              <p className="text-[10px] text-gray-500 leading-relaxed italic">
+                Parameter dihitung berdasarkan nilai OTR dan target budget Anda secara otomatis.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="pt-6 border-t border-white/5">
+        <WhatsAppShareButton
           otrPrice={otrPrice}
           totalDp={results.totalDp}
           monthlyInstallment={results.monthlyInstallment}
           tenor={tenor}
           insuranceType={insuranceType}
+          dpPercentage={results.dpPercentage}
+          dpAmount={results.dpAmount}
+          loanPrincipal={results.loanPrincipal}
+          totalLoanAmount={results.totalLoanAmount}
+          insuranceAmount={results.insuranceAmount}
         />
-
-        {/* Kolom kanan - Hasil Detail (50% width) */}
-        <div className="w-full md:w-1/2">
-          <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 border border-gray-200 dark:border-gray-700 h-full">
-            <h3 className="text-base font-semibold text-[#0B1C2E] dark:text-[#0B1C2E] mb-3">Hasil Simulasi</h3>
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">DP yang diperlukan:</span>
-                <span className="text-sm font-medium">{results.dpPercentage.toFixed(5)}%</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">DP Murni:</span>
-                <span className="text-sm font-medium">{formatRupiah(results.dpAmount)}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Total DP:</span>
-                <span className="text-sm font-medium">{formatRupiah(results.totalDp)}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Angsuran per bulan:</span>
-                <span className="text-sm font-medium">{formatRupiah(results.monthlyInstallment)}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Pokok Hutang:</span>
-                <span className="text-sm font-medium">{formatRupiah(results.loanPrincipal)}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Total Pinjaman:</span>
-                <span className="text-sm font-medium">{formatRupiah(results.totalLoanAmount)}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Biaya Asuransi:</span>
-                <span className="text-sm font-medium">{formatRupiah(results.insuranceAmount)}</span>
-              </div>
-            </div>
-
-            <p className="text-xs text-gray-500 dark:text-gray-400 italic mt-4 bg-white dark:bg-gray-700/30 p-2 rounded-md border border-gray-200 dark:border-gray-700">
-              * Hasil simulasi di atas merupakan perkiraan. Silakan hubungi dealer untuk informasi lebih akurat.
-            </p>
-          </div>
-        </div>
       </div>
-
-      {/* Share WhatsApp Button */}
-      <WhatsAppShareButton
-        otrPrice={otrPrice}
-        totalDp={results.totalDp}
-        monthlyInstallment={results.monthlyInstallment}
-        tenor={tenor}
-        insuranceType={insuranceType}
-        dpPercentage={results.dpPercentage}
-        dpAmount={results.dpAmount}
-        loanPrincipal={results.loanPrincipal}
-        totalLoanAmount={results.totalLoanAmount}
-        insuranceAmount={results.insuranceAmount}
-      />
     </div>
   );
 };
