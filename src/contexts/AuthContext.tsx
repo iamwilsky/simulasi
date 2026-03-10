@@ -68,7 +68,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         if (profileRes.data?.last_session_id) {
             const localSessionId = localStorage.getItem('simulasi_session_id');
-            if (profileRes.data.last_session_id !== localSessionId) {
+
+            // Jika local pending atau match, izinkan
+            if (localSessionId === 'PENDING') {
+                // Jangan lakukan apa-apa, biarkan Login.tsx nanti yang update
+            } else if (profileRes.data.last_session_id !== localSessionId) {
                 handleSessionMismatch();
                 return;
             }
@@ -87,15 +91,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             .eq('id', userId)
             .single();
 
-        if (profile?.last_session_id) {
-            const localSessionId = localStorage.getItem('simulasi_session_id');
-            if (profile.last_session_id !== localSessionId) {
-                handleSessionMismatch();
-            }
+        const localSessionId = localStorage.getItem('simulasi_session_id');
+
+        // Jika status pending, abaikan pengecekan dulu agar proses login selesai
+        if (localSessionId === 'PENDING') return;
+
+        if (profile?.last_session_id && localSessionId && profile.last_session_id !== localSessionId) {
+            handleSessionMismatch();
         }
     };
 
     const handleSessionMismatch = async () => {
+        // Double check localSessionId inside mismatch in case it changed to pending
+        if (localStorage.getItem('simulasi_session_id') === 'PENDING') return;
+
         await supabase.auth.signOut();
         localStorage.removeItem('simulasi_session_id');
 

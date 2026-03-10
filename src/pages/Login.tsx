@@ -20,6 +20,9 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         try {
+            // Tandai sesi sebagai pending agar tidak ter-logout otomatis saat proses transisi
+            localStorage.setItem('simulasi_session_id', 'PENDING');
+
             const { data, error } = await supabase.auth.signInWithPassword({ email, password });
             if (error) throw error;
 
