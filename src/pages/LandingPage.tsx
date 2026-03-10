@@ -53,7 +53,7 @@ const LandingPage = () => {
                 </div>
 
                 {/* Bottom Bar Content */}
-                <div className="pb-8 md:pb-12 flex flex-col md:flex-row items-center md:items-end justify-between gap-8 md:gap-0 animate-fade-up" style={{ animationDelay: '400ms' }}>
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-8 md:pb-12 flex flex-col md:flex-row items-center md:items-end justify-between gap-8 md:gap-0 animate-fade-up" style={{ animationDelay: '400ms' }}>
 
                     {/* Scroll to Discover (Center-ish / Mobile: Hidden or bottom) */}
                     <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 flex-col items-center gap-3">
