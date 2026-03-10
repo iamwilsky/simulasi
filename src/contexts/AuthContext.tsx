@@ -88,10 +88,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             .eq('id', userId)
             .single();
 
-        const localSessionId = localStorage.getItem('simulasi_session_id');
-
-        if (profile?.last_session_id && localSessionId && profile.last_session_id !== localSessionId) {
-            handleSessionMismatch();
+        if (profile?.last_session_id) {
+            const localSessionId = localStorage.getItem('simulasi_session_id');
+            if (profile.last_session_id !== localSessionId) {
+                handleSessionMismatch();
+            }
         }
     };
 
