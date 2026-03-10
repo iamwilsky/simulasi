@@ -102,8 +102,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const handleSessionMismatch = async () => {
-        // Double check localSessionId inside mismatch in case it changed to pending
-        if (localStorage.getItem('simulasi_session_id') === 'PENDING') return;
+        const currentLocal = localStorage.getItem('simulasi_session_id');
+        // Double check localSessionId inside mismatch in case it changed to pending or just finished
+        if (currentLocal === 'PENDING') {
+            console.log("Session Check: Pending state detected, skipping logout.");
+            return;
+        }
+
+        console.log("Session Check: Mismatch detected. Current local:", currentLocal);
 
         await supabase.auth.signOut();
         localStorage.removeItem('simulasi_session_id');
