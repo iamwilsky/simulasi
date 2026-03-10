@@ -29,12 +29,13 @@ const Login = () => {
             // Perbarui last_session_id untuk pembatasan satu perangkat
             if (data.session) {
                 const sessionId = Math.random().toString(36).substring(2, 15);
-                localStorage.setItem('simulasi_session_id', sessionId);
 
                 await supabase
                     .from('profiles')
                     .update({ last_session_id: sessionId })
                     .eq('id', data.session.user.id);
+
+                localStorage.setItem('simulasi_session_id', sessionId);
             }
 
             toast.success('Login berhasil!');
