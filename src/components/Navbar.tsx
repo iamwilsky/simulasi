@@ -39,13 +39,9 @@ const Navbar: React.FC = () => {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <img
-                src="/lovable-uploads/fd2dea6c-8bd7-465f-bbad-5127eed31324.png"
-                alt="Hyundai Utama"
-                className="h-5 sm:h-7 w-auto"
-                style={{ filter: isTransparentPage ? 'brightness(0) invert(1)' : 'none' }}
-              />
-              <span className="hidden">Kredit Simulators</span>
+              <span className={`text-xl sm:text-2xl tracking-tighter transition-all duration-300 ${isTransparentPage ? 'text-white' : 'text-[#002C5F] dark:text-white'}`}>
+                <strong className="font-extrabold">simulasi</strong>kredit.id
+              </span>
             </Link>
           </div>
 
