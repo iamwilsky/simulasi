@@ -4,7 +4,7 @@ import Navbar from '../Navbar';
 
 const AppLayout = () => {
     return (
-        <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#09090B] flex flex-col">
+        <div className="min-h-screen bg-white dark:bg-[#0A0A0A] flex flex-col">
             <Navbar />
             <main className="flex-1">
                 <Outlet />
