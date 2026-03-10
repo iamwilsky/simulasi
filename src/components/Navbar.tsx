@@ -1,13 +1,15 @@
 
 import React, { useState } from "react";
-import { Calculator, Settings, LogIn } from "lucide-react";
+import { Calculator, Settings, LogIn, LayoutDashboard } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import PinDialog from "./PinDialog";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar: React.FC = () => {
   const [isPinDialogOpen, setIsPinDialogOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useAuth();
 
   const transparentRoutes = ["/", "/pricing", "/login", "/register"];
   const isTransparentPage = transparentRoutes.includes(location.pathname);
@@ -50,14 +52,25 @@ const Navbar: React.FC = () => {
                 >
                   <span>Pricing</span>
                 </Link>
-                <Link
-                  to="/login"
-                  className={`flex items-center justify-center w-10 h-10 rounded-full transition-all ${location.pathname === "/login" ? "bg-emerald-500 text-white" : "bg-white/10 hover:bg-white/20 text-white"
-                    }`}
-                  title="Login"
-                >
-                  <LogIn className="h-5 w-5" />
-                </Link>
+
+                {user ? (
+                  <Link
+                    to="/dashboard"
+                    className="flex items-center px-3 py-2 text-sm font-bold text-white hover:text-emerald-400 transition-colors uppercase tracking-widest gap-2"
+                  >
+                    <LayoutDashboard className="h-4 w-4" />
+                    <span className="hidden sm:inline">Dashboard</span>
+                  </Link>
+                ) : (
+                  <Link
+                    to="/login"
+                    className={`flex items-center justify-center w-10 h-10 rounded-full transition-all ${location.pathname === "/login" ? "bg-emerald-500 text-white" : "bg-white/10 hover:bg-white/20 text-white"
+                      }`}
+                    title="Login"
+                  >
+                    <LogIn className="h-5 w-5" />
+                  </Link>
+                )}
               </>
             ) : (
               <a

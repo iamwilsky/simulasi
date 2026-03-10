@@ -1,12 +1,13 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2, ArrowRight, ArrowLeft } from 'lucide-react';
+import { CheckCircle2, ArrowRight, ArrowLeft, Check } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import heroBg from '@/assets/hero-bg.png';
 
 const Pricing = () => {
-    const { user } = useAuth();
+    const { user, hasActiveSubscription } = useAuth();
 
     return (
         <div className="relative h-screen w-full flex flex-col bg-[#0A0A0A] overflow-hidden">
@@ -59,7 +60,20 @@ const Pricing = () => {
                             </li>
                         </ul>
 
-                        {user ? (
+                        {hasActiveSubscription ? (
+                            <div className="space-y-4">
+                                <Button className="w-full h-12 md:h-14 bg-emerald-500 text-white cursor-default font-bold uppercase tracking-widest text-[11px] md:text-[13px] rounded-xl flex items-center justify-center gap-2 transition-all">
+                                    <Check className="w-5 h-5" />
+                                    Paket Anda Aktif
+                                </Button>
+                                <Link to="/dashboard" className="block">
+                                    <Button variant="outline" className="w-full h-12 md:h-14 border-white/20 text-white hover:bg-white/5 font-bold uppercase tracking-widest text-[11px] md:text-[13px] rounded-xl flex items-center justify-center gap-2 transition-all">
+                                        Mulai Gunakan
+                                        <ArrowRight className="w-4 h-4" />
+                                    </Button>
+                                </Link>
+                            </div>
+                        ) : user ? (
                             <a href={`https://arsalelegance.myr.id/m/express?email=${encodeURIComponent(user.email || '')}`} target="_blank" rel="noopener noreferrer">
                                 <Button className="w-full h-12 md:h-14 bg-white text-black hover:bg-gray-100 font-bold uppercase tracking-widest text-[11px] md:text-[13px] rounded-xl flex items-center justify-center gap-2 transition-all">
                                     Aktivasi Sekarang
@@ -77,7 +91,7 @@ const Pricing = () => {
                     </div>
                 </div>
 
-                <div className="mt-8 md:mt-16">
+                <div className="bottom-8 md:bottom-16">
                     <Link to="/" className="text-gray-500 hover:text-white transition-colors text-xs md:text-sm font-light flex items-center gap-2">
                         <ArrowLeft className="w-3 h-3" />
                         Kembali ke halaman utama
