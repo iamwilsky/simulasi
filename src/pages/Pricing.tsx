@@ -67,7 +67,7 @@ const Pricing = () => {
                                     Paket Anda Aktif
                                 </Button>
                                 <Link to="/dashboard" className="block">
-                                    <Button variant="outline" className="w-full h-12 md:h-14 border-white/20 text-white hover:bg-white/5 font-bold uppercase tracking-widest text-[11px] md:text-[13px] rounded-xl flex items-center justify-center gap-2 transition-all">
+                                    <Button className="w-full h-12 md:h-14 bg-white text-black hover:bg-gray-100 font-bold uppercase tracking-widest text-[11px] md:text-[13px] rounded-xl flex items-center justify-center gap-2 transition-all">
                                         Mulai Gunakan
                                         <ArrowRight className="w-4 h-4" />
                                     </Button>
