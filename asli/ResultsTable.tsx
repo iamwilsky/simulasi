@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { ChevronDown, ChevronUp, Info } from "lucide-react";
 import ResultsSummaryCards from "./ResultsSummaryCards";
@@ -39,7 +40,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
       <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
         <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-700">
           <h2 className="text-lg font-semibold">Hasil Simulasi</h2>
-          <button
+          <button 
             onClick={() => setShowFullDetails(!showFullDetails)}
             className="text-primary hover:bg-primary/10 p-1.5 rounded-lg transition-colors"
           >
@@ -49,7 +50,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
 
         <div className="p-4 space-y-4">
           {/* Main Summary Cards */}
-          <ResultsSummaryCards
+          <ResultsSummaryCards 
             results={results}
             otrPrice={otrPrice}
             dpPercent={dpPercent}
@@ -57,7 +58,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
           />
 
           {/* Share WhatsApp Button */}
-          <ResultsWhatsAppShare
+          <ResultsWhatsAppShare 
             results={results}
             otrPrice={otrPrice}
             dpPercent={dpPercent}
@@ -68,7 +69,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
           <div className="flex items-start p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
             <Info className="w-4 h-4 text-[#00aad2] mt-0.5 mr-2 flex-shrink-0" />
             <p className="text-sm text-[#002c5f] dark:text-blue-300">
-              Hasil simulasi ini merupakan estimasi.
+              Hasil simulasi ini merupakan estimasi. 
               {!showFullDetails && " Klik tombol di kanan atas untuk melihat detail lengkap."}
             </p>
           </div>
@@ -76,7 +77,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
 
         {/* Full Details Section */}
         {showFullDetails && (
-          <ResultsDetailBreakdown
+          <ResultsDetailBreakdown 
             results={results}
             dpPercent={dpPercent}
             tenor={tenor}

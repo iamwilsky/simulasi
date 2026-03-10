@@ -75,39 +75,39 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
       setResults(null);
       return;
     }
-
+    
     setIsCalculating(true);
-
+    
     setTimeout(() => {
       try {
         const dpAmount = otrPrice * (dpPercent / 100);
         const loanPrincipal = otrPrice - dpAmount;
         const provisionFee = loanPrincipal * (provisionRate / 100);
         const loanWithProvision = loanPrincipal + provisionFee;
-
+        
         const interestRate = getInterestRateFromTable(tenor);
-
+        
         // Calculate interest based on loan principal plus provision
         const interestAmount = loanWithProvision * (interestRate / 100) * tenor;
-
+        
         const totalLoanAmount = loanWithProvision + interestAmount;
-
+        
         const tenorMonths = tenor * 12;
         const monthlyInstallment = totalLoanAmount / tenorMonths;
-
+        
         // Get insurance rate from table based on OTR price, tenor, and insurance type
         const insuranceRate = getInsuranceRateFromTable(otrPrice, insuranceType, tenor);
         const insuranceAmount = otrPrice * (insuranceRate / 100);
-
+        
         // Get admin fee based on tenor
         const adminFee = getAdminFee(tenor);
         const totalAdminFee = adminFee + additionalAdminFee;
-
+        
         const creditProtection = loanPrincipal * (fees.creditProtectionRate / 100);
-
+        
         // Total DP includes: DP + First Installment + Insurance + Admin Fee + TPI Fee + Credit Protection
         const totalDp = dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + fees.tpiFee + creditProtection;
-
+        
         setResults({
           dpAmount,
           loanPrincipal,
@@ -125,13 +125,13 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
           totalAdminFee,
           tpiFee: fees.tpiFee,
           provisionRate,
-          insuranceType: insuranceType === 'kombinasi'
-            ? 'Kombinasi'
-            : insuranceType === 'allrisk'
-              ? 'All Risk'
+          insuranceType: insuranceType === 'kombinasi' 
+            ? 'Kombinasi' 
+            : insuranceType === 'allrisk' 
+              ? 'All Risk' 
               : 'All Risk Perluasan'
         });
-
+        
         setIsCalculating(false);
       } catch (error) {
         console.error("Calculation error:", error);
@@ -152,7 +152,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
           <Calculator className="h-5 w-5 text-primary mr-2" />
           <h2 className="text-xl font-semibold">Simulasi Kredit</h2>
         </div>
-
+        
         <div className="space-y-6">
           <FormInput
             label="Harga OTR"
@@ -163,7 +163,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             placeholder="Masukkan harga OTR"
             description="Harga On The Road kendaraan"
           />
-
+          
           <FormInput
             label="Uang Muka (%)"
             type="number"
@@ -174,11 +174,11 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             suffix="%"
             description="Minimal 20% dari harga OTR"
           />
-
+          
           <div className="space-y-1.5">
             <label className="input-label block">Tenor</label>
-            <Select
-              value={tenor.toString()}
+            <Select 
+              value={tenor.toString()} 
               onValueChange={handleTenorChange}
             >
               <SelectTrigger className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md">
@@ -196,22 +196,24 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             </Select>
             <p className="text-xs text-gray-500 dark:text-gray-400">Jangka waktu kredit (1-7 tahun)</p>
           </div>
-
+          
           <div className="space-y-1.5">
             <label className="input-label block">Jenis Asuransi</label>
             <div className="grid grid-cols-3 gap-2 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl">
               <button
                 type="button"
                 onClick={() => setInsuranceType('kombinasi')}
-                className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${insuranceType === 'kombinasi'
+                className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${
+                  insuranceType === 'kombinasi'
                     ? 'bg-primary text-white shadow-lg scale-[1.02]'
                     : 'hover:bg-gray-200 dark:hover:bg-gray-700'
-                  }`}
+                }`}
               >
-                <span className={`relative z-10 ${insuranceType === 'kombinasi'
+                <span className={`relative z-10 ${
+                  insuranceType === 'kombinasi'
                     ? 'text-white'
                     : 'text-gray-700 dark:text-gray-300'
-                  }`}>
+                }`}>
                   Kombinasi
                 </span>
                 {insuranceType === 'kombinasi' && (
@@ -221,15 +223,17 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
               <button
                 type="button"
                 onClick={() => setInsuranceType('allrisk')}
-                className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${insuranceType === 'allrisk'
+                className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${
+                  insuranceType === 'allrisk'
                     ? 'bg-primary text-white shadow-lg scale-[1.02]'
                     : 'hover:bg-gray-200 dark:hover:bg-gray-700'
-                  }`}
+                }`}
               >
-                <span className={`relative z-10 ${insuranceType === 'allrisk'
+                <span className={`relative z-10 ${
+                  insuranceType === 'allrisk'
                     ? 'text-white'
                     : 'text-gray-700 dark:text-gray-300'
-                  }`}>
+                }`}>
                   All Risk
                 </span>
                 {insuranceType === 'allrisk' && (
@@ -239,15 +243,17 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
               <button
                 type="button"
                 onClick={() => setInsuranceType('allriskPerluasan')}
-                className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${insuranceType === 'allriskPerluasan'
+                className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${
+                  insuranceType === 'allriskPerluasan'
                     ? 'bg-primary text-white shadow-lg scale-[1.02]'
                     : 'hover:bg-gray-200 dark:hover:bg-gray-700'
-                  }`}
+                }`}
               >
-                <span className={`relative z-10 ${insuranceType === 'allriskPerluasan'
+                <span className={`relative z-10 ${
+                  insuranceType === 'allriskPerluasan'
                     ? 'text-white'
                     : 'text-gray-700 dark:text-gray-300'
-                  }`}>
+                }`}>
                   AR Perluasan
                 </span>
                 {insuranceType === 'allriskPerluasan' && (
@@ -257,7 +263,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400">Pilih jenis asuransi kendaraan</p>
           </div>
-
+          
           {otrPrice > 0 && (
             <div className="pt-2">
               <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -270,23 +276,23 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
           )}
         </div>
       </div>
-
+      
       {/* Hasil Simulasi */}
       {results && (
         <div className="mt-8 results-appear">
-          <ResultsTable
-            results={results}
-            otrPrice={otrPrice}
-            dpPercent={dpPercent}
-            tenor={tenor}
+          <ResultsTable 
+            results={results} 
+            otrPrice={otrPrice} 
+            dpPercent={dpPercent} 
+            tenor={tenor} 
           />
         </div>
       )}
-
+      
       {/* Tabel Perbandingan Tenor */}
       {otrPrice > 0 && (
         <div className="mt-8 results-appear">
-          <CreditComparisonTable
+          <CreditComparisonTable 
             otrPrice={otrPrice}
             dpPercent={dpPercent}
             insuranceType={insuranceType}

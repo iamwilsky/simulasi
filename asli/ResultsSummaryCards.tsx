@@ -50,7 +50,7 @@ const ResultsSummaryCards: React.FC<ResultsSummaryCardsProps> = ({
       </div>
 
       {/* Total DP */}
-      <div
+      <div 
         className="bg-[#00aad2] text-white rounded-xl p-4 cursor-pointer hover:bg-[#009abf] transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
         onClick={() => setShowDpDetails(!showDpDetails)}
       >
@@ -62,7 +62,7 @@ const ResultsSummaryCards: React.FC<ResultsSummaryCardsProps> = ({
           <ChevronDown className={`w-4 h-4 text-white/80 transition-transform ${showDpDetails ? 'rotate-180' : ''}`} />
         </div>
         <div className="text-xl font-semibold">{formatRupiah(results.totalDp)}</div>
-
+        
         {/* DP Breakdown */}
         {showDpDetails && (
           <div className="mt-3 pt-3 border-t border-white/20 space-y-2 animate-fade-in">
@@ -119,7 +119,7 @@ const ResultsSummaryCards: React.FC<ResultsSummaryCardsProps> = ({
           <span className="text-sm text-gray-500">Asuransi</span>
         </div>
         <div className="text-xl font-semibold text-[#002c5f]">
-          {results.insuranceType}
+          {results.insuranceType} 
           <span className="text-sm font-normal text-gray-500 ml-1">
             ({results.insuranceRate?.toFixed(2)}%)
           </span>
