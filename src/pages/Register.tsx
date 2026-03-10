@@ -49,7 +49,7 @@ const Register = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-[#0A0A0A]" />
             </div>
 
-            <div className="relative z-10 max-w-md w-full px-6 py-12 animate-fade-up">
+            <div className="relative z-10 max-w-md w-full px-6 pt-24 pb-12 md:pt-12 md:pb-12 animate-fade-up">
                 <div className="bg-white/5 backdrop-blur-xl p-10 rounded-2xl border border-white/10 shadow-2xl shadow-black/50">
                     <div className="text-center mb-10">
                         <Link to="/" className="inline-flex items-center gap-2 mb-8 group text-gray-400 hover:text-white transition-colors">

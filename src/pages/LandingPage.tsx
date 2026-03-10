@@ -23,7 +23,7 @@ const LandingPage = () => {
             <main className="relative z-10 flex flex-col h-full px-10">
 
                 {/* Content Area - Middle Left */}
-                <div className="flex-1 flex flex-col justify-center max-w-4xl pt-16 md:pt-20">
+                <div className="flex-1 flex flex-col justify-center max-w-4xl pt-28 md:pt-32">
 
                     {/* Headline */}
                     <div className="mb-8 md:mb-10 animate-fade-up">

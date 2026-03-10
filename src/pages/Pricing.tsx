@@ -22,7 +22,7 @@ const Pricing = () => {
                 <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A] via-transparent to-[#0A0A0A]" />
             </div>
 
-            <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-10 md:py-20 animate-fade-up">
+            <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 pt-28 pb-10 md:pt-32 md:pb-20 animate-fade-up">
                 <div className="text-center mb-8 md:mb-16">
                     <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-tight">
                         Investasi untuk <span className="text-gray-400">hasil yang presisi.</span>
