@@ -1,9 +1,10 @@
 
 import React, { useState } from "react";
-import { Calculator, Settings, LogIn, LayoutDashboard } from "lucide-react";
+import { Calculator, Settings, LogIn, LayoutDashboard, LogOut } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import PinDialog from "./PinDialog";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/lib/supabaseClient";
 
 const Navbar: React.FC = () => {
   const [isPinDialogOpen, setIsPinDialogOpen] = useState(false);
@@ -17,6 +18,12 @@ const Navbar: React.FC = () => {
   const handleSettingsClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsPinDialogOpen(true);
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    localStorage.removeItem('simulasi_session_id');
+    navigate("/");
   };
 
   const handlePinSuccess = () => {
@@ -54,13 +61,22 @@ const Navbar: React.FC = () => {
                 </Link>
 
                 {user ? (
-                  <Link
-                    to="/dashboard"
-                    className="flex items-center px-3 py-2 text-sm font-bold text-white hover:text-emerald-400 transition-colors uppercase tracking-widest gap-2"
-                  >
-                    <LayoutDashboard className="h-4 w-4" />
-                    <span className="hidden sm:inline">Dashboard</span>
-                  </Link>
+                  <>
+                    <Link
+                      to="/dashboard"
+                      className="flex items-center px-3 py-2 text-sm font-bold text-white hover:text-emerald-400 transition-colors uppercase tracking-widest gap-2"
+                    >
+                      <LayoutDashboard className="h-4 w-4" />
+                      <span className="hidden sm:inline">Dashboard</span>
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-red-500/20 text-white hover:text-red-400 transition-all"
+                      title="Logout"
+                    >
+                      <LogOut className="h-5 w-5" />
+                    </button>
+                  </>
                 ) : (
                   <Link
                     to="/login"
@@ -73,14 +89,23 @@ const Navbar: React.FC = () => {
                 )}
               </>
             ) : (
-              <a
-                href="#"
-                onClick={handleSettingsClick}
-                className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              >
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Setting</span>
-              </a>
+              <>
+                <a
+                  href="#"
+                  onClick={handleSettingsClick}
+                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                >
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Setting</span>
+                </a>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Logout</span>
+                </button>
+              </>
             )}
           </nav>
         </div>
