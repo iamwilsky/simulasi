@@ -52,10 +52,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     const fetchUserData = async (userId: string) => {
+        const { data: sessionData } = await supabase.auth.getSession();
+        const currentSessionHash = userId + ':' + (sessionData.session?.access_token.slice(-10) || '');
+
         const [profileRes, subRes] = await Promise.all([
             supabase.from('profiles').select('*').eq('id', userId).single(),
             supabase.from('subscriptions').select('*').eq('user_id', userId).single()
         ]);
+
+        // Cek validasi sesi tunggal
+        if (profileRes.data?.last_session_id && profileRes.data.last_session_id !== currentSessionHash) {
+            await supabase.auth.signOut();
+            import('sonner').then(({ toast }) => {
+                toast.error('Akun Anda masuk di perangkat lain. Sesi ini telah berakhir.', {
+                    duration: 5000,
+                    id: 'session-clash'
+                });
+            });
+            return;
+        }
 
         setProfile(profileRes.data);
         setSubscription(subRes.data);

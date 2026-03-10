@@ -20,8 +20,17 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const { error } = await supabase.auth.signInWithPassword({ email, password });
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
             if (error) throw error;
+
+            // Perbarui last_session_id di tabel profiles untuk pembatasan satu perangkat
+            if (data.session) {
+                await supabase
+                    .from('profiles')
+                    .update({ last_session_id: data.session.user.id + ':' + data.session.access_token.slice(-10) })
+                    .eq('id', data.session.user.id);
+            }
+
             toast.success('Login berhasil!');
             navigate(from, { replace: true });
         } catch (error: any) {

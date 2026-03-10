@@ -18,7 +18,7 @@ const Register = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const { error } = await supabase.auth.signUp({
+            const { data, error } = await supabase.auth.signUp({
                 email,
                 password,
                 options: {
@@ -28,7 +28,16 @@ const Register = () => {
                 }
             });
             if (error) throw error;
-            toast.success('Registrasi berhasil! Silahkan login.');
+
+            // Perbarui last_session_id jika otomatis login saat pendaftaran
+            if (data.session) {
+                await supabase
+                    .from('profiles')
+                    .update({ last_session_id: data.session.user.id + ':' + data.session.access_token.slice(-10) })
+                    .eq('id', data.session.user.id);
+            }
+
+            toast.success('Registrasi berhasil!');
             navigate('/login');
         } catch (error: any) {
             toast.error(error.message || 'Gagal mendaftar');
