@@ -36,43 +36,45 @@ const BudgetForm: React.FC<BudgetFormProps> = ({
   onCalculate
 }) => {
   return (
-    <div className="space-y-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="space-y-3">
-          <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">Harga OTR Kendaraan</label>
-          <div className="relative group">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">Rp</div>
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-slate-700">Harga OTR</label>
+          <div className="relative">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-sm">Rp</div>
             <Input
               type="text"
               value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
               onChange={onOtrChange}
-              placeholder="Masukkan harga"
-              className="h-14 pl-12 bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-300 transition-all rounded-2xl focus:border-[#002C5F] focus:ring-0 text-lg font-bold"
+              placeholder="Masukkan harga OTR"
+              className="h-11 pl-10 bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-300 rounded-lg focus:ring-1 focus:ring-blue-500 transition-all font-medium"
             />
           </div>
+          <p className="text-[10px] text-slate-400">Harga On The Road kendaraan</p>
         </div>
 
-        <div className="space-y-3">
-          <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">Masa Tenor</label>
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-slate-700">Tenor</label>
           <Select value={tenor.toString()} onValueChange={onTenorChange}>
-            <SelectTrigger className="h-14 bg-slate-50 border-slate-200 text-slate-900 focus:ring-0 focus:border-[#002C5F] transition-all rounded-2xl text-lg font-bold">
-              <SelectValue placeholder="Tenor" />
+            <SelectTrigger className="h-11 bg-slate-50 border-slate-200 text-slate-900 focus:ring-1 focus:ring-blue-500 transition-all rounded-lg font-medium">
+              <SelectValue placeholder="Pilih Tenor" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-slate-200 text-slate-900 rounded-2xl shadow-xl">
+            <SelectContent className="bg-white border-slate-200 text-slate-900 rounded-xl">
               {[1, 2, 3, 4, 5, 6, 7].map((t) => (
-                <SelectItem key={t} value={t.toString()} className="focus:bg-slate-50 rounded-lg m-1 py-3 font-medium">
-                  {t} Tahun
+                <SelectItem key={t} value={t.toString()} className="font-medium">
+                  {t} tahun
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
+          <p className="text-[10px] text-slate-400">Jangka waktu kredit (1-7 tahun)</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-3">
-          <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">Jenis Asuransi</label>
-          <div className="grid grid-cols-3 gap-2 p-1.5 bg-slate-100 rounded-[1.25rem] border border-slate-200">
+          <label className="text-sm font-semibold text-slate-700 block">Jenis Asuransi</label>
+          <div className="flex bg-slate-100 p-1 rounded-xl">
             {[
               { id: 'kombinasi', label: 'Kombinasi' },
               { id: 'allrisk', label: 'All Risk' },
@@ -82,20 +84,21 @@ const BudgetForm: React.FC<BudgetFormProps> = ({
                 key={type.id}
                 type="button"
                 onClick={() => onInsuranceTypeChange(type.id as any)}
-                className={`py-2.5 px-2 rounded-[0.9rem] text-[10px] font-bold uppercase tracking-widest transition-all ${insuranceType === type.id
-                  ? 'bg-[#002C5F] text-white shadow-lg'
-                  : 'text-slate-500 hover:text-[#002C5F] hover:bg-white/50'
+                className={`flex-1 py-2 px-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${insuranceType === type.id
+                  ? 'bg-[#002C5F] text-white'
+                  : 'text-slate-500 hover:text-[#002C5F]'
                   }`}
               >
                 {type.label}
               </button>
             ))}
           </div>
+          <p className="text-[10px] text-slate-400">Pilih jenis asuransi kendaraan</p>
         </div>
 
         <div className="space-y-3">
-          <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">Kategori Budget</label>
-          <div className="grid grid-cols-2 gap-2 p-1.5 bg-slate-100 rounded-[1.25rem] border border-slate-200">
+          <label className="text-sm font-semibold text-slate-700 block">Kategori Budget</label>
+          <div className="flex bg-slate-100 p-1 rounded-xl">
             {[
               { id: 'tdp', label: 'Total DP' },
               { id: 'installment', label: 'Angsuran' }
@@ -104,30 +107,31 @@ const BudgetForm: React.FC<BudgetFormProps> = ({
                 key={type.id}
                 type="button"
                 onClick={() => onBudgetTypeChange(type.id as any)}
-                className={`py-2.5 px-3 rounded-[0.9rem] text-[10px] font-bold uppercase tracking-widest transition-all ${budgetType === type.id
-                  ? 'bg-[#002C5F] text-white shadow-lg'
-                  : 'text-slate-500 hover:text-[#002C5F] hover:bg-white/50'
+                className={`flex-1 py-2 px-3 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${budgetType === type.id
+                  ? 'bg-[#002C5F] text-white'
+                  : 'text-slate-500 hover:text-[#002C5F]'
                   }`}
               >
                 {type.label}
               </button>
             ))}
           </div>
+          <p className="text-[10px] text-slate-400">Proritaskan DP atau Angsuran</p>
         </div>
       </div>
 
-      <div className="space-y-3">
-        <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">
+      <div className="space-y-2">
+        <label className="text-sm font-semibold text-slate-700">
           Budget {budgetType === 'tdp' ? "Total DP" : "Angsuran"} Maksimal
         </label>
-        <div className="relative group">
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">Rp</div>
+        <div className="relative">
+          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-sm">Rp</div>
           <Input
             type="text"
             value={budgetAmount}
             onChange={onBudgetAmountChange}
             placeholder={budgetType === 'tdp' ? "Masukkan budget DP" : "Masukkan budget angsuran"}
-            className="h-16 pl-12 bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-300 transition-all rounded-2xl focus:border-[#002C5F] focus:ring-0 text-xl font-extrabold"
+            className="h-12 pl-10 bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-300 rounded-lg focus:ring-1 focus:ring-blue-500 transition-all text-lg font-bold"
           />
         </div>
       </div>
@@ -136,9 +140,9 @@ const BudgetForm: React.FC<BudgetFormProps> = ({
         type="button"
         onClick={onCalculate}
         disabled={!budgetAmount || isCalculating || otrPrice <= 0}
-        className="w-full h-16 bg-[#002C5F] text-white hover:bg-[#003984] border-0 shadow-lg shadow-[#002C5F]/20 px-8 rounded-2xl font-bold uppercase tracking-widest text-[11px] transition-all duration-500 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-3"
+        className="w-full h-12 bg-[#002C5F] text-white hover:bg-[#001A3A] border-0 px-8 rounded-xl font-bold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-3 mt-4"
       >
-        <Calculator className="h-5 w-5" />
+        <Calculator className="h-4 w-4" />
         {isCalculating ? "Mencari Optimalisasi..." : "Hitung Struktur Kredit"}
       </Button>
     </div>

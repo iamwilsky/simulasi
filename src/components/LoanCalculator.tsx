@@ -96,86 +96,85 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
   }, [otrPrice, dpPercent, tenor, insuranceType, provisionRate, additionalAdminFee]);
 
   return (
-    <div className="w-full animate-fade-in space-y-12">
-      <div className="bg-white border border-slate-200/60 rounded-[2rem] p-8 md:p-12 shadow-[0_10px_50px_rgba(0,0,0,0.02)] relative overflow-hidden group transition-all hover:shadow-[0_20px_70px_rgba(0,0,0,0.05)]">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#002C5F]/5 blur-[100px] pointer-events-none" />
-
-        <div className="flex items-center gap-4 mb-10">
-          <div className="w-12 h-12 rounded-2xl bg-[#002C5F]/5 border border-[#002C5F]/10 flex items-center justify-center">
-            <Calculator className="h-6 w-6 text-[#002C5F]" />
+    <div className="w-full animate-fade-in space-y-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-slate-700">Harga OTR</label>
+          <div className="relative">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-sm">Rp</div>
+            <Input
+              type="text"
+              value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
+              onChange={handleOtrChange}
+              placeholder="Masukkan harga OTR"
+              className="h-11 pl-10 bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-300 rounded-lg focus:ring-1 focus:ring-blue-500 transition-all font-medium"
+            />
           </div>
-          <h2 className="text-2xl font-bold tracking-tight text-slate-900">Parameter <span className="text-slate-400">Kredit.</span></h2>
+          <p className="text-[10px] text-slate-400">Harga On The Road kendaraan</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="space-y-3">
-            <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">Harga OTR Kendaraan</label>
-            <div className="relative group">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">Rp</div>
-              <Input
-                type="text"
-                value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
-                onChange={handleOtrChange}
-                placeholder="Masukkan harga"
-                className="h-14 pl-12 bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-300 transition-all rounded-2xl focus:border-[#002C5F] focus:ring-0 text-lg font-bold"
-              />
-            </div>
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-slate-700">Uang Muka (%)</label>
+          <div className="relative">
+            <Input
+              type="number"
+              value={dpPercent}
+              onChange={handleDpPercentChange}
+              className="h-11 bg-slate-50 border-slate-200 text-slate-900 rounded-lg focus:ring-1 focus:ring-blue-500 transition-all font-medium"
+            />
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-sm">%</div>
           </div>
-
-          <div className="space-y-3">
-            <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">Persentase DP</label>
-            <div className="flex gap-3">
-              <Input
-                type="number"
-                value={dpPercent}
-                onChange={handleDpPercentChange}
-                className="h-14 bg-slate-50 border-slate-200 text-slate-900 transition-all rounded-2xl focus:border-[#002C5F] focus:ring-0 text-lg font-bold"
-              />
-              <div className="h-14 w-14 bg-slate-100 border border-slate-200 rounded-2xl flex items-center justify-center text-slate-600 font-bold">%</div>
-            </div>
-          </div>
-
-          <div className="space-y-3">
-            <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">Masa Tenor</label>
-            <Select value={tenor.toString()} onValueChange={handleTenorChange}>
-              <SelectTrigger className="h-14 bg-slate-50 border-slate-200 text-slate-900 focus:ring-0 focus:border-[#002C5F] transition-all rounded-2xl text-lg font-bold">
-                <SelectValue placeholder="Tenor" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border-slate-200 text-slate-900 rounded-2xl shadow-xl">
-                {[1, 2, 3, 4, 5, 6, 7].map((t) => (
-                  <SelectItem key={t} value={t.toString()} className="focus:bg-slate-50 rounded-lg m-1 py-3 font-medium">
-                    {t} Tahun
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <p className="text-[10px] text-slate-400">Minimal 20% dari harga OTR</p>
         </div>
 
-        <div className="mt-10 space-y-3">
-          <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">Proteksi Keamanan (Asuransi)</label>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-1.5 bg-slate-100 rounded-[1.25rem] border border-slate-200">
-            {[
-              { id: 'kombinasi', label: 'Kombinasi' },
-              { id: 'allrisk', label: 'All Risk' },
-              { id: 'allriskPerluasan', label: 'AR Perluasan' }
-            ].map((type) => (
-              <button
-                key={type.id}
-                type="button"
-                onClick={() => setInsuranceType(type.id as any)}
-                className={`py-3.5 px-4 rounded-[0.9rem] text-[11px] font-bold uppercase tracking-widest transition-all ${insuranceType === type.id
-                  ? 'bg-[#002C5F] text-white shadow-lg shadow-[#002C5F]/20'
-                  : 'text-slate-500 hover:text-[#002C5F] hover:bg-white/50'
-                  }`}
-              >
-                {type.label}
-              </button>
-            ))}
-          </div>
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-slate-700">Tenor</label>
+          <Select value={tenor.toString()} onValueChange={handleTenorChange}>
+            <SelectTrigger className="h-11 bg-slate-50 border-slate-200 text-slate-900 focus:ring-1 focus:ring-blue-500 transition-all rounded-lg font-medium">
+              <SelectValue placeholder="Pilih Tenor" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border-slate-200 text-slate-900 rounded-xl">
+              {[1, 2, 3, 4, 5, 6, 7].map((t) => (
+                <SelectItem key={t} value={t.toString()} className="font-medium">
+                  {t} tahun
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <p className="text-[10px] text-slate-400">Jangka waktu kredit (1-7 tahun)</p>
         </div>
       </div>
 
+      <div className="space-y-3">
+        <label className="text-sm font-semibold text-slate-700 block">Jenis Asuransi</label>
+        <div className="flex bg-slate-100 p-1 rounded-xl">
+          {[
+            { id: 'kombinasi', label: 'Kombinasi' },
+            { id: 'allrisk', label: 'All Risk' },
+            { id: 'allriskPerluasan', label: 'AR Perluasan' }
+          ].map((type) => (
+            <button
+              key={type.id}
+              type="button"
+              onClick={() => setInsuranceType(type.id as any)}
+              className={`flex-1 py-2 px-4 rounded-lg text-xs font-bold transition-all ${insuranceType === type.id
+                ? 'bg-[#002C5F] text-white'
+                : 'text-slate-500 hover:text-[#002C5F]'
+                }`}
+            >
+              {type.label}
+            </button>
+          ))}
+        </div>
+        <p className="text-[10px] text-slate-400">Pilih jenis asuransi kendaraan</p>
+      </div>
+
+      {results && otrPrice > 0 && (
+        <div className="pt-4 text-xs font-semibold text-slate-500 flex gap-6">
+          <p>Nilai DP Murni: <span className="text-slate-900 font-bold">{formatRupiah(results.dpAmount)}</span></p>
+          <p>Pokok Hutang: <span className="text-slate-900 font-bold">{formatRupiah(results.loanPrincipal)}</span></p>
+        </div>
+      )}
       {results && (otrPrice > 0) && (
         <div className="results-appear">
           <ResultsTable

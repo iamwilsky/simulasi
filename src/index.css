@@ -13,33 +13,22 @@
     --popover: 0 0% 100%;
     --popover-foreground: 210 20% 15%;
 
-    /* BYD Colors */
-    /* BYD Colors (Legacy) */
-    --byd-primary: 174 77% 40%;
-    --byd-dark: 211 61% 11%;
-    --byd-light: 174 50% 95%;
-
-    /* Hyundai Corporate Colors */
+    /* Hyundai Corporate Colors (Original) */
     --hyundai-navy: 212 100% 19%;
     /* #002C5F */
     --hyundai-blue: 191 100% 41%;
     /* #00AAD2 */
 
-    /* System Primary - Now Hyundai Navy */
     --primary: 212 100% 19%;
     --primary-foreground: 0 0% 100%;
 
-    /* BYD Primary */
-    --primary: 174 77% 40%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 193 100% 41%;
+    --secondary: 191 100% 41%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 210 20% 96%;
     --muted-foreground: 215 20% 45%;
 
-    --accent: 193 100% 41%;
+    --accent: 191 100% 41%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -50,15 +39,6 @@
     --ring: 212 100% 19%;
 
     --radius: 1rem;
-
-    --sidebar-background: 174 77% 40%;
-    --sidebar-foreground: 210 20% 98%;
-    --sidebar-primary: 174 77% 40%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 214 89% 30%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 214 89% 35%;
-    --sidebar-ring: 214 89% 60%;
   }
 
   .dark {
@@ -245,24 +225,24 @@
   background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
-/* BYD colors for cards */
-.byd-blue {
-  background-color: #0B1C2E;
+/* Hyundai colors for cards */
+.hyundai-blue {
+  background-color: #002C5F;
   /* Dark Navy */
   color: white;
 }
 
-.byd-teal {
-  background-color: #0B1C2E;
+.hyundai-teal {
+  background-color: #00AAD2;
   color: white;
 }
 
-.byd-light-blue {
+.hyundai-light-blue {
   background-color: #E0F2F1;
-  color: #0B1C2E;
+  color: #002C5F;
 }
 
-.byd-gradient {
-  background: linear-gradient(135deg, #0B1C2E 0%, #0B1C2E 100%);
+.hyundai-gradient {
+  background: linear-gradient(135deg, #002C5F 0%, #00AAD2 100%);
   color: white;
 }

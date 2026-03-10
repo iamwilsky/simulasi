@@ -173,14 +173,12 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
 
   return (
     <div className="w-full animate-fade-in space-y-12">
-      <div className="bg-white/[0.03] backdrop-blur-3xl border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden group transition-all hover:border-white/10">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-[100px] pointer-events-none" />
-
+      <div className="bg-white border border-slate-100 rounded-3xl p-6 md:p-10 relative overflow-hidden group">
         <div className="flex items-center gap-4 mb-10">
-          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center">
-            <Wallet className="h-5 w-5 text-gray-400" />
+          <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+            <Wallet className="h-5 w-5 text-blue-600" />
           </div>
-          <h2 className="text-2xl font-bold tracking-tight">Optimasi <span className="text-gray-500">Anggaran.</span></h2>
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Simulasi Budget</h2>
         </div>
 
         <BudgetForm

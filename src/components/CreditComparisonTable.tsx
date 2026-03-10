@@ -93,18 +93,18 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Tabel Perbandingan - 50% width pada desktop */}
         <div className="lg:w-1/2 w-full flex">
-          <div className="rounded-xl shadow-md overflow-hidden bg-white dark:bg-gray-800/80 w-full h-full flex flex-col">
+          <div className="rounded-xl shadow-md overflow-hidden bg-white w-full h-full flex flex-col border border-slate-100">
             <table className="w-full border-collapse flex-grow">
-              <thead className="bg-[#0B1C2E] text-white">
+              <thead className="bg-[#002C5F] text-white">
                 <tr>
-                  <th className="font-semibold py-3 text-left text-xs pl-4 w-[25%]">
-                    TENOR
+                  <th className="font-semibold py-3 text-left text-xs pl-4 w-[25%] uppercase tracking-widest">
+                    Tenor
                   </th>
-                  <th className="font-semibold py-3 text-center text-xs w-[37.5%]">
-                    TOTAL DP
+                  <th className="font-semibold py-3 text-center text-xs w-[37.5%] uppercase tracking-widest">
+                    Total DP
                   </th>
-                  <th className="font-semibold py-3 text-right text-xs pr-4 w-[37.5%]">
-                    ANGSURAN
+                  <th className="font-semibold py-3 text-right text-xs pr-4 w-[37.5%] uppercase tracking-widest">
+                    Angsuran
                   </th>
                 </tr>
               </thead>
@@ -112,22 +112,22 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
                 {tenorData.map((data) => (
                   <tr
                     key={data.tenor}
-                    className={`border-b border-slate-100 transition-all duration-200 hover:bg-slate-50/80 cursor-pointer ${selectedTenor === data.tenor ? 'bg-[#002C5F]/5' : ''
+                    className={`border-b border-slate-50 transition-all duration-200 hover:bg-slate-50 cursor-pointer ${selectedTenor === data.tenor ? 'bg-blue-50' : ''
                       }`}
                     onClick={() => handleRowClick(data.tenor)}
                   >
-                    <td className="py-3.5 pl-4">
-                      <div className="font-medium text-sm">
+                    <td className="py-4 pl-4">
+                      <div className="font-bold text-sm text-slate-700">
                         {data.tenor} thn
                       </div>
                     </td>
                     <td className="py-4 text-center">
-                      <span className="text-[#002C5F] font-extrabold text-sm">
+                      <span className="text-slate-600 font-bold text-sm">
                         {formatRupiah(data.totalDp)}
                       </span>
                     </td>
-                    <td className="py-4 text-right pr-6">
-                      <span className="text-[#002C5F] font-extrabold text-sm">
+                    <td className="py-4 text-right pr-4">
+                      <span className="text-blue-600 font-bold text-sm">
                         {formatRupiah(data.monthlyInstallment)}
                       </span>
                     </td>
@@ -141,71 +141,70 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
         {/* Info cards di sebelah kanan - 50% width pada desktop */}
         <div className="lg:w-1/2 w-full flex">
           <div className="flex flex-col space-y-4 w-full h-full justify-between">
-            {/* Harga OTR Card - PERTAMA */}
-            <div className="bg-slate-50 border border-slate-200/60 rounded-3xl p-5 flex justify-between items-center text-slate-800 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.01] active:scale-[0.99] cursor-pointer">
+            {/* Harga OTR Card */}
+            <div className="bg-[#002C5F] text-white rounded-xl p-5 flex justify-between items-center shadow-md">
               <div className="flex items-center">
-                <div className="bg-white border border-slate-200 rounded-2xl w-12 h-12 flex items-center justify-center mr-4 shadow-sm">
-                  <Car className="h-6 w-6 text-[#002C5F]" />
+                <div className="bg-white/10 rounded-lg w-10 h-10 flex items-center justify-center mr-4">
+                  <Car className="h-5 w-5 text-white" />
                 </div>
-                <div className="text-xs font-bold uppercase tracking-widest text-slate-400">Harga OTR</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-white/70">Harga OTR</div>
               </div>
-              <div className="text-xl font-extrabold text-slate-900 leading-none">Rp {otrPrice.toLocaleString('id-ID')}</div>
+              <div className="text-lg font-bold">Rp {otrPrice.toLocaleString('id-ID')}</div>
             </div>
 
-            {/* Total DP Card - KEDUA */}
-            <div className="bg-[#002C5F] rounded-3xl p-5 flex justify-between items-center text-white shadow-xl shadow-[#002C5F]/10 transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] cursor-pointer">
+            {/* Total DP Card */}
+            <div className="bg-[#00AAD2] text-white rounded-xl p-5 flex justify-between items-center shadow-md">
               <div className="flex items-center">
-                <div className="bg-white/10 rounded-2xl w-12 h-12 flex items-center justify-center mr-4">
-                  <Wallet className="h-6 w-6" />
+                <div className="bg-white/10 rounded-lg w-10 h-10 flex items-center justify-center mr-4">
+                  <Wallet className="h-5 w-5 text-white" />
                 </div>
-                <div className="text-xs font-bold uppercase tracking-widest text-white/60">Total DP</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-white/70">Total DP</div>
               </div>
-              <div className="text-xl font-extrabold leading-none">
+              <div className="text-lg font-bold">
                 {formatRupiah(selectedTenorData.totalDp)}
               </div>
             </div>
 
-            {/* Angsuran Bulanan Card - KETIGA */}
-            <div className="bg-[#00AAD2] rounded-3xl p-5 flex justify-between items-center text-white shadow-xl shadow-[#00AAD2]/10 transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] cursor-pointer">
+            {/* Angsuran Bulanan Card */}
+            <div className="bg-[#002C5F] text-white rounded-xl p-5 flex justify-between items-center shadow-md">
               <div className="flex items-center">
-                <div className="bg-white/10 rounded-2xl w-12 h-12 flex items-center justify-center mr-4">
-                  <CreditCard className="h-6 w-6" />
+                <div className="bg-white/10 rounded-lg w-10 h-10 flex items-center justify-center mr-4">
+                  <CreditCard className="h-5 w-5 text-white" />
                 </div>
-                <div className="text-xs font-bold uppercase tracking-widest text-white/60">Angsuran Bulanan</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-white/70">Angsuran Bulanan</div>
               </div>
-              <div className="text-xl font-extrabold leading-none">
+              <div className="text-lg font-bold">
                 {formatRupiah(selectedTenorData.monthlyInstallment)}
               </div>
             </div>
 
-            {/* Tenor Card - KEEMPAT */}
-            <div className="bg-slate-50 border border-slate-200/60 rounded-3xl p-5 flex justify-between items-center text-slate-800 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.01] active:scale-[0.99] cursor-pointer">
+            {/* Tenor Card */}
+            <div className="bg-slate-500 text-white rounded-xl p-5 flex justify-between items-center shadow-md">
               <div className="flex items-center">
-                <div className="bg-white border border-slate-200 rounded-2xl w-12 h-12 flex items-center justify-center mr-4 shadow-sm">
-                  <Calendar className="h-6 w-6 text-[#002C5F]" />
+                <div className="bg-white/10 rounded-lg w-10 h-10 flex items-center justify-center mr-4">
+                  <Calendar className="h-5 w-5 text-white" />
                 </div>
-                <div className="text-xs font-bold uppercase tracking-widest text-slate-400">Tenor</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-white/70">Tenor</div>
               </div>
-              <div className="text-xl font-extrabold text-slate-900 leading-none">{selectedTenorData.tenor} <span className="text-[10px] text-slate-400 uppercase">Tahun</span></div>
+              <div className="text-lg font-bold">{selectedTenorData.tenor} <span className="text-[10px] text-white/60 uppercase">Tahun</span></div>
             </div>
 
-            {/* Jenis Asuransi Card - KELIMA */}
-            <div className="bg-white border border-slate-200/60 rounded-3xl p-5 flex justify-between items-center shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.01] active:scale-[0.99] cursor-pointer">
+            {/* Jenis Asuransi Card */}
+            <div className="bg-[#002C5F] text-white rounded-xl p-5 flex justify-between items-center shadow-md">
               <div className="flex items-center">
-                <div className="bg-[#002C5F]/5 rounded-2xl w-12 h-12 flex items-center justify-center mr-4">
-                  <Shield className="h-6 w-6 text-[#002C5F]" />
+                <div className="bg-white/10 rounded-lg w-10 h-10 flex items-center justify-center mr-4">
+                  <Shield className="h-5 w-5 text-white" />
                 </div>
-                <div className="text-xs font-bold uppercase tracking-widest text-slate-400">Proteksi</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-white/70">Jenis Asuransi</div>
               </div>
-              <div className="text-xl font-extrabold text-[#002C5F] leading-none">{insuranceTypeDisplay}</div>
+              <div className="text-lg font-bold text-white">{insuranceTypeDisplay}</div>
             </div>
           </div>
         </div>
       </div>
 
-      <p className="text-[11px] text-slate-400 mt-6 font-medium italic flex items-center gap-2">
-        <Info className="w-3 h-3" />
-        Estimasi perhitungan. Detail resmi dapat dikonfirmasi dengan konsultan penjualan Hyundai kami.
+      <p className="text-[10px] text-slate-400 mt-6 font-medium italic">
+        * Perhitungan di atas merupakan estimasi. Silakan hubungi dealer untuk informasi lebih lanjut.
       </p>
     </div>
   );
