@@ -14,12 +14,20 @@
     --popover-foreground: 210 20% 15%;
 
     /* BYD Colors */
+    /* BYD Colors (Legacy) */
     --byd-primary: 174 77% 40%;
-    /* #0B1C2E - Bright Teal */
     --byd-dark: 211 61% 11%;
-    /* #0B1C2E - Dark Navy */
     --byd-light: 174 50% 95%;
-    /* #e0f5f3 */
+
+    /* Hyundai Corporate Colors */
+    --hyundai-navy: 212 100% 19%;
+    /* #002C5F */
+    --hyundai-blue: 191 100% 41%;
+    /* #00AAD2 */
+
+    /* System Primary - Now Hyundai Navy */
+    --primary: 212 100% 19%;
+    --primary-foreground: 0 0% 100%;
 
     /* BYD Primary */
     --primary: 174 77% 40%;
@@ -37,11 +45,11 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 10% 90%;
-    --input: 214 10% 90%;
-    --ring: 174 77% 40%;
+    --border: 214 20% 92%;
+    --input: 214 20% 95%;
+    --ring: 212 100% 19%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
     --sidebar-background: 174 77% 40%;
     --sidebar-foreground: 210 20% 98%;

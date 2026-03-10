@@ -13,91 +13,87 @@ const Index = () => {
   const [tenor, setTenor] = useState<number>(5);
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col bg-[#0A0A0A] text-white overflow-x-hidden">
+    <div className="relative min-h-screen w-full flex flex-col bg-[#F8F9FA] text-slate-900 overflow-x-hidden pt-20">
       <Navbar />
 
       {/* Background Background with Blur/Darken */}
-      <div className="absolute inset-0 z-0 h-[50vh]">
-        <img
-          src={heroBg}
-          alt="Background"
-          className="w-full h-full object-cover opacity-20 grayscale brightness-50"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/0 via-[#0A0A0A]/80 to-[#0A0A0A]" />
+      <div className="absolute top-0 left-0 w-full h-[60vh] z-0 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#002C5F]/5 via-white to-[#00AAD2]/5" />
+        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-[#F8F9FA] to-transparent" />
       </div>
 
       <main className="relative z-10 flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12 md:mb-16 animate-fade-up">
-            <span className="inline-block bg-white/5 border border-white/10 text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-1 rounded-full mb-6">
-              Infrastruktur Pembiayaan Modern
+          <div className="text-center mb-12 md:mb-20 animate-fade-up">
+            <span className="inline-block bg-[#002C5F]/5 border border-[#002C5F]/10 text-[#002C5F] text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full mb-6">
+              Hyundai Financial Services
             </span>
-            <h1 className="text-4xl md:text-6xl font-bold tracking-[-0.03em] mb-6 leading-tight">
-              Simulasi Kredit <span className="text-gray-400">Otomotif.</span>
+            <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight mb-8 text-[#002C5F] leading-[1.1]">
+              Simulasi Kredit <br /><span className="text-slate-400">Otomotif Hyundai.</span>
             </h1>
-            <p className="text-gray-500 text-sm md:text-lg font-light max-w-2xl mx-auto tracking-wide">
-              Hitung estimasi angsuran, budget uang muka, dan rincian asuransi dengan presisi tinggi dalam satu dashboard terpadu.
+            <p className="text-slate-600 text-sm md:text-xl font-normal max-w-2xl mx-auto tracking-normal leading-relaxed">
+              Hitung estimasi angsuran dan rincian asuransi dengan presisi tinggi menggunakan standar kalkulasi Hyundai Indonesia.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div className="bg-white/5 backdrop-blur-xl border border-white/5 rounded-2xl p-6 transition-all hover:border-white/10 group">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            <div className="bg-white border border-slate-200/60 rounded-3xl p-8 shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] group">
               <div className="flex items-center">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 text-gray-300 mr-4 border border-white/5">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-[#002C5F]/5 text-[#002C5F] mr-5 border border-[#002C5F]/10">
                   <Car className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white mb-0.5">Harga Flexibel</h3>
-                  <p className="text-xs text-gray-500 font-light tracking-wide">Simulasi berbagai harga OTR</p>
+                  <h3 className="font-bold text-slate-900 text-lg mb-0.5">Harga Flexibel</h3>
+                  <p className="text-sm text-slate-500 font-medium">Update real-time OTR</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/5 rounded-2xl p-6 transition-all hover:border-white/10 group">
+            <div className="bg-white border border-slate-200/60 rounded-3xl p-8 shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] group">
               <div className="flex items-center">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 text-emerald-400 mr-4 border border-white/5">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-blue-50 text-blue-600 mr-5 border border-blue-100">
                   <CreditCard className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white mb-0.5">Tenor Beragam</h3>
-                  <p className="text-xs text-gray-500 font-light tracking-wide">Pilihan tenor 1-7 tahun</p>
+                  <h3 className="font-bold text-slate-900 text-lg mb-0.5">Tenor Beragam</h3>
+                  <p className="text-sm text-slate-500 font-medium">Hingga 7 tahun</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/5 rounded-2xl p-6 transition-all hover:border-white/10 group">
+            <div className="bg-white border border-slate-200/60 rounded-3xl p-8 shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] group">
               <div className="flex items-center">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 text-blue-400 mr-4 border border-white/5">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-emerald-50 text-emerald-600 mr-5 border border-emerald-100">
                   <CheckCircle className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white mb-0.5">Asuransi Lengkap</h3>
-                  <p className="text-xs text-gray-500 font-light tracking-wide">Estimasi premi asuransi kendaraan</p>
+                  <h3 className="font-bold text-slate-900 text-lg mb-0.5">Proteksi</h3>
+                  <p className="text-sm text-slate-500 font-medium">Opsi asuransi lengkap</p>
                 </div>
               </div>
             </div>
           </div>
 
           <Tabs defaultValue="loan" className="w-full mb-16">
-            <TabsList className="grid w-full grid-cols-2 max-w-sm mx-auto bg-white/5 border border-white/10 p-1.5 rounded-2xl">
+            <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto bg-slate-200/50 border border-slate-200 p-1.5 rounded-[1.25rem]">
               <TabsTrigger
                 value="loan"
-                className="flex items-center justify-center rounded-xl data-[state=active]:bg-white data-[state=active]:text-black text-gray-500 hover:text-white transition-all font-bold uppercase tracking-widest text-[10px] py-3"
+                className="flex items-center justify-center rounded-[0.9rem] data-[state=active]:bg-[#002C5F] data-[state=active]:text-white text-slate-500 hover:text-[#002C5F] transition-all font-bold uppercase tracking-widest text-[11px] py-4"
               >
-                <Calculator className="h-3.5 w-3.5 mr-2" />
+                <Calculator className="h-4 w-4 mr-2" />
                 Simulasi Kredit
               </TabsTrigger>
               <TabsTrigger
                 value="budget"
-                className="flex items-center justify-center rounded-xl data-[state=active]:bg-white data-[state=active]:text-black text-gray-500 hover:text-white transition-all font-bold uppercase tracking-widest text-[10px] py-3"
+                className="flex items-center justify-center rounded-[0.9rem] data-[state=active]:bg-[#002C5F] data-[state=active]:text-white text-slate-500 hover:text-[#002C5F] transition-all font-bold uppercase tracking-widest text-[11px] py-4"
               >
-                <Wallet className="h-3.5 w-3.5 mr-2" />
+                <Wallet className="h-4 w-4 mr-2" />
                 Simulasi Budget
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="loan" className="mt-6 sm:mt-8">
-              <div className="bg-white/[0.02] backdrop-blur-3xl border border-white/5 p-8 rounded-3xl shadow-2xl">
+            <TabsContent value="loan" className="mt-12">
+              <div className="bg-white border border-slate-200/60 p-10 rounded-[2.5rem] shadow-[0_20px_80px_rgba(0,0,0,0.04)]">
                 <LoanCalculator
                   defaultOtr={undefined}
                   defaultDpPercent={dpPercent}
@@ -106,8 +102,8 @@ const Index = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="budget" className="mt-6 sm:mt-8">
-              <div className="bg-white/[0.02] backdrop-blur-3xl border border-white/5 p-8 rounded-3xl shadow-2xl">
+            <TabsContent value="budget" className="mt-12">
+              <div className="bg-white border border-slate-200/60 p-10 rounded-[2.5rem] shadow-[0_20px_80px_rgba(0,0,0,0.04)]">
                 <BudgetCalculator
                   defaultOtr={undefined}
                   defaultTenor={tenor}
@@ -152,32 +148,32 @@ const Index = () => {
         </div>
       </main>
 
-      <footer className="relative z-10 bg-[#0A0A0A] border-t border-white/5 py-16 mt-20">
+      <footer className="relative z-10 bg-white border-t border-slate-200 py-20 mt-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left">
           <div className="md:flex md:justify-between items-start">
             <div className="mb-10 md:mb-0">
-              <h2 className="text-2xl font-bold text-white mb-4 tracking-tight">SimulasiKredit<span className="text-gray-500">.</span></h2>
-              <p className="text-sm text-gray-500 font-light max-w-sm leading-relaxed tracking-wide">
-                Solusi cerdas kalkulasi pembiayaan otomotif untuk mempermudah Anda dalam merencanakan masa depan.
+              <h2 className="text-3xl font-extrabold text-[#002C5F] mb-6 tracking-tight">SimulasiKredit<span className="text-blue-500">.</span></h2>
+              <p className="text-slate-500 font-medium max-w-sm leading-relaxed text-sm">
+                Layanan finansial modern untuk memudahkan kepemilikan kendaraan Hyundai impian Anda melalui transparansi data.
               </p>
             </div>
 
-            <div className="flex flex-wrap justify-center sm:justify-start gap-12 sm:gap-24">
+            <div className="flex flex-wrap justify-center sm:justify-start gap-12 sm:gap-32">
               <div>
-                <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-6">Layanan</h3>
-                <ul className="text-gray-500 font-light text-sm space-y-3">
-                  <li><a href="#" className="hover:text-white transition-colors">Simulasi Kredit</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Simulasi Budget</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Simulasi Asuransi</a></li>
+                <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#002C5F] mb-8">Layanan</h3>
+                <ul className="text-slate-500 font-medium text-sm space-y-4">
+                  <li><a href="#" className="hover:text-[#002C5F] transition-colors">Simulasi Kredit</a></li>
+                  <li><a href="#" className="hover:text-[#002C5F] transition-colors">Simulasi Budget</a></li>
+                  <li><a href="#" className="hover:text-[#002C5F] transition-colors">Simulasi Asuransi</a></li>
                 </ul>
               </div>
 
               <div>
-                <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-6">Bantuan</h3>
-                <ul className="text-gray-500 font-light text-sm space-y-3">
-                  <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Kontak</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Dukungan</a></li>
+                <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#002C5F] mb-8">Bantuan</h3>
+                <ul className="text-slate-500 font-medium text-sm space-y-4">
+                  <li><a href="#" className="hover:text-[#002C5F] transition-colors">FAQ</a></li>
+                  <li><a href="#" className="hover:text-[#002C5F] transition-colors">Kontak</a></li>
+                  <li><a href="#" className="hover:text-[#002C5F] transition-colors">Dukungan</a></li>
                 </ul>
               </div>
             </div>

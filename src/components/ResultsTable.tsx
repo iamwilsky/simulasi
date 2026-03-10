@@ -37,19 +37,19 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
 
   return (
     <div className="w-full">
-      <div className="bg-white/[0.03] backdrop-blur-3xl border border-white/5 rounded-3xl overflow-hidden shadow-2xl transition-all hover:border-white/10">
-        <div className="flex items-center justify-between p-8 border-b border-white/5">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center border border-emerald-500/20">
-              <ChevronDown className="h-4 w-4 text-emerald-400" />
+      <div className="bg-white border border-slate-200/60 rounded-[2.5rem] overflow-hidden shadow-[0_10px_60px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0_20px_80px_rgba(0,0,0,0.06)]">
+        <div className="flex items-center justify-between p-8 border-b border-slate-100">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-xl bg-[#002C5F]/5 flex items-center justify-center border border-[#002C5F]/10">
+              <ChevronDown className="h-5 w-5 text-[#002C5F]" />
             </div>
-            <h2 className="text-xl font-bold tracking-tight">Kalkulasi <span className="text-zinc-500">Rinci.</span></h2>
+            <h2 className="text-xl font-bold tracking-tight text-slate-900">Kalkulasi <span className="text-slate-400">Rinci.</span></h2>
           </div>
           <button
             onClick={() => setShowFullDetails(!showFullDetails)}
-            className="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+            className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 hover:text-[#002C5F] hover:border-[#002C5F]/30 transition-all shadow-sm"
           >
-            {showFullDetails ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+            {showFullDetails ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
           </button>
         </div>
 
@@ -63,7 +63,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
           />
 
           {/* Share WhatsApp Button */}
-          <div className="pt-4 border-t border-white/5">
+          <div className="pt-8 border-t border-slate-100">
             <ResultsWhatsAppShare
               results={results}
               otrPrice={otrPrice}
@@ -72,11 +72,11 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
             />
           </div>
 
-          <div className="flex items-start gap-4 p-4 bg-white/5 border border-white/5 rounded-2xl">
-            <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0 text-zinc-400">
-              <Info className="w-4 h-4" />
+          <div className="flex items-start gap-4 p-5 bg-slate-50 border border-slate-200/60 rounded-[1.5rem]">
+            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center flex-shrink-0 text-slate-400 shadow-sm">
+              <Info className="w-5 h-5" />
             </div>
-            <p className="text-xs text-zinc-400 font-light leading-relaxed">
+            <p className="text-xs text-slate-500 font-medium leading-relaxed">
               Hasil simulasi ini merupakan estimasi awal. Untuk memproses penawaran resmi, silakan bagikan hasil ini ke konsultan kami melalui tombol di atas.
             </p>
           </div>

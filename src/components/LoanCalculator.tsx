@@ -97,53 +97,53 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
 
   return (
     <div className="w-full animate-fade-in space-y-12">
-      <div className="bg-white/[0.03] backdrop-blur-3xl border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden group transition-all hover:border-white/10">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 blur-[100px] pointer-events-none" />
+      <div className="bg-white border border-slate-200/60 rounded-[2rem] p-8 md:p-12 shadow-[0_10px_50px_rgba(0,0,0,0.02)] relative overflow-hidden group transition-all hover:shadow-[0_20px_70px_rgba(0,0,0,0.05)]">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#002C5F]/5 blur-[100px] pointer-events-none" />
 
         <div className="flex items-center gap-4 mb-10">
-          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center">
-            <Calculator className="h-5 w-5 text-gray-400" />
+          <div className="w-12 h-12 rounded-2xl bg-[#002C5F]/5 border border-[#002C5F]/10 flex items-center justify-center">
+            <Calculator className="h-6 w-6 text-[#002C5F]" />
           </div>
-          <h2 className="text-2xl font-bold tracking-tight">Parameter <span className="text-gray-500">Kredit.</span></h2>
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900">Parameter <span className="text-slate-400">Kredit.</span></h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="space-y-3">
-            <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 ml-1">Harga OTR Kendaraan</label>
+            <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">Harga OTR Kendaraan</label>
             <div className="relative group">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium text-sm">Rp</div>
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">Rp</div>
               <Input
                 type="text"
                 value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
                 onChange={handleOtrChange}
                 placeholder="Masukkan harga"
-                className="h-14 pl-12 bg-black/20 border-white/5 text-white placeholder:text-zinc-700 transition-all rounded-2xl focus:border-white/20 focus:ring-0 text-lg font-medium"
+                className="h-14 pl-12 bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-300 transition-all rounded-2xl focus:border-[#002C5F] focus:ring-0 text-lg font-bold"
               />
             </div>
           </div>
 
           <div className="space-y-3">
-            <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 ml-1">Persentase DP</label>
+            <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">Persentase DP</label>
             <div className="flex gap-3">
               <Input
                 type="number"
                 value={dpPercent}
                 onChange={handleDpPercentChange}
-                className="h-14 bg-black/20 border-white/5 text-white transition-all rounded-2xl focus:border-white/20 focus:ring-0 text-lg font-medium"
+                className="h-14 bg-slate-50 border-slate-200 text-slate-900 transition-all rounded-2xl focus:border-[#002C5F] focus:ring-0 text-lg font-bold"
               />
-              <div className="h-14 w-14 bg-white/5 border border-white/5 rounded-2xl flex items-center justify-center text-zinc-400 font-bold">%</div>
+              <div className="h-14 w-14 bg-slate-100 border border-slate-200 rounded-2xl flex items-center justify-center text-slate-600 font-bold">%</div>
             </div>
           </div>
 
           <div className="space-y-3">
-            <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 ml-1">Masa Tenor</label>
+            <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">Masa Tenor</label>
             <Select value={tenor.toString()} onValueChange={handleTenorChange}>
-              <SelectTrigger className="h-14 bg-black/20 border-white/5 text-white focus:ring-0 focus:border-white/20 transition-all rounded-2xl text-lg">
+              <SelectTrigger className="h-14 bg-slate-50 border-slate-200 text-slate-900 focus:ring-0 focus:border-[#002C5F] transition-all rounded-2xl text-lg font-bold">
                 <SelectValue placeholder="Tenor" />
               </SelectTrigger>
-              <SelectContent className="bg-[#1A1A1A] border-white/10 text-white rounded-2xl">
+              <SelectContent className="bg-white border-slate-200 text-slate-900 rounded-2xl shadow-xl">
                 {[1, 2, 3, 4, 5, 6, 7].map((t) => (
-                  <SelectItem key={t} value={t.toString()} className="focus:bg-white/10 rounded-lg m-1 py-3">
+                  <SelectItem key={t} value={t.toString()} className="focus:bg-slate-50 rounded-lg m-1 py-3 font-medium">
                     {t} Tahun
                   </SelectItem>
                 ))}
@@ -153,8 +153,8 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
         </div>
 
         <div className="mt-10 space-y-3">
-          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Proteksi Keamanan (Asuransi)</label>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-1.5 bg-white/5 rounded-2xl border border-white/5">
+          <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">Proteksi Keamanan (Asuransi)</label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-1.5 bg-slate-100 rounded-[1.25rem] border border-slate-200">
             {[
               { id: 'kombinasi', label: 'Kombinasi' },
               { id: 'allrisk', label: 'All Risk' },
@@ -164,9 +164,9 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
                 key={type.id}
                 type="button"
                 onClick={() => setInsuranceType(type.id as any)}
-                className={`py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${insuranceType === type.id
-                  ? 'bg-white text-black shadow-xl'
-                  : 'text-gray-500 hover:text-white hover:bg-white/5'
+                className={`py-3.5 px-4 rounded-[0.9rem] text-[11px] font-bold uppercase tracking-widest transition-all ${insuranceType === type.id
+                  ? 'bg-[#002C5F] text-white shadow-lg shadow-[#002C5F]/20'
+                  : 'text-slate-500 hover:text-[#002C5F] hover:bg-white/50'
                   }`}
               >
                 {type.label}
@@ -187,10 +187,10 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
 
           <div className="mt-12 group">
             <div className="flex items-center gap-4 mb-8">
-              <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center">
-                <Calendar className="h-5 w-5 text-gray-400" />
+              <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center">
+                <Calendar className="h-6 w-6 text-blue-600" />
               </div>
-              <h2 className="text-2xl font-bold tracking-tight">Komparasi <span className="text-gray-500">Tenor.</span></h2>
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900">Komparasi <span className="text-slate-400">Tenor.</span></h2>
             </div>
             <CreditComparisonTable
               otrPrice={otrPrice}
