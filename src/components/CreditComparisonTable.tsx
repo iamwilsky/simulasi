@@ -1,8 +1,17 @@
 
 import React, { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from "@/components/ui/table";
 import { formatRupiah } from "@/lib/calculations";
-import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
-import { Wallet, Shield, Percent, Calendar, CreditCard, Car, Info } from "lucide-react";
+import { getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee, fees } from "@/data/rateData";
+import { useSettings } from "@/context/SettingsContext";
+import { Calendar, Info, Wallet, Car } from "lucide-react";
 
 interface CreditComparisonTableProps {
   otrPrice: number;
@@ -12,15 +21,6 @@ interface CreditComparisonTableProps {
   additionalAdminFee: number;
 }
 
-interface TenorData {
-  tenor: number;
-  totalDp: number;
-  monthlyInstallment: number;
-  interestRate: number;
-  insuranceRate: number;
-  adminFee: number;
-}
-
 const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
   otrPrice,
   dpPercent,
@@ -28,15 +28,9 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
   provisionRate,
   additionalAdminFee
 }) => {
-  // State untuk menyimpan tenor yang dipilih
-  const [selectedTenor, setSelectedTenor] = useState<number>(1);
+  const [selectedTenor, setSelectedTenor] = useState<number | null>(null);
 
-  // Calculate data for each tenor
-  const tenorData: TenorData[] = [];
-
-  // Generate data for tenors 1-7 years
-  for (let tenor = 1; tenor <= 7; tenor++) {
-    // Basic calculations
+  const calculateForTenor = (tenor: number) => {
     const dpAmount = otrPrice * (dpPercent / 100);
     const loanPrincipal = otrPrice - dpAmount;
     const provisionFee = loanPrincipal * (provisionRate / 100);
@@ -44,8 +38,8 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
 
     const interestRate = getInterestRateFromTable(tenor);
     const interestAmount = loanWithProvision * (interestRate / 100) * tenor;
-
     const totalLoanAmount = loanWithProvision + interestAmount;
+
     const tenorMonths = tenor * 12;
     const monthlyInstallment = totalLoanAmount / tenorMonths;
 
@@ -57,155 +51,101 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
 
     const creditProtection = loanPrincipal * (fees.creditProtectionRate / 100);
 
-    // Total DP calculation
     const totalDp = dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + fees.tpiFee + creditProtection;
 
-    // Add to data array
-    tenorData.push({
-      tenor,
-      totalDp,
+    return {
       monthlyInstallment,
-      interestRate,
-      insuranceRate,
-      adminFee: totalAdminFee
-    });
-  }
-
-  // Transform insurance type for display
-  const insuranceTypeDisplay = {
-    'kombinasi': 'Kombinasi',
-    'allrisk': 'All Risk',
-    'allriskPerluasan': 'All Risk Perluasan'
-  }[insuranceType];
-
-  // Handler saat baris di tabel diklik
-  const handleRowClick = (tenor: number) => {
-    setSelectedTenor(tenor);
+      totalDp,
+      interestRate
+    };
   };
 
-  // Temukan data untuk tenor yang dipilih
-  const selectedTenorData = tenorData.find(data => data.tenor === selectedTenor) || tenorData[0];
+  const tenors = [1, 2, 3, 4, 5, 6, 7];
 
   return (
-    <div className="my-10">
-      <h3 className="text-xl font-bold mb-6 text-slate-800">Perbandingan Tenor</h3>
-
-      <div className="flex flex-col lg:flex-row gap-6">
-        {/* Tabel Perbandingan - 50% width pada desktop */}
-        <div className="lg:w-1/2 w-full flex">
-          <div className="rounded-xl shadow-md overflow-hidden bg-white w-full h-full flex flex-col border border-slate-100">
-            <table className="w-full border-collapse flex-grow">
-              <thead className="bg-[#002C5F] text-white">
-                <tr>
-                  <th className="font-semibold py-3 text-left text-xs pl-4 w-[25%] uppercase tracking-widest">
-                    Tenor
-                  </th>
-                  <th className="font-semibold py-3 text-center text-xs w-[37.5%] uppercase tracking-widest">
-                    Total DP
-                  </th>
-                  <th className="font-semibold py-3 text-right text-xs pr-4 w-[37.5%] uppercase tracking-widest">
-                    Angsuran
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="flex-grow">
-                {tenorData.map((data) => (
-                  <tr
-                    key={data.tenor}
-                    className={`border-b border-slate-50 transition-all duration-200 hover:bg-slate-50 cursor-pointer ${selectedTenor === data.tenor ? 'bg-blue-50' : ''
-                      }`}
-                    onClick={() => handleRowClick(data.tenor)}
-                  >
-                    <td className="py-4 pl-4">
-                      <div className="font-bold text-sm text-slate-700">
-                        {data.tenor} thn
-                      </div>
-                    </td>
-                    <td className="py-4 text-center">
-                      <span className="text-slate-600 font-bold text-sm">
-                        {formatRupiah(data.totalDp)}
-                      </span>
-                    </td>
-                    <td className="py-4 text-right pr-4">
-                      <span className="text-blue-600 font-bold text-sm">
-                        {formatRupiah(data.monthlyInstallment)}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+    <div className="w-full bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden animate-fade-up">
+      <div className="p-5 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-[#00aad2]/10 flex items-center justify-center">
+            <Info className="w-4 h-4 text-[#00aad2]" />
           </div>
+          <h2 className="text-lg font-semibold text-[#002c5f] dark:text-blue-100 font-hyundai">Perbandingan Tenor</h2>
         </div>
-
-        {/* Info cards di sebelah kanan - 50% width pada desktop */}
-        <div className="lg:w-1/2 w-full flex">
-          <div className="flex flex-col space-y-4 w-full h-full justify-between">
-            {/* Harga OTR Card */}
-            <div className="bg-[#002C5F] text-white rounded-lg p-5 flex justify-between items-center shadow-md">
-              <div className="flex items-center">
-                <div className="bg-white/10 rounded-lg w-10 h-10 flex items-center justify-center mr-4">
-                  <Car className="h-5 w-5 text-white" />
-                </div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-white/70">Harga OTR</div>
-              </div>
-              <div className="text-lg font-bold">Rp {otrPrice.toLocaleString('id-ID')}</div>
-            </div>
-
-            {/* Total DP Card */}
-            <div className="bg-[#00AAD2] text-white rounded-lg p-5 flex justify-between items-center shadow-md">
-              <div className="flex items-center">
-                <div className="bg-white/10 rounded-lg w-10 h-10 flex items-center justify-center mr-4">
-                  <Wallet className="h-5 w-5 text-white" />
-                </div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-white/70">Total DP</div>
-              </div>
-              <div className="text-lg font-bold">
-                {formatRupiah(selectedTenorData.totalDp)}
-              </div>
-            </div>
-
-            {/* Angsuran Bulanan Card */}
-            <div className="bg-[#002C5F] text-white rounded-xl p-5 flex justify-between items-center shadow-md">
-              <div className="flex items-center">
-                <div className="bg-white/10 rounded-lg w-10 h-10 flex items-center justify-center mr-4">
-                  <CreditCard className="h-5 w-5 text-white" />
-                </div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-white/70">Angsuran Bulanan</div>
-              </div>
-              <div className="text-lg font-bold">
-                {formatRupiah(selectedTenorData.monthlyInstallment)}
-              </div>
-            </div>
-
-            {/* Tenor Card */}
-            <div className="bg-slate-500 text-white rounded-lg p-5 flex justify-between items-center shadow-md">
-              <div className="flex items-center">
-                <div className="bg-white/10 rounded-lg w-10 h-10 flex items-center justify-center mr-4">
-                  <Calendar className="h-5 w-5 text-white" />
-                </div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-white/70">Tenor</div>
-              </div>
-              <div className="text-lg font-bold">{selectedTenorData.tenor} <span className="text-[10px] text-white/60 uppercase">Tahun</span></div>
-            </div>
-
-            {/* Jenis Asuransi Card */}
-            <div className="bg-[#002C5F] text-white rounded-xl p-5 flex justify-between items-center shadow-md">
-              <div className="flex items-center">
-                <div className="bg-white/10 rounded-lg w-10 h-10 flex items-center justify-center mr-4">
-                  <Shield className="h-5 w-5 text-white" />
-                </div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-white/70">Jenis Asuransi</div>
-              </div>
-              <div className="text-lg font-bold text-white">{insuranceTypeDisplay}</div>
-            </div>
-          </div>
+        <div className="hidden sm:block">
+          <p className="text-xs text-gray-500">Klik baris untuk melihat detail</p>
         </div>
       </div>
 
-      <p className="text-[10px] text-slate-400 mt-6 font-medium italic">
-        * Perhitungan di atas merupakan estimasi. Silakan hubungi dealer untuk informasi lebih lanjut.
-      </p>
+      <div className="overflow-x-auto">
+        <Table>
+          <TableHeader className="bg-gray-50 dark:bg-gray-900/50">
+            <TableRow>
+              <TableHead className="text-center font-bold text-[#002c5f] py-4">Tenor</TableHead>
+              <TableHead className="text-center font-bold text-[#002c5f] py-4">Bunga</TableHead>
+              <TableHead className="text-right font-bold text-[#002c5f] py-4">Angsuran/Bulan</TableHead>
+              <TableHead className="text-right font-bold text-[#002c5f] py-4">Total DP</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {tenors.map((tenor) => {
+              const data = calculateForTenor(tenor);
+              const isSelected = selectedTenor === tenor;
+
+              return (
+                <TableRow
+                  key={tenor}
+                  className={`cursor-pointer transition-colors ${isSelected ? 'bg-[#00aad2]/5 dark:bg-[#00aad2]/10' : 'hover:bg-gray-50 dark:hover:bg-gray-800/50'}`}
+                  onClick={() => setSelectedTenor(isSelected ? null : tenor)}
+                >
+                  <TableCell className="text-center font-medium py-4">
+                    <div className="flex flex-col items-center">
+                      <span className="text-gray-900 dark:text-white font-bold">{tenor} Tahun</span>
+                      <span className="text-[10px] text-gray-400 capitalize">{tenor * 12} bulan</span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-center py-4">
+                    <span className="inline-flex items-center px-2 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold">
+                      {data.interestRate.toFixed(2)}%
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-right font-bold text-[#002c5f] dark:text-blue-200 py-4">
+                    {formatRupiah(data.monthlyInstallment)}
+                  </TableCell>
+                  <TableCell className="text-right font-bold text-[#00aad2] py-4">
+                    {formatRupiah(data.totalDp)}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
+
+      {selectedTenor && (
+        <div className="p-4 bg-[#002c5f] text-white animate-fade-in">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex items-center">
+              <div className="bg-white/10 p-2 rounded-lg mr-3">
+                <Car className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <p className="text-[10px] text-white/60 uppercase font-bold tracking-wider">Harga OTR</p>
+                <p className="text-lg font-bold">{formatRupiah(otrPrice)}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center">
+              <div className="bg-white/10 p-2 rounded-lg mr-3">
+                <Wallet className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <p className="text-[10px] text-white/60 uppercase font-bold tracking-wider">DP Murni ({dpPercent}%)</p>
+                <p className="text-lg font-bold">{formatRupiah(otrPrice * (dpPercent / 100))}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

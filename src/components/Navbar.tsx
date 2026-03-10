@@ -1,74 +1,56 @@
-import React from "react";
+
+import React, { useState } from "react";
+import { Calculator, Settings } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/lib/supabaseClient";
-import { Button } from "@/components/ui/button";
-import { Settings, LogOut, LayoutDashboard, ChevronRight } from "lucide-react";
-import { toast } from "sonner";
+import PinDialog from "./PinDialog";
 
 const Navbar: React.FC = () => {
-  const { user } = useAuth();
+  const [isPinDialogOpen, setIsPinDialogOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    try {
-      await supabase.auth.signOut();
-      toast.success("Berhasil logout");
-      navigate("/login");
-    } catch (error) {
-      toast.error("Gagal logout");
-    }
+  const handleSettingsClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsPinDialogOpen(true);
+  };
+
+  const handlePinSuccess = () => {
+    navigate("/settings");
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-6 py-5 flex items-center justify-between">
-      {/* Logo */}
-      <Link to="/" className="flex items-center gap-2.5 group">
-        <div className="w-6 h-6 rounded border border-white/20 flex items-center justify-center bg-white/5 backdrop-blur-sm">
-          <div className="w-2 h-2 rounded-full bg-white group-hover:scale-110 transition-transform" />
+    <header className="w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-50 border-b border-gray-200 dark:border-gray-800">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          <div className="flex items-center">
+            <Link to="/" className="flex items-center">
+              <img
+                src="/lovable-uploads/fd2dea6c-8bd7-465f-bbad-5127eed31324.png"
+                alt="Hyundai Utama"
+                className="h-5 sm:h-7 w-auto"
+              />
+              <span className="hidden">Kredit Simulators</span>
+            </Link>
+          </div>
+
+          <nav className="flex items-center space-x-4">
+            <a
+              href="#"
+              onClick={handleSettingsClick}
+              className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Setting</span>
+            </a>
+          </nav>
         </div>
-        <span className="text-[17px] font-semibold text-white tracking-tight">
-          SimulasiKredit
-        </span>
-      </Link>
+      </div>
 
-      {/* Centered Navigation Pill (Removed as per user request) */}
-      <div className="hidden md:block flex-1" />
-
-      {/* Right side */}
-      <nav className="flex items-center gap-4">
-        {user ? (
-          <>
-            <Link
-              to="/dashboard"
-              className="text-[14px] font-medium text-gray-300 hover:text-white transition-colors"
-            >
-              Dashboard
-            </Link>
-            <Button
-              size="sm"
-              onClick={handleLogout}
-              className="h-9 px-5 rounded-lg bg-white text-black hover:bg-gray-100 text-[13px] font-semibold"
-            >
-              Coba Gratis
-            </Button>
-          </>
-        ) : (
-          <>
-            <Link
-              to="/login"
-              className="text-[14px] font-medium text-gray-300 hover:text-white transition-colors"
-            >
-              Masuk
-            </Link>
-            <Link to="/register">
-              <Button size="sm" className="h-9 px-5 rounded-lg bg-white text-black hover:bg-gray-100 text-[14px] font-semibold flex items-center gap-1">
-                Coba Gratis
-              </Button>
-            </Link>
-          </>
-        )}
-      </nav>
+      <PinDialog
+        isOpen={isPinDialogOpen}
+        onClose={() => setIsPinDialogOpen(false)}
+        correctPin="082788"
+        onSuccess={handlePinSuccess}
+      />
     </header>
   );
 };

@@ -1,152 +1,97 @@
 
-import React, { useState, useEffect } from "react";
-import { Shield, Calendar, Car } from "lucide-react";
+import React, { useState } from "react";
+import { Shield, Calculator } from "lucide-react";
 import FormInput from "./FormInput";
 import { formatRupiah } from "@/lib/calculations";
 import { getInsuranceRateFromTable } from "@/data/rateData";
+import { useSettings } from "@/context/SettingsContext";
 
-interface InsuranceCalculatorProps {
-  defaultOtr?: number;
-  defaultTenor?: number;
-}
-
-const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({
-  defaultOtr = 300000000,
-  defaultTenor = 4
-}) => {
-  const [otrPrice, setOtrPrice] = useState<number>(defaultOtr);
-  const [tenor, setTenor] = useState<number>(defaultTenor);
+const InsuranceCalculator: React.FC = () => {
+  const [otrPrice, setOtrPrice] = useState<number>(0);
+  const [tenor, setTenor] = useState<number>(4);
   const [insuranceType, setInsuranceType] = useState<'kombinasi' | 'allrisk' | 'allriskPerluasan'>('kombinasi');
-  const [insuranceRate, setInsuranceRate] = useState<number>(0);
-  const [insuranceAmount, setInsuranceAmount] = useState<number>(0);
-  
+
   const handleOtrChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, "");
-    if (value === "") {
-      setOtrPrice(0);
-    } else {
-      setOtrPrice(parseInt(value, 10));
-    }
+    setOtrPrice(value === "" ? 0 : parseInt(value, 10));
   };
 
-  const handleTenorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = parseInt(e.target.value, 10);
-    if (isNaN(value)) {
-      setTenor(1);
-    } else {
-      setTenor(Math.min(Math.max(value, 1), 7)); // Clamp between 1 and 7 years
-    }
-  };
-  
   const calculateInsurance = () => {
-    // Get rate from the updated table based on price, insurance type and tenor
+    if (otrPrice <= 0) return 0;
     const rate = getInsuranceRateFromTable(otrPrice, insuranceType, tenor);
-    setInsuranceRate(rate);
-    setInsuranceAmount(otrPrice * (rate / 100));
+    return otrPrice * (rate / 100);
   };
-  
-  // Calculate on initial render and when inputs change
-  useEffect(() => {
-    calculateInsurance();
-  }, [otrPrice, tenor, insuranceType]);
-  
+
+  const insuranceAmount = calculateInsurance();
+
   return (
-    <div className="glass-card dark:glass-card-dark p-6 rounded-2xl animate-fade-in">
-      <div className="flex items-center mb-5">
-        <Shield className="h-5 w-5 text-primary mr-2" />
-        <h2 className="text-xl font-semibold">Kalkulasi Asuransi</h2>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-6">
+    <div className="w-full animate-fade-in">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <div className="flex items-center mb-6">
+          <Shield className="h-5 w-5 text-[#00aad2] mr-2" />
+          <h2 className="text-xl font-semibold text-[#002c5f]">Estimasi Asuransi</h2>
+        </div>
+
+        <div className="space-y-5">
           <FormInput
-            label="Harga OTR"
+            label="Harga OTR Kendaraan"
             type="text"
             prefix="Rp"
-            value={otrPrice.toLocaleString('id-ID')}
+            value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
             onChange={handleOtrChange}
-            placeholder="0"
-            description="Harga On The Road kendaraan"
+            placeholder="Contoh: 350,000,000"
           />
-          
-          <FormInput
-            label="Tenor"
-            type="number"
-            min={1}
-            max={7}
-            value={tenor}
-            onChange={handleTenorChange}
-            suffix="tahun"
-            description="Jangka waktu kredit (1-7 tahun)"
-          />
-          
+
           <div className="space-y-1.5">
-            <label className="input-label block">Jenis Asuransi</label>
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                onClick={() => setInsuranceType('kombinasi')}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  insuranceType === 'kombinasi'
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}
-              >
-                Kombinasi
-              </button>
-              <button
-                type="button"
-                onClick={() => setInsuranceType('allrisk')}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  insuranceType === 'allrisk'
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}
-              >
-                All Risk
-              </button>
-              <button
-                type="button"
-                onClick={() => setInsuranceType('allriskPerluasan')}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  insuranceType === 'allriskPerluasan'
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}
-              >
-                AR Perluasan
-              </button>
-            </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Pilih jenis asuransi kendaraan</p>
-          </div>
-        </div>
-        
-        <div className="flex flex-col justify-center space-y-5">
-          <div className="p-4 bg-gray-50 dark:bg-gray-800/30 rounded-lg border border-gray-200 dark:border-gray-700">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium">Rate Asuransi:</span>
-              <span className="text-lg font-semibold text-primary">{insuranceRate.toFixed(2)}%</span>
-            </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              Rate asuransi untuk {insuranceType === 'kombinasi' ? 'Kombinasi' : insuranceType === 'allrisk' ? 'All Risk' : 'All Risk Perluasan'} dengan tenor {tenor} tahun
-            </p>
-          </div>
-          
-          <div className="p-5 bg-primary/5 rounded-lg border border-primary/20">
-            <div className="flex flex-col items-center">
-              <span className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Biaya Asuransi Tahunan</span>
-              <span className="text-2xl font-bold text-primary">{formatRupiah(insuranceAmount)}</span>
-              <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                untuk tahun pertama
-              </span>
+            <label className="input-label block text-[#002c5f]">Tenor (Tahun)</label>
+            <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
+              {[1, 2, 3, 4, 5, 6, 7].map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => setTenor(t)}
+                  className={`py-2 text-xs font-bold rounded-lg border transition-all ${tenor === t
+                      ? 'bg-[#002c5f] text-white border-[#002c5f]'
+                      : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'
+                    }`}
+                >
+                  {t}
+                </button>
+              ))}
             </div>
           </div>
-          
-          <div className="p-4 bg-gray-50 dark:bg-gray-800/30 rounded-lg border border-gray-200 dark:border-gray-700">
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              * Biaya asuransi dihitung berdasarkan tabel rate sesuai range harga OTR dan tenor.
-            </p>
+
+          <div className="space-y-1.5">
+            <label className="input-label block text-[#002c5f]">Jenis Asuransi</label>
+            <div className="grid grid-cols-3 gap-2 p-1 bg-gray-50 rounded-xl">
+              {(['kombinasi', 'allrisk', 'allriskPerluasan'] as const).map((type) => (
+                <button
+                  key={type}
+                  type="button"
+                  onClick={() => setInsuranceType(type)}
+                  className={`py-2 px-1 text-[10px] sm:text-xs font-bold transition-all rounded-lg ${insuranceType === type
+                      ? 'bg-white text-[#00aad2] shadow-sm'
+                      : 'text-gray-400 hover:text-gray-500'
+                    }`}
+                >
+                  {type === 'kombinasi' ? 'Kombinasi' : type === 'allrisk' ? 'All Risk' : 'AR Perluasan'}
+                </button>
+              ))}
+            </div>
           </div>
+
+          {otrPrice > 0 && (
+            <div className="mt-8 p-6 bg-gradient-to-br from-[#002c5f] to-[#004e8a] rounded-2xl text-white shadow-lg animate-fade-up">
+              <p className="text-xs uppercase tracking-widest font-bold opacity-70 mb-1">Estimasi Premi</p>
+              <div className="text-3xl font-bold mb-2">
+                {formatRupiah(insuranceAmount)}
+              </div>
+              <div className="h-1 w-10 bg-[#00aad2] rounded-full mb-3" />
+              <p className="text-[10px] opacity-60 leading-relaxed italic">
+                *Premi estimasi regional 2 (Jakarta, Banten, Jabar). Hubungi admin untuk detail spesifik.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

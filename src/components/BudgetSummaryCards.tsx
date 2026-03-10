@@ -1,108 +1,69 @@
 
 import React from "react";
+import { formatRupiah } from "@/lib/calculations";
 import { Car, Wallet, CreditCard, Calendar, Shield } from "lucide-react";
 
 interface BudgetSummaryCardsProps {
+  results: {
+    dpPercentage: number;
+    dpAmount: number;
+    totalDp: number;
+    monthlyInstallment: number;
+    loanPrincipal: number;
+    totalLoanAmount: number;
+    insuranceAmount: number;
+    insuranceType: string;
+  };
   otrPrice: number;
-  totalDp: number;
-  monthlyInstallment: number;
   tenor: number;
-  insuranceType: 'kombinasi' | 'allrisk' | 'allriskPerluasan';
 }
 
 const BudgetSummaryCards: React.FC<BudgetSummaryCardsProps> = ({
+  results,
   otrPrice,
-  totalDp,
-  monthlyInstallment,
-  tenor,
-  insuranceType
+  tenor
 }) => {
-  const getInsuranceTypeDisplay = () => {
-    switch (insuranceType) {
-      case 'kombinasi': return 'Kombinasi';
-      case 'allrisk': return 'All Risk';
-      case 'allriskPerluasan': return 'All Risk Perluasan';
-      default: return 'Kombinasi';
-    }
-  };
-
   return (
-    <div className="w-full md:w-1/2">
-      <div className="grid grid-cols-1 gap-2 h-full">
-        {/* Harga OTR Card */}
-        <div className="bg-[#0B1C2E] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
-          <div className="px-3 py-3 text-white">
-            <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
-                <Car className="h-4 w-4 text-white" />
-              </div>
-              <div>
-                <p className="text-xs opacity-90 font-medium">Harga OTR</p>
-                <p className="text-base font-bold">Rp {otrPrice.toLocaleString('id-ID')}</p>
-              </div>
-            </div>
-          </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="bg-[#002c5f] text-white rounded-xl p-5 shadow-sm">
+        <div className="flex items-center mb-1 gap-2">
+          <Car className="w-4 h-4 text-white/70" />
+          <span className="text-xs font-bold uppercase tracking-wider text-white/70">Harga OTR</span>
         </div>
+        <p className="text-xl font-bold">{formatRupiah(otrPrice)}</p>
+      </div>
 
-        {/* Total DP Card */}
-        <div className="bg-[#0B1C2E] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
-          <div className="px-3 py-3 text-white">
-            <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
-                <Wallet className="h-4 w-4 text-white" />
-              </div>
-              <div>
-                <p className="text-xs opacity-90 font-medium">Total DP</p>
-                <p className="text-base font-bold">Rp {totalDp.toLocaleString('id-ID')}</p>
-              </div>
-            </div>
-          </div>
+      <div className="bg-[#00aad2] text-white rounded-xl p-5 shadow-sm">
+        <div className="flex items-center mb-1 gap-2">
+          <Wallet className="w-4 h-4 text-white/70" />
+          <span className="text-xs font-bold uppercase tracking-wider text-white/70">Total DP (Estimasi)</span>
         </div>
+        <p className="text-xl font-bold">{formatRupiah(results.totalDp)}</p>
+        <p className="text-[10px] mt-1 text-white/80">Uang Muka: {results.dpPercentage.toFixed(2)}%</p>
+      </div>
 
-        {/* Angsuran Card */}
-        <div className="bg-[#0B1C2E] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
-          <div className="px-3 py-3 text-white">
-            <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
-                <CreditCard className="h-4 w-4 text-white" />
-              </div>
-              <div>
-                <p className="text-xs opacity-90 font-medium">Angsuran</p>
-                <p className="text-base font-bold">Rp {monthlyInstallment.toLocaleString('id-ID')}</p>
-              </div>
-            </div>
-          </div>
+      <div className="bg-[#002c5f] text-white rounded-xl p-5 shadow-sm">
+        <div className="flex items-center mb-1 gap-2">
+          <CreditCard className="w-4 h-4 text-white/70" />
+          <span className="text-xs font-bold uppercase tracking-wider text-white/70">Angsuran / Bulan</span>
         </div>
+        <p className="text-xl font-bold">{formatRupiah(results.monthlyInstallment)}</p>
+      </div>
 
-        {/* Tenor Card */}
-        <div className="bg-gray-500 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
-          <div className="px-3 py-3 text-white">
-            <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
-                <Calendar className="h-4 w-4 text-white" />
-              </div>
-              <div>
-                <p className="text-xs opacity-90 font-medium">Tenor</p>
-                <p className="text-base font-bold">{tenor} tahun</p>
-              </div>
-            </div>
-          </div>
+      <div className="bg-gray-500 text-white rounded-xl p-5 shadow-sm">
+        <div className="flex items-center mb-1 gap-2">
+          <Calendar className="w-4 h-4 text-white/70" />
+          <span className="text-xs font-bold uppercase tracking-wider text-white/70">Tenor</span>
         </div>
+        <p className="text-xl font-bold">{tenor} Tahun <span className="text-sm font-normal text-white/70">({tenor * 12} Bulan)</span></p>
+      </div>
 
-        {/* Asuransi Card */}
-        <div className="bg-gray-100 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
-          <div className="px-3 py-3">
-            <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-[#0B1C2E] flex items-center justify-center mr-3">
-                <Shield className="h-4 w-4 text-white" />
-              </div>
-              <div>
-                <p className="text-xs opacity-90 font-medium text-[#0B1C2E]">Asuransi</p>
-                <p className="text-base font-bold text-[#0f5951]">{getInsuranceTypeDisplay()}</p>
-              </div>
-            </div>
-          </div>
+      <div className="md:col-span-2 bg-slate-50 border border-slate-100 rounded-xl p-5">
+        <div className="flex items-center mb-1 gap-2">
+          <Shield className="w-4 h-4 text-[#002c5f]" />
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Asuransi</span>
         </div>
+        <p className="text-xl font-bold text-[#002c5f]">{results.insuranceType}</p>
       </div>
     </div>
   );

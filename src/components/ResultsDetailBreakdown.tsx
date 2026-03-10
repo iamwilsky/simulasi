@@ -1,7 +1,15 @@
 
 import React from "react";
 import { formatRupiah } from "@/lib/calculations";
-import { Info } from "lucide-react";
+import {
+  CheckCircle2,
+  Info,
+  DollarSign,
+  ShieldCheck,
+  Settings2,
+  UserSquare2,
+  FileText
+} from "lucide-react";
 
 interface CalculationResults {
   dpAmount: number;
@@ -20,7 +28,6 @@ interface CalculationResults {
   totalAdminFee?: number;
   tpiFee: number;
   insuranceType?: string;
-  provisionRate?: number;
 }
 
 interface ResultsDetailBreakdownProps {
@@ -34,75 +41,88 @@ const ResultsDetailBreakdown: React.FC<ResultsDetailBreakdownProps> = ({
   dpPercent,
   tenor
 }) => {
-  const hasAdditionalAdminFee = results.additionalAdminFee && results.additionalAdminFee > 0;
+  const breakdownItems = [
+    {
+      group: "Pembiayaan",
+      icon: <DollarSign className="w-4 h-4 text-blue-500" />,
+      items: [
+        { label: `Uang Muka (${dpPercent}%)`, value: formatRupiah(results.dpAmount) },
+        { label: "Pokok Hutang", value: formatRupiah(results.loanPrincipal) },
+        { label: "Biaya Provisi", value: formatRupiah(results.provisionFee) },
+        { label: "Plafond Pinjaman", value: formatRupiah(results.loanWithProvision) },
+      ]
+    },
+    {
+      group: "Bunga & Angsuran",
+      icon: <Settings2 className="w-4 h-4 text-orange-500" />,
+      items: [
+        { label: "Suku Bunga", value: `${results.interestRate.toFixed(2)}%` },
+        { label: "Total Bunga", value: formatRupiah(results.interestAmount) },
+        { label: "Total Pinjaman", value: formatRupiah(results.totalLoanAmount) },
+        { label: "Tenor", value: `${tenor} Tahun (${tenor * 12} Bulan)` },
+        { label: "Angsuran per Bulan", value: formatRupiah(results.monthlyInstallment), highlight: true },
+      ]
+    },
+    {
+      group: "Biaya Transaksi (Bayar di Depan)",
+      icon: <FileText className="w-4 h-4 text-purple-500" />,
+      items: [
+        { label: "DP Murni", value: formatRupiah(results.dpAmount) },
+        { label: "Angsuran ke-1", value: formatRupiah(results.monthlyInstallment) },
+        { label: `Asuransi (${results.insuranceType})`, value: formatRupiah(results.insuranceAmount) },
+        { label: "Biaya Administrasi", value: formatRupiah(results.totalAdminFee || results.adminFee) },
+        { label: "TPI (Biaya Pihak Ketiga)", value: formatRupiah(results.tpiFee) },
+        { label: "Total Bayar di Depan", value: formatRupiah(results.totalDp), highlight: true, highlightColor: "bg-[#00aad2] text-white" },
+      ]
+    }
+  ];
 
   return (
-    <div className="border-t border-slate-100 p-8 animate-fade-in space-y-12 bg-slate-50/30">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* OTR Final Details */}
-        <div className="space-y-8">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-1.5 h-6 bg-[#002C5F] rounded-full" />
-            <h3 className="text-sm font-extrabold uppercase tracking-widest text-slate-900">Struktur Harga Final</h3>
-          </div>
-
-          <div className="space-y-2">
-            {[
-              { label: 'OTR Kendaraan', value: formatRupiah(results.loanPrincipal + results.dpAmount) },
-              { label: `DP Murni (${dpPercent}%)`, value: formatRupiah(results.dpAmount) },
-              { label: 'Pokok Hutang Murni', value: formatRupiah(results.loanPrincipal) },
-              { label: 'Handling Fee (Provisi)', value: formatRupiah(results.provisionFee) },
-              { label: 'Pokok Hutang + Provisi', value: formatRupiah(results.loanWithProvision), highlight: true },
-              { label: `Bunga (${results.interestRate.toFixed(2)}%)`, value: formatRupiah(results.interestAmount) },
-              { label: 'Total Kewajiban Pinjaman', value: formatRupiah(results.totalLoanAmount), emerald: true },
-            ].map((item, idx) => (
-              <div key={idx} className={`flex justify-between items-center p-4 rounded-2xl transition-all border border-transparent hover:bg-white hover:border-slate-200/60 hover:shadow-sm ${item.highlight ? 'bg-[#002C5F]/5 border-[#002C5F]/10' : ''}`}>
-                <span className="text-xs text-slate-500 font-bold uppercase tracking-tight">{item.label}</span>
-                <span className={`text-sm font-extrabold ${item.emerald ? 'text-emerald-600' : 'text-slate-900'}`}>{item.value}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Total DP Details */}
-        <div className="space-y-8">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-1.5 h-6 bg-[#00AAD2] rounded-full" />
-            <h3 className="text-sm font-extrabold uppercase tracking-widest text-slate-900">Rincian Pembayaran Awal</h3>
-          </div>
-
-          <div className="space-y-2">
-            {[
-              { label: 'Uang Muka Murni (DP)', value: formatRupiah(results.dpAmount) },
-              { label: 'Angsuran Bulan Pertama', value: formatRupiah(results.monthlyInstallment) },
-              { label: `Asuransi Mobil (${results.insuranceType})`, value: formatRupiah(results.insuranceAmount) },
-              { label: 'Biaya Administrasi', value: formatRupiah(results.totalAdminFee || results.adminFee) },
-              { label: 'Biaya Layanan TPI', value: formatRupiah(results.tpiFee) },
-              { label: 'TOTAL UANG MUKA (TDP)', value: formatRupiah(results.totalDp), highlight: true, emerald: true },
-            ].map((item, idx) => (
-              <div key={idx} className={`flex justify-between items-center p-4 rounded-2xl transition-all border border-transparent hover:bg-white hover:border-slate-200/60 hover:shadow-sm ${item.highlight ? 'bg-[#002C5F]/5 border-[#002C5F] border' : ''}`}>
-                <span className="text-xs text-slate-500 font-bold uppercase tracking-tight">{item.label}</span>
-                <span className={`text-sm font-extrabold ${item.emerald ? 'text-emerald-600' : 'text-slate-900'}`}>{item.value}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+    <div className="bg-slate-50 dark:bg-gray-900/50 p-6 border-t border-slate-100 dark:border-gray-800 animate-slide-up">
+      <div className="flex items-center gap-2 mb-6">
+        <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+        <h3 className="font-bold text-slate-800 dark:text-slate-200">Detail Perhitungan Lengkap</h3>
       </div>
 
-      {/* Info Box */}
-      <div className="bg-white border border-slate-200/60 rounded-[2rem] p-8 md:p-10 relative overflow-hidden shadow-sm">
-        <div className="absolute top-0 left-0 w-full h-full bg-[#002C5F]/[0.01] pointer-events-none" />
-        <div className="flex items-start gap-6">
-          <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center flex-shrink-0 text-slate-400">
-            <Info className="w-6 h-6" />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {breakdownItems.map((group, idx) => (
+          <div key={idx} className="bg-white dark:bg-gray-800 rounded-xl p-5 border border-slate-100 dark:border-gray-700 shadow-sm">
+            <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-50 dark:border-gray-700">
+              {group.icon}
+              <h4 className="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">{group.group}</h4>
+            </div>
+
+            <div className="space-y-3">
+              {group.items.map((item, itemIdx) => (
+                <div
+                  key={itemIdx}
+                  className={`flex justify-between items-center py-1.5 ${item.highlight
+                      ? item.highlightColor
+                        ? `${item.highlightColor} p-3 rounded-lg mt-2 font-bold`
+                        : "text-[#002c5f] font-bold border-t border-slate-50 pt-3 mt-1"
+                      : ""
+                    }`}
+                >
+                  <span className={`text-xs ${item.highlight && !item.highlightColor ? "text-blue-900" : "text-slate-500"}`}>{item.label}</span>
+                  <span className={`text-sm ${item.highlight && !item.highlightColor ? "text-[#002c5f]" : "text-slate-700 dark:text-slate-300"}`}>{item.value}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="space-y-2">
-            <p className="text-[11px] text-[#002C5F] font-bold uppercase tracking-[0.2em]">Catatan Transparansi</p>
-            <p className="text-sm text-slate-500 leading-relaxed font-medium">
-              Suku bunga efektif {(results.interestRate * 1.8).toFixed(2)}% p.a. Biaya administrasi sudah termasuk PPN.
-              Simulasi ini bersifat estimasi dan sewaktu-waktu dapat berubah mengikuti kebijakan leasing yang berlaku di Hyundai Indonesia.
-            </p>
-          </div>
+        ))}
+      </div>
+
+      <div className="mt-8 p-4 bg-white dark:bg-gray-800 rounded-xl border border-blue-100 dark:border-blue-900/30 flex items-start gap-4">
+        <div className="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+          <Info className="w-4 h-4 text-blue-500" />
+        </div>
+        <div className="text-xs text-slate-500 dark:text-slate-400 space-y-2">
+          <p className="font-semibold text-slate-700 dark:text-slate-300 leading-relaxed">Catatan Penting:</p>
+          <ul className="list-disc pl-4 space-y-1">
+            <li>Perhitungan asuransi menggunakan tarif standar wilayah 2 (Jakarta, Banten, Jawa Barat).</li>
+            <li>Biaya admin dan provisi dapat berubah sewaktu-waktu sesuai kebijakan cabang.</li>
+            <li>Produk asuransi menggunakan skema Kombinasi (All Risk Tahun ke-1, TLO tahun berikutnya).</li>
+          </ul>
         </div>
       </div>
     </div>
