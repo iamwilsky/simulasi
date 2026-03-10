@@ -39,7 +39,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({
     <div className="space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-3">
-          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Harga OTR Kendaraan</label>
+          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 ml-1">Harga OTR Kendaraan</label>
           <div className="relative group">
             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium text-sm">Rp</div>
             <Input
@@ -47,15 +47,15 @@ const BudgetForm: React.FC<BudgetFormProps> = ({
               value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
               onChange={onOtrChange}
               placeholder="Masukkan harga"
-              className="h-14 pl-12 bg-white/5 border-white/5 text-white placeholder:text-gray-800 transition-all rounded-2xl focus:border-white/20 focus:ring-0 text-lg font-medium"
+              className="h-14 pl-12 bg-black/20 border-white/5 text-white placeholder:text-zinc-700 transition-all rounded-2xl focus:border-white/20 focus:ring-0 text-lg font-medium"
             />
           </div>
         </div>
 
         <div className="space-y-3">
-          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Masa Tenor</label>
+          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 ml-1">Masa Tenor</label>
           <Select value={tenor.toString()} onValueChange={onTenorChange}>
-            <SelectTrigger className="h-14 bg-white/5 border-white/5 text-white focus:ring-0 focus:border-white/20 transition-all rounded-2xl text-lg">
+            <SelectTrigger className="h-14 bg-black/20 border-white/5 text-white focus:ring-0 focus:border-white/20 transition-all rounded-2xl text-lg">
               <SelectValue placeholder="Tenor" />
             </SelectTrigger>
             <SelectContent className="bg-[#1A1A1A] border-white/10 text-white rounded-2xl">
@@ -71,7 +71,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-3">
-          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Jenis Asuransi</label>
+          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 ml-1">Jenis Asuransi</label>
           <div className="grid grid-cols-3 gap-2 p-1 bg-white/5 rounded-2xl border border-white/5">
             {[
               { id: 'kombinasi', label: 'Kombinasi' },
@@ -94,7 +94,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({
         </div>
 
         <div className="space-y-3">
-          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Kategori Budget</label>
+          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 ml-1">Kategori Budget</label>
           <div className="grid grid-cols-2 gap-2 p-1 bg-white/5 rounded-2xl border border-white/5">
             {[
               { id: 'tdp', label: 'Total DP' },
@@ -117,7 +117,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({
       </div>
 
       <div className="space-y-3">
-        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">
+        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 ml-1">
           Budget {budgetType === 'tdp' ? "Total DP" : "Angsuran"} Maksimal
         </label>
         <div className="relative group">
@@ -127,7 +127,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({
             value={budgetAmount}
             onChange={onBudgetAmountChange}
             placeholder={budgetType === 'tdp' ? "Masukkan budget DP" : "Masukkan budget angsuran"}
-            className="h-16 pl-12 bg-white/5 border-white/5 text-white placeholder:text-gray-800 transition-all rounded-2xl focus:border-white/20 focus:ring-0 text-xl font-bold"
+            className="h-16 pl-12 bg-black/20 border-white/5 text-white placeholder:text-zinc-700 transition-all rounded-2xl focus:border-white/20 focus:ring-0 text-xl font-bold"
           />
         </div>
       </div>

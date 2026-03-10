@@ -43,7 +43,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
             <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center border border-emerald-500/20">
               <ChevronDown className="h-4 w-4 text-emerald-400" />
             </div>
-            <h2 className="text-xl font-bold tracking-tight">Kalkulasi <span className="text-gray-500">Rinci.</span></h2>
+            <h2 className="text-xl font-bold tracking-tight">Kalkulasi <span className="text-zinc-500">Rinci.</span></h2>
           </div>
           <button
             onClick={() => setShowFullDetails(!showFullDetails)}
@@ -73,10 +73,10 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
           </div>
 
           <div className="flex items-start gap-4 p-4 bg-white/5 border border-white/5 rounded-2xl">
-            <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
-              <Info className="w-4 h-4 text-gray-500" />
+            <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0 text-zinc-400">
+              <Info className="w-4 h-4" />
             </div>
-            <p className="text-xs text-gray-500 font-light leading-relaxed">
+            <p className="text-xs text-zinc-400 font-light leading-relaxed">
               Hasil simulasi ini merupakan estimasi awal. Untuk memproses penawaran resmi, silakan bagikan hasil ini ke konsultan kami melalui tombol di atas.
             </p>
           </div>

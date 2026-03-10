@@ -79,19 +79,25 @@ const Index = () => {
           </div>
 
           <Tabs defaultValue="loan" className="w-full mb-16">
-            <TabsList className="grid w-full grid-cols-2 max-w-sm mx-auto bg-white/5 border border-white/10 p-1 rounded-xl">
-              <TabsTrigger value="loan" className="flex items-center justify-center rounded-lg data-[state=active]:bg-white data-[state=active]:text-black transition-all font-bold uppercase tracking-widest text-[11px]">
+            <TabsList className="grid w-full grid-cols-2 max-w-sm mx-auto bg-white/5 border border-white/10 p-1.5 rounded-2xl">
+              <TabsTrigger
+                value="loan"
+                className="flex items-center justify-center rounded-xl data-[state=active]:bg-white data-[state=active]:text-black text-gray-500 hover:text-white transition-all font-bold uppercase tracking-widest text-[10px] py-3"
+              >
                 <Calculator className="h-3.5 w-3.5 mr-2" />
                 Simulasi Kredit
               </TabsTrigger>
-              <TabsTrigger value="budget" className="flex items-center justify-center rounded-lg data-[state=active]:bg-white data-[state=active]:text-black transition-all font-bold uppercase tracking-widest text-[11px]">
+              <TabsTrigger
+                value="budget"
+                className="flex items-center justify-center rounded-xl data-[state=active]:bg-white data-[state=active]:text-black text-gray-500 hover:text-white transition-all font-bold uppercase tracking-widest text-[10px] py-3"
+              >
                 <Wallet className="h-3.5 w-3.5 mr-2" />
                 Simulasi Budget
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="loan" className="mt-6 sm:mt-8">
-              <div className="frosted-glass p-6 rounded-2xl shadow-md">
+              <div className="bg-white/[0.02] backdrop-blur-3xl border border-white/5 p-8 rounded-3xl shadow-2xl">
                 <LoanCalculator
                   defaultOtr={undefined}
                   defaultDpPercent={dpPercent}
@@ -101,7 +107,7 @@ const Index = () => {
             </TabsContent>
 
             <TabsContent value="budget" className="mt-6 sm:mt-8">
-              <div className="frosted-glass p-6 rounded-2xl shadow-md">
+              <div className="bg-white/[0.02] backdrop-blur-3xl border border-white/5 p-8 rounded-3xl shadow-2xl">
                 <BudgetCalculator
                   defaultOtr={undefined}
                   defaultTenor={tenor}

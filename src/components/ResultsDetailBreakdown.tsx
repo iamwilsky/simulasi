@@ -56,8 +56,8 @@ const ResultsDetailBreakdown: React.FC<ResultsDetailBreakdownProps> = ({
               { label: `Bunga (${results.interestRate.toFixed(2)}%)`, value: formatRupiah(results.interestAmount) },
               { label: 'Total Kewajiban Pinjaman', value: formatRupiah(results.totalLoanAmount), emerald: true },
             ].map((item, idx) => (
-              <div key={idx} className={`flex justify-between items-center p-3 rounded-xl transition-colors hover:bg-white/[0.02] ${item.highlight ? 'bg-white/5' : ''}`}>
-                <span className="text-xs text-gray-500 font-medium">{item.label}</span>
+              <div key={idx} className={`flex justify-between items-center p-3 rounded-xl transition-colors hover:bg-white/[0.02] ${item.highlight ? 'bg-white/5 border border-white/5' : ''}`}>
+                <span className="text-xs text-zinc-400 font-medium">{item.label}</span>
                 <span className={`text-sm font-bold ${item.emerald ? 'text-emerald-400' : 'text-white'}`}>{item.value}</span>
               </div>
             ))}
@@ -81,7 +81,7 @@ const ResultsDetailBreakdown: React.FC<ResultsDetailBreakdownProps> = ({
               { label: 'TOTAL UANG MUKA (TDP)', value: formatRupiah(results.totalDp), highlight: true, emerald: true },
             ].map((item, idx) => (
               <div key={idx} className={`flex justify-between items-center p-3 rounded-xl transition-colors hover:bg-white/[0.02] ${item.highlight ? 'bg-white/5 border border-white/5' : ''}`}>
-                <span className="text-xs text-gray-500 font-medium">{item.label}</span>
+                <span className="text-xs text-zinc-400 font-medium">{item.label}</span>
                 <span className={`text-sm font-bold ${item.emerald ? 'text-emerald-400' : 'text-white'}`}>{item.value}</span>
               </div>
             ))}
@@ -98,7 +98,7 @@ const ResultsDetailBreakdown: React.FC<ResultsDetailBreakdownProps> = ({
           </div>
           <div className="space-y-2">
             <p className="text-xs text-white font-bold uppercase tracking-widest">Catatan Penting</p>
-            <p className="text-xs text-gray-500 leading-relaxed font-light">
+            <p className="text-xs text-zinc-400 leading-relaxed font-light">
               Suku bunga efektif {(results.interestRate * 1.8).toFixed(2)}% p.a. Biaya administrasi sudah termasuk PPN.
               Simulasi ini bersifat estimasi dan sewaktu-waktu dapat berubah mengikuti kebijakan leasing yang berlaku.
             </p>

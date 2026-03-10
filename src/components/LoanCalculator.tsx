@@ -109,7 +109,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="space-y-3">
-            <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Harga OTR Kendaraan</label>
+            <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 ml-1">Harga OTR Kendaraan</label>
             <div className="relative group">
               <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium text-sm">Rp</div>
               <Input
@@ -117,28 +117,28 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
                 value={otrPrice > 0 ? otrPrice.toLocaleString('id-ID') : ""}
                 onChange={handleOtrChange}
                 placeholder="Masukkan harga"
-                className="h-14 pl-12 bg-white/5 border-white/5 text-white placeholder:text-gray-800 transition-all rounded-2xl focus:border-white/20 focus:ring-0 text-lg font-medium"
+                className="h-14 pl-12 bg-black/20 border-white/5 text-white placeholder:text-zinc-700 transition-all rounded-2xl focus:border-white/20 focus:ring-0 text-lg font-medium"
               />
             </div>
           </div>
 
           <div className="space-y-3">
-            <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Persentase DP</label>
+            <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 ml-1">Persentase DP</label>
             <div className="flex gap-3">
               <Input
                 type="number"
                 value={dpPercent}
                 onChange={handleDpPercentChange}
-                className="h-14 bg-white/5 border-white/5 text-white transition-all rounded-2xl focus:border-white/20 focus:ring-0 text-lg font-medium"
+                className="h-14 bg-black/20 border-white/5 text-white transition-all rounded-2xl focus:border-white/20 focus:ring-0 text-lg font-medium"
               />
-              <div className="h-14 w-14 bg-white/5 border border-white/5 rounded-2xl flex items-center justify-center text-gray-500 font-bold">%</div>
+              <div className="h-14 w-14 bg-white/5 border border-white/5 rounded-2xl flex items-center justify-center text-zinc-400 font-bold">%</div>
             </div>
           </div>
 
           <div className="space-y-3">
-            <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 ml-1">Masa Tenor</label>
+            <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 ml-1">Masa Tenor</label>
             <Select value={tenor.toString()} onValueChange={handleTenorChange}>
-              <SelectTrigger className="h-14 bg-white/5 border-white/5 text-white focus:ring-0 focus:border-white/20 transition-all rounded-2xl text-lg">
+              <SelectTrigger className="h-14 bg-black/20 border-white/5 text-white focus:ring-0 focus:border-white/20 transition-all rounded-2xl text-lg">
                 <SelectValue placeholder="Tenor" />
               </SelectTrigger>
               <SelectContent className="bg-[#1A1A1A] border-white/10 text-white rounded-2xl">
