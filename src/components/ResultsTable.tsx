@@ -37,23 +37,18 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
 
   return (
     <div className="w-full">
-      <div className="bg-white border border-slate-200/60 rounded-[2.5rem] overflow-hidden shadow-[0_10px_60px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0_20px_80px_rgba(0,0,0,0.06)]">
-        <div className="flex items-center justify-between p-8 border-b border-slate-100">
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-xl bg-[#002C5F]/5 flex items-center justify-center border border-[#002C5F]/10">
-              <ChevronDown className="h-5 w-5 text-[#002C5F]" />
-            </div>
-            <h2 className="text-xl font-bold tracking-tight text-slate-900">Kalkulasi <span className="text-slate-400">Rinci.</span></h2>
-          </div>
+      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+        <div className="flex items-center justify-between p-6 border-b border-slate-100">
+          <h2 className="text-lg font-bold tracking-tight text-slate-900">Hasil Simulasi</h2>
           <button
             onClick={() => setShowFullDetails(!showFullDetails)}
-            className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 hover:text-[#002C5F] hover:border-[#002C5F]/30 transition-all shadow-sm"
+            className="text-slate-400 hover:text-[#002C5F] transition-all p-2"
           >
-            {showFullDetails ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+            {showFullDetails ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
           </button>
         </div>
 
-        <div className="p-8 space-y-8">
+        <div className="p-6 space-y-6">
           {/* Main Summary Cards */}
           <ResultsSummaryCards
             results={results}
@@ -72,12 +67,10 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, otrPrice, dpPercen
             />
           </div>
 
-          <div className="flex items-start gap-4 p-5 bg-slate-50 border border-slate-200/60 rounded-[1.5rem]">
-            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center flex-shrink-0 text-slate-400 shadow-sm">
-              <Info className="w-5 h-5" />
-            </div>
-            <p className="text-xs text-slate-500 font-medium leading-relaxed">
-              Hasil simulasi ini merupakan estimasi awal. Untuk memproses penawaran resmi, silakan bagikan hasil ini ke konsultan kami melalui tombol di atas.
+          <div className="flex items-start gap-3 p-4 bg-blue-50/50 border border-blue-100 rounded-lg">
+            <Info className="w-4 h-4 text-blue-500 mt-0.5 shrink-0" />
+            <p className="text-[11px] text-blue-700/80 font-medium">
+              Hasil simulasi ini merupakan estimasi awal. Klik tombol di kanan atas untuk melihat detail lengkap.
             </p>
           </div>
         </div>

@@ -32,8 +32,8 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-slate-50 text-slate-900">
+            <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm flex items-center gap-4">
+              <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-slate-50 text-slate-900">
                 <Car className="w-6 h-6" />
               </div>
               <div>
@@ -42,8 +42,8 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-blue-50 text-blue-500">
+            <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm flex items-center gap-4">
+              <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-blue-50 text-blue-500">
                 <CreditCard className="w-6 h-6" />
               </div>
               <div>
@@ -52,8 +52,8 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-emerald-50 text-emerald-500">
+            <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm flex items-center gap-4">
+              <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-emerald-50 text-emerald-500">
                 <CheckCircle className="w-6 h-6" />
               </div>
               <div>
@@ -84,7 +84,7 @@ const Index = () => {
             </div>
 
             <TabsContent value="loan" className="mt-0">
-              <div className="bg-white border border-slate-100 p-6 md:p-10 rounded-3xl shadow-sm">
+              <div className="bg-white border border-slate-100 p-6 md:p-10 rounded-xl shadow-sm">
                 <LoanCalculator
                   defaultOtr={undefined}
                   defaultDpPercent={dpPercent}
@@ -94,7 +94,7 @@ const Index = () => {
             </TabsContent>
 
             <TabsContent value="budget" className="mt-0">
-              <div className="bg-white border border-slate-100 p-6 md:p-10 rounded-3xl shadow-sm">
+              <div className="bg-white border border-slate-100 p-6 md:p-10 rounded-xl shadow-sm">
                 <BudgetCalculator
                   defaultOtr={undefined}
                   defaultTenor={tenor}
@@ -103,9 +103,9 @@ const Index = () => {
             </TabsContent>
           </Tabs>
 
-          <div className="bg-white border border-slate-100 rounded-3xl p-8 md:p-12 shadow-sm">
+          <div className="bg-white border border-slate-100 rounded-xl p-8 md:p-12 shadow-sm">
             <div className="flex items-center mb-8">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center mr-4">
+              <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mr-4">
                 <Info className="h-5 w-5 text-blue-600" />
               </div>
               <h2 className="text-2xl font-bold text-slate-900">Informasi Penting</h2>

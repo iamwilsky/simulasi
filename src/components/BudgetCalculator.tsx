@@ -173,7 +173,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
 
   return (
     <div className="w-full animate-fade-in space-y-12">
-      <div className="bg-white border border-slate-100 rounded-3xl p-6 md:p-10 relative overflow-hidden group">
+      <div className="bg-white border border-slate-100 rounded-xl p-6 md:p-10 relative overflow-hidden group">
         <div className="flex items-center gap-4 mb-10">
           <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
             <Wallet className="h-5 w-5 text-blue-600" />

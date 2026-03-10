@@ -142,7 +142,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
         <div className="lg:w-1/2 w-full flex">
           <div className="flex flex-col space-y-4 w-full h-full justify-between">
             {/* Harga OTR Card */}
-            <div className="bg-[#002C5F] text-white rounded-xl p-5 flex justify-between items-center shadow-md">
+            <div className="bg-[#002C5F] text-white rounded-lg p-5 flex justify-between items-center shadow-md">
               <div className="flex items-center">
                 <div className="bg-white/10 rounded-lg w-10 h-10 flex items-center justify-center mr-4">
                   <Car className="h-5 w-5 text-white" />
@@ -153,7 +153,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
 
             {/* Total DP Card */}
-            <div className="bg-[#00AAD2] text-white rounded-xl p-5 flex justify-between items-center shadow-md">
+            <div className="bg-[#00AAD2] text-white rounded-lg p-5 flex justify-between items-center shadow-md">
               <div className="flex items-center">
                 <div className="bg-white/10 rounded-lg w-10 h-10 flex items-center justify-center mr-4">
                   <Wallet className="h-5 w-5 text-white" />
@@ -179,7 +179,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
             </div>
 
             {/* Tenor Card */}
-            <div className="bg-slate-500 text-white rounded-xl p-5 flex justify-between items-center shadow-md">
+            <div className="bg-slate-500 text-white rounded-lg p-5 flex justify-between items-center shadow-md">
               <div className="flex items-center">
                 <div className="bg-white/10 rounded-lg w-10 h-10 flex items-center justify-center mr-4">
                   <Calendar className="h-5 w-5 text-white" />

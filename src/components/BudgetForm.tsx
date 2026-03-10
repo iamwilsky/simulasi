@@ -59,7 +59,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({
             <SelectTrigger className="h-11 bg-slate-50 border-slate-200 text-slate-900 focus:ring-1 focus:ring-blue-500 transition-all rounded-lg font-medium">
               <SelectValue placeholder="Pilih Tenor" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-slate-200 text-slate-900 rounded-xl">
+            <SelectContent className="bg-white border-slate-200 text-slate-900 rounded-xl shadow-xl">
               {[1, 2, 3, 4, 5, 6, 7].map((t) => (
                 <SelectItem key={t} value={t.toString()} className="font-medium">
                   {t} tahun
