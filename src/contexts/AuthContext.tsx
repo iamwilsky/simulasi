@@ -1,6 +1,6 @@
-
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
 import { supabase } from '@/lib/supabaseClient';
+import { toast } from 'sonner';
 
 interface AuthContextType {
     user: any;
@@ -18,112 +18,112 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [subscription, setSubscription] = useState<any>(null);
     const [isLoading, setIsLoading] = useState(true);
 
+    // Guard: mencegah fetchUserData berjalan bersamaan (race condition)
+    const fetchingRef = useRef(false);
+
     useEffect(() => {
         // 1. Get initial session
         supabase.auth.getSession().then(({ data: { session } }) => {
             setUser(session?.user ?? null);
-            if (session?.user) fetchUserData(session.user.id);
-            else setIsLoading(false);
+            if (session?.user) {
+                fetchUserData(session.user.id);
+            } else {
+                setIsLoading(false);
+            }
         });
 
         // 2. Listen for auth changes
         const { data: { subscription: authListener } } = supabase.auth.onAuthStateChange((_event, session) => {
             setUser(session?.user ?? null);
-            if (session?.user) fetchUserData(session.user.id);
-            else {
+            if (session?.user) {
+                fetchUserData(session.user.id);
+            } else {
                 setProfile(null);
                 setSubscription(null);
                 setIsLoading(false);
             }
         });
 
-        // 3. Periodic Session Check (Every 30 seconds)
-        const sessionInterval = setInterval(() => {
-            if (user) {
-                checkSingleSession(user.id);
-            }
-        }, 30000);
+        return () => {
+            authListener.unsubscribe();
+        };
+    }, []);
 
-        // 4. Listen for window focus to re-verify session immediately
-        const handleFocus = async () => {
-            const { data: sessionData } = await supabase.auth.getSession();
-            if (sessionData.session?.user) {
-                fetchUserData(sessionData.session.user.id);
+    // Periodic + focus session check (terpisah dari fetchUserData)
+    useEffect(() => {
+        if (!user) return;
+
+        const checkSession = async () => {
+            const localId = localStorage.getItem('simulasi_session_id');
+            // Jangan cek jika sedang dalam proses login (PENDING) atau belum ada ID
+            if (!localId || localId === 'PENDING') return;
+
+            const { data } = await supabase
+                .from('profiles')
+                .select('last_session_id')
+                .eq('id', user.id)
+                .single();
+
+            if (data?.last_session_id && data.last_session_id !== localId) {
+                forceLogout();
             }
         };
+
+        // Cek setiap 30 detik
+        const interval = setInterval(checkSession, 30000);
+
+        // Cek saat window di-focus
+        const handleFocus = () => checkSession();
         window.addEventListener('focus', handleFocus);
 
         return () => {
-            authListener.unsubscribe();
-            clearInterval(sessionInterval);
+            clearInterval(interval);
             window.removeEventListener('focus', handleFocus);
         };
     }, [user?.id]);
 
     const fetchUserData = async (userId: string) => {
-        const [profileRes, subRes] = await Promise.all([
-            supabase.from('profiles').select('*').eq('id', userId).single(),
-            supabase.from('subscriptions').select('*').eq('user_id', userId).single()
-        ]);
+        // Guard: jika sudah ada proses fetch, abaikan
+        if (fetchingRef.current) return;
+        fetchingRef.current = true;
 
-        if (profileRes.data) {
-            const localSessionId = localStorage.getItem('simulasi_session_id');
-            const dbSessionId = profileRes.data.last_session_id;
+        try {
+            const [profileRes, subRes] = await Promise.all([
+                supabase.from('profiles').select('*').eq('id', userId).single(),
+                supabase.from('subscriptions').select('*').eq('user_id', userId).single()
+            ]);
 
-            // STRATEGI: Autonomic Session Claiming
-            // Jika user login tapi perangkat ini belum punya ID, maka KLAIM sesi ini
-            if (!localSessionId || localSessionId === 'PENDING') {
-                const newId = Math.random().toString(36).substring(2, 15);
-                localStorage.setItem('simulasi_session_id', newId);
+            // Ambil localSessionId SETELAH fetch selesai (agar mendapat nilai terbaru)
+            const localId = localStorage.getItem('simulasi_session_id');
+            const dbId = profileRes.data?.last_session_id;
 
-                await supabase
-                    .from('profiles')
-                    .update({ last_session_id: newId })
-                    .eq('id', userId);
-
-                profileRes.data.last_session_id = newId;
-            }
-            // Jika sudah punya ID tapi TIDAK COCOK dengan DB, baru Logout (karena sudah ada perangkat lain yang klaim)
-            else if (dbSessionId && dbSessionId !== localSessionId) {
-                handleSessionMismatch();
+            // ATURAN VALIDASI:
+            // 1. Jika PENDING → Login.tsx sedang proses, jangan validasi, cukup load data
+            // 2. Jika tidak ada localId → halaman publik / belum login via form, load data saja
+            // 3. Jika ada localId DAN ada dbId DAN tidak cocok → perangkat lain sudah klaim
+            if (localId && localId !== 'PENDING' && dbId && dbId !== localId) {
+                forceLogout();
                 return;
             }
 
             setProfile(profileRes.data);
-        }
-
-        setSubscription(subRes.data);
-        setIsLoading(false);
-    };
-
-    const checkSingleSession = async (userId: string) => {
-        const { data: profileRes } = await supabase
-            .from('profiles')
-            .select('last_session_id')
-            .eq('id', userId)
-            .single();
-
-        const localSessionId = localStorage.getItem('simulasi_session_id');
-
-        if (profileRes?.last_session_id && localSessionId && localSessionId !== 'PENDING') {
-            if (profileRes.last_session_id !== localSessionId) {
-                handleSessionMismatch();
-            }
+            setSubscription(subRes.data);
+            setIsLoading(false);
+        } finally {
+            fetchingRef.current = false;
         }
     };
 
-    const handleSessionMismatch = async () => {
-        // Redundant safety check
+    const forceLogout = async () => {
+        // Safety: jangan logout jika sedang dalam proses login
         if (localStorage.getItem('simulasi_session_id') === 'PENDING') return;
 
         await supabase.auth.signOut();
         localStorage.removeItem('simulasi_session_id');
 
-        import('sonner').then(({ toast }) => {
-            toast.error('Akun Anda masuk di perangkat lain. Akses di perangkat ini telah dihentikan.', {
-                duration: 10000,
-                id: 'session-clash'
-            });
+        toast.error('Akun Anda login di perangkat lain. Sesi ini dihentikan.', {
+            duration: 10000,
+            id: 'session-clash'
         });
 
         setUser(null);

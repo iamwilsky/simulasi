@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabaseClient';
@@ -19,10 +18,7 @@ const Register = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            // Tandai sesi sebagai pending agar transisi AuthContext mulus
-            localStorage.setItem('simulasi_session_id', 'PENDING');
-
-            const { error } = await supabase.auth.signUp({
+            const { data, error } = await supabase.auth.signUp({
                 email,
                 password,
                 options: {
@@ -33,11 +29,22 @@ const Register = () => {
             });
             if (error) throw error;
 
+            // Jika otomatis login saat pendaftaran, set session ID
+            if (data.session) {
+                const sessionId = crypto.randomUUID?.() || Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+
+                await supabase
+                    .from('profiles')
+                    .update({ last_session_id: sessionId })
+                    .eq('id', data.session.user.id);
+
+                localStorage.setItem('simulasi_session_id', sessionId);
+            }
+
             toast.success('Registrasi berhasil!');
             navigate('/login');
         } catch (error: any) {
             toast.error(error.message || 'Gagal mendaftar');
-            localStorage.removeItem('simulasi_session_id');
         } finally {
             setLoading(false);
         }
@@ -45,7 +52,6 @@ const Register = () => {
 
     return (
         <div className="relative min-h-screen w-full flex items-center justify-center bg-[#0A0A0A] overflow-hidden">
-            {/* Background Background with Blur/Darken */}
             <div className="absolute inset-0 z-0">
                 <img
                     src={heroBg}

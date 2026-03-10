@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/lib/supabaseClient';
@@ -21,17 +20,29 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            // Tandai sebagai pending agar AuthContext tahu ini perangkat baru yang akan klaim sesi
+            // STEP 1: Tandai PENDING agar AuthContext tidak memvalidasi sesi saat transisi
             localStorage.setItem('simulasi_session_id', 'PENDING');
 
-            const { error } = await supabase.auth.signInWithPassword({ email, password });
+            // STEP 2: Login ke Supabase
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
             if (error) throw error;
+
+            // STEP 3: Generate session ID unik untuk perangkat ini
+            const sessionId = crypto.randomUUID?.() || Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+
+            // STEP 4: Tulis ke database DULU (agar perangkat lama langsung terdeteksi mismatch)
+            await supabase
+                .from('profiles')
+                .update({ last_session_id: sessionId })
+                .eq('id', data.user!.id);
+
+            // STEP 5: Baru tulis ke localStorage (sekarang AuthContext akan mengenali perangkat ini)
+            localStorage.setItem('simulasi_session_id', sessionId);
 
             toast.success('Login berhasil!');
             navigate(from, { replace: true });
         } catch (error: any) {
             toast.error(error.message || 'Gagal login');
-            // Bersihkan pending jika gagal
             localStorage.removeItem('simulasi_session_id');
         } finally {
             setLoading(false);
@@ -40,7 +51,6 @@ const Login = () => {
 
     return (
         <div className="relative min-h-screen w-full flex items-center justify-center bg-[#0A0A0A] overflow-hidden">
-            {/* Background Background with Blur/Darken */}
             <div className="absolute inset-0 z-0">
                 <img
                     src={heroBg}
