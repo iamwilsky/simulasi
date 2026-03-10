@@ -23,11 +23,14 @@ const Login = () => {
             const { data, error } = await supabase.auth.signInWithPassword({ email, password });
             if (error) throw error;
 
-            // Perbarui last_session_id di tabel profiles untuk pembatasan satu perangkat
+            // Perbarui last_session_id untuk pembatasan satu perangkat
             if (data.session) {
+                const sessionId = Math.random().toString(36).substring(2, 15);
+                localStorage.setItem('simulasi_session_id', sessionId);
+
                 await supabase
                     .from('profiles')
-                    .update({ last_session_id: data.session.user.id + ':' + data.session.access_token.slice(-10) })
+                    .update({ last_session_id: sessionId })
                     .eq('id', data.session.user.id);
             }
 

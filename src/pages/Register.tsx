@@ -31,9 +31,12 @@ const Register = () => {
 
             // Perbarui last_session_id jika otomatis login saat pendaftaran
             if (data.session) {
+                const sessionId = Math.random().toString(36).substring(2, 15);
+                localStorage.setItem('simulasi_session_id', sessionId);
+
                 await supabase
                     .from('profiles')
-                    .update({ last_session_id: data.session.user.id + ':' + data.session.access_token.slice(-10) })
+                    .update({ last_session_id: sessionId })
                     .eq('id', data.session.user.id);
             }
 
