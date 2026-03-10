@@ -2,9 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 import heroBg from '@/assets/hero-bg.png';
 
 const LandingPage = () => {
+    const { user } = useAuth();
+    const ctaTarget = user ? "/dashboard" : "/register";
+
     return (
         <div className="relative h-screen w-full overflow-hidden bg-[#0A0A0A] text-white font-sans">
 
@@ -36,7 +40,7 @@ const LandingPage = () => {
 
                     {/* Left Side CTA */}
                     <div className="flex items-center gap-6 animate-fade-up" style={{ animationDelay: '200ms' }}>
-                        <Link to="/register" className="w-auto">
+                        <Link to={ctaTarget} className="w-auto">
                             <div className="flex items-center group cursor-pointer bg-white text-black pl-5 pr-1 py-1 rounded-sm transition-all hover:bg-gray-100 max-w-fit">
                                 <span className="text-[11px] md:text-[13px] font-bold uppercase tracking-widest mr-4 md:mr-8">Mulai Simulasi</span>
                                 <div className="bg-[#41EAD4] p-3 rounded-sm transition-transform group-hover:translate-x-0.5">
