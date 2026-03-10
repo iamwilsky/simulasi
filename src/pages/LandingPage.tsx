@@ -24,11 +24,9 @@ const LandingPage = () => {
                 <div className="absolute inset-0 bg-black/20" />
             </div>
 
-            <main className="relative z-10 flex flex-col h-full px-10">
+            <main className="relative z-10 flex flex-col h-full">
 
-                {/* Content Area - Middle Left */}
-                <div className="flex-1 flex flex-col justify-center max-w-4xl pt-28 md:pt-32">
-
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-center">
                     {/* Headline */}
                     <div className="mb-8 md:mb-10 animate-fade-up">
                         <h1 className="text-4xl sm:text-6xl md:text-[5.5rem] lg:text-[7rem] font-bold tracking-[-0.05em] leading-[0.95] mb-4">
@@ -49,7 +47,6 @@ const LandingPage = () => {
                             </div>
                         </Link>
                     </div>
-
                 </div>
 
                 {/* Bottom Bar Content */}
