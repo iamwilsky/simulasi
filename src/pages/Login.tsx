@@ -96,7 +96,7 @@ const Login = () => {
 
                     <div className="mt-10 text-center">
                         <p className="text-gray-500 text-sm font-light">
-                            Belum punya akun? <Link to="/register" className="text-white hover:underline font-medium">Buka akses sekarang</Link>
+                            Belum punya akun? <Link to="/register" className="text-white hover:underline font-medium">Daftar sekarang</Link>
                         </p>
                     </div>
                 </div>

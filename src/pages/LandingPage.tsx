@@ -7,7 +7,7 @@ import heroBg from '@/assets/hero-bg.png';
 
 const LandingPage = () => {
     const { user } = useAuth();
-    const ctaTarget = user ? "/dashboard" : "/register";
+    const ctaTarget = user ? "/dashboard" : "/login";
 
     return (
         <div className="relative h-screen w-full overflow-hidden bg-[#0A0A0A] text-white font-sans">
