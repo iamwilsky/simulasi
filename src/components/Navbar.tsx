@@ -38,9 +38,9 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center">
-              <span className={`text-xl sm:text-2xl tracking-tighter transition-all duration-300 ${isTransparentPage ? 'text-white' : 'text-[#002C5F] dark:text-white'}`}>
-                <strong className="font-extrabold">simulasi</strong>kredit.id
+            <Link to="/" className="flex items-center group">
+              <span className={`text-xl sm:text-2xl tracking-tighter transition-all duration-300 ${isTransparentPage ? 'text-white' : 'text-[#002C5F] dark:text-white'}`} style={{ fontFamily: "'Outfit', sans-serif" }}>
+                <span className="font-extrabold uppercase tracking-[0.02em]">simulasi</span>kredit.id
               </span>
             </Link>
           </div>
