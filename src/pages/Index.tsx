@@ -14,8 +14,6 @@ const Index = () => {
 
   return (
     <div className="relative min-h-screen w-full flex flex-col bg-slate-50 text-slate-900 overflow-x-hidden pt-20">
-      <Navbar />
-
       <main className="relative z-10 flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12 md:mb-16 animate-fade-up">

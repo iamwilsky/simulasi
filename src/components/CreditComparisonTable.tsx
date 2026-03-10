@@ -64,26 +64,26 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
 
   return (
     <div className="w-full bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden animate-fade-up">
-      <div className="p-5 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-[#00aad2]/10 flex items-center justify-center">
-            <Info className="w-4 h-4 text-[#00aad2]" />
+      <div className="p-6 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 rounded-full bg-[#00aad2]/10 flex items-center justify-center">
+            <Info className="w-5 h-5 text-[#00aad2]" />
           </div>
-          <h2 className="text-lg font-semibold text-[#002c5f] dark:text-blue-100 font-hyundai">Perbandingan Tenor</h2>
+          <h2 className="text-xl font-bold text-[#002c5f] dark:text-blue-100 uppercase tracking-tight">Perbandingan Tenor</h2>
         </div>
         <div className="hidden sm:block">
-          <p className="text-xs text-gray-500">Klik baris untuk melihat detail</p>
+          <p className="text-sm text-gray-400 font-medium">Klik baris untuk melihat detail</p>
         </div>
       </div>
 
       <div className="overflow-x-auto">
         <Table>
-          <TableHeader className="bg-gray-50 dark:bg-gray-900/50">
-            <TableRow>
-              <TableHead className="text-center font-bold text-[#002c5f] py-4">Tenor</TableHead>
-              <TableHead className="text-center font-bold text-[#002c5f] py-4">Bunga</TableHead>
-              <TableHead className="text-right font-bold text-[#002c5f] py-4">Angsuran/Bulan</TableHead>
-              <TableHead className="text-right font-bold text-[#002c5f] py-4">Total DP</TableHead>
+          <TableHeader className="bg-white border-b border-gray-100">
+            <TableRow className="hover:bg-transparent">
+              <TableHead className="text-center font-bold text-[#002c5f] py-6 text-sm">Tenor</TableHead>
+              <TableHead className="text-center font-bold text-[#002c5f] py-6 text-sm">Bunga</TableHead>
+              <TableHead className="text-right font-bold text-[#002c5f] py-6 text-sm">Angsuran/Bulan</TableHead>
+              <TableHead className="text-right font-bold text-[#002c5f] py-6 text-sm">Total DP</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -94,24 +94,24 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
               return (
                 <TableRow
                   key={tenor}
-                  className={`cursor-pointer transition-colors ${isSelected ? 'bg-[#00aad2]/5 dark:bg-[#00aad2]/10' : 'hover:bg-gray-50 dark:hover:bg-gray-800/50'}`}
+                  className={`cursor-pointer transition-colors border-b border-gray-100/50 ${isSelected ? 'bg-blue-50/50 dark:bg-blue-900/10' : 'hover:bg-gray-50/80 dark:hover:bg-gray-800/50'}`}
                   onClick={() => setSelectedTenor(isSelected ? null : tenor)}
                 >
-                  <TableCell className="text-center font-medium py-4">
+                  <TableCell className="text-center py-6">
                     <div className="flex flex-col items-center">
-                      <span className="text-gray-900 dark:text-white font-bold">{tenor} Tahun</span>
-                      <span className="text-[10px] text-gray-400 capitalize">{tenor * 12} bulan</span>
+                      <span className="text-gray-900 dark:text-white font-bold text-base leading-tight">{tenor} Tahun</span>
+                      <span className="text-[11px] text-gray-400 font-medium mt-0.5">{tenor * 12} Bulan</span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-center py-4">
-                    <span className="inline-flex items-center px-2 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold">
+                  <TableCell className="text-center py-6">
+                    <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 text-xs font-bold ring-1 ring-blue-100/50">
                       {data.interestRate.toFixed(2)}%
                     </span>
                   </TableCell>
-                  <TableCell className="text-right font-bold text-[#002c5f] dark:text-blue-200 py-4">
+                  <TableCell className="text-right font-bold text-[#002c5f] dark:text-blue-200 py-6 text-base">
                     {formatRupiah(data.monthlyInstallment)}
                   </TableCell>
-                  <TableCell className="text-right font-bold text-[#00aad2] py-4">
+                  <TableCell className="text-right font-bold text-[#00aad2] py-6 text-base">
                     {formatRupiah(data.totalDp)}
                   </TableCell>
                 </TableRow>
@@ -122,25 +122,25 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
       </div>
 
       {selectedTenor && (
-        <div className="p-4 bg-[#002c5f] text-white animate-fade-in">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="p-5 bg-gradient-to-r from-[#002c5f] to-[#001c3f] text-white animate-fade-in shadow-inner">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex items-center">
-              <div className="bg-white/10 p-2 rounded-lg mr-3">
-                <Car className="w-5 h-5 text-white" />
+              <div className="bg-white/10 p-3 rounded-xl mr-4 backdrop-blur-sm">
+                <Car className="w-6 h-6 text-white" />
               </div>
               <div>
-                <p className="text-[10px] text-white/60 uppercase font-bold tracking-wider">Harga OTR</p>
-                <p className="text-lg font-bold">{formatRupiah(otrPrice)}</p>
+                <p className="text-[11px] text-white/60 uppercase font-bold tracking-widest mb-0.5">Harga OTR</p>
+                <p className="text-xl font-bold">{formatRupiah(otrPrice)}</p>
               </div>
             </div>
 
             <div className="flex items-center">
-              <div className="bg-white/10 p-2 rounded-lg mr-3">
-                <Wallet className="w-5 h-5 text-white" />
+              <div className="bg-white/10 p-3 rounded-xl mr-4 backdrop-blur-sm">
+                <Wallet className="w-6 h-6 text-white" />
               </div>
               <div>
-                <p className="text-[10px] text-white/60 uppercase font-bold tracking-wider">DP Murni ({dpPercent}%)</p>
-                <p className="text-lg font-bold">{formatRupiah(otrPrice * (dpPercent / 100))}</p>
+                <p className="text-[11px] text-white/60 uppercase font-bold tracking-widest mb-0.5">DP Murni ({dpPercent}%)</p>
+                <p className="text-xl font-bold">{formatRupiah(otrPrice * (dpPercent / 100))}</p>
               </div>
             </div>
           </div>
