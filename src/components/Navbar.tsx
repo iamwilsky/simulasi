@@ -7,7 +7,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
 
 const Navbar: React.FC = () => {
-  const [isPinDialogOpen, setIsPinDialogOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
@@ -17,7 +16,7 @@ const Navbar: React.FC = () => {
 
   const handleSettingsClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    setIsPinDialogOpen(true);
+    navigate("/settings");
   };
 
   const handleLogout = async () => {
@@ -26,9 +25,6 @@ const Navbar: React.FC = () => {
     navigate("/");
   };
 
-  const handlePinSuccess = () => {
-    navigate("/settings");
-  };
 
   return (
     <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${isTransparentPage
@@ -107,12 +103,6 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      <PinDialog
-        isOpen={isPinDialogOpen}
-        onClose={() => setIsPinDialogOpen(false)}
-        correctPin="082788"
-        onSuccess={handlePinSuccess}
-      />
     </header>
   );
 };

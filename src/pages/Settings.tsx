@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from "react";
 import FormInput from "@/components/FormInput";
 import { useSettings } from "@/context/SettingsContext";
-import { Sliders, Save, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Sliders, Save, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const Settings = () => {
+  const navigate = useNavigate();
   const { provisionRate, setProvisionRate, additionalAdminFee, setAdditionalAdminFee } = useSettings();
 
   const handleProvisionRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,10 +79,20 @@ const Settings = () => {
                 description="Biaya admin tambahan di luar biaya admin default"
               />
 
-              <div className="pt-4">
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Perubahan parameter akan diterapkan secara otomatis pada perhitungan simulasi kredit.
-                </p>
+              <div className="pt-8 flex flex-col sm:flex-row gap-4">
+                <Button
+                  onClick={() => navigate("/dashboard")}
+                  className="bg-primary text-white hover:bg-primary/90 px-8 py-6 h-auto text-lg font-bold rounded-xl shadow-lg shadow-primary/20 flex-1 sm:flex-none"
+                >
+                  <CheckCircle2 className="mr-2 h-5 w-5" />
+                  OK - Selesai
+                </Button>
+
+                <div className="flex items-center">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 italic">
+                    * Perubahan disimpan otomatis
+                  </p>
+                </div>
               </div>
             </div>
           </div>
