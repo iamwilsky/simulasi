@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Wallet } from "lucide-react";
-import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
+import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee, getTpiFee } from "@/data/rateData";
 import { useSettings } from "@/context/SettingsContext";
 import BudgetForm from "./BudgetForm";
 import BudgetResults from "./BudgetResults";
@@ -59,7 +59,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
       const provisionFee = loanPrincipal * (provisionRate / 100);
       const loanWithProvision = loanPrincipal + provisionFee;
 
-      const interestRate = getInterestRateFromTable(tenor);
+      const interestRate = getInterestRateFromTable(tenor, testDp, insuranceType);
       const interestAmount = loanWithProvision * (interestRate / 100) * tenor;
       const totalLoanAmount = loanWithProvision + interestAmount;
       const monthlyInstallment = Math.round(totalLoanAmount / (tenor * 12));
@@ -136,7 +136,7 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
     const loanWithProvision = roundedLoanPrincipal + roundedProvisionFee;
     const roundedLoanWithProvision = Math.round(loanWithProvision / 1000) * 1000;
 
-    const interestRate = getInterestRateFromTable(tenor);
+    const interestRate = getInterestRateFromTable(tenor, calculatedDpPercent, insuranceType);
     const interestAmount = roundedLoanWithProvision * (interestRate / 100) * tenor;
     const roundedInterestAmount = Math.round(interestAmount / 1000) * 1000;
 
