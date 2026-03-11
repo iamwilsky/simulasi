@@ -86,7 +86,7 @@ export const getInterestRateFromTable = (
   // Special condition check
   if (
     tenorYears === 1 &&
-    dpPercent === 50 &&
+    dpPercent !== undefined && dpPercent >= 50 &&
     (insuranceType === 'allriskPerluasan' || insuranceType === 'All Risk Perluasan')
   ) {
     return 0;
