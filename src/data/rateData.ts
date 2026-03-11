@@ -47,7 +47,6 @@ export const fees = {
     { minTenor: 4, maxTenor: 4, fee: 3250000 }, // 4 tahun: 3,250,000
     { minTenor: 5, maxTenor: 7, fee: 3500000 }  // 5-7 tahun: 3,500,000
   ],
-  tpiFee: 500000, // TPI fee in Rupiah
   creditProtectionRate: 0.0 // Credit protection rate in percentage
 };
 
@@ -107,4 +106,12 @@ export const getAdminFee = (tenorYears: number): number => {
     }
   }
   return fees.adminFees[fees.adminFees.length - 1].fee; // Default to highest fee if no match
+};
+
+/**
+ * Get the TPI fee based on tenor
+ * 100,000 per year
+ */
+export const getTpiFee = (tenorYears: number): number => {
+  return tenorYears * 100000;
 };

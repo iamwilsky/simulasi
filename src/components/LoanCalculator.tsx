@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Calculator, DollarSign, Percent, Calendar, Shield } from "lucide-react";
 import FormInput from "./FormInput";
 import { formatRupiah } from "@/lib/calculations";
-import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
+import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee, getTpiFee } from "@/data/rateData";
 import ResultsTable from "./ResultsTable";
 import CreditComparisonTable from "./CreditComparisonTable";
 import { useSettings } from "@/context/SettingsContext";
@@ -105,8 +105,9 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
 
         const creditProtection = loanPrincipal * (fees.creditProtectionRate / 100);
 
+        const currentTpiFee = getTpiFee(tenor);
         // Total DP includes: DP + First Installment + Insurance + Admin Fee + TPI Fee + Credit Protection
-        const totalDp = dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + fees.tpiFee + creditProtection;
+        const totalDp = dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + currentTpiFee + creditProtection;
 
         setResults({
           dpAmount,
@@ -123,7 +124,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
           adminFee,
           additionalAdminFee,
           totalAdminFee,
-          tpiFee: fees.tpiFee,
+          tpiFee: currentTpiFee,
           provisionRate,
           insuranceType: insuranceType === 'kombinasi'
             ? 'Kombinasi'

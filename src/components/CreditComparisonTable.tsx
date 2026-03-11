@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { formatRupiah } from "@/lib/calculations";
-import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee } from "@/data/rateData";
+import { fees, getInterestRateFromTable, getInsuranceRateFromTable, getAdminFee, getTpiFee } from "@/data/rateData";
 import { Wallet, Shield, Calendar, CreditCard, Car } from "lucide-react";
 
 interface CreditComparisonTableProps {
@@ -57,8 +57,9 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
 
     const creditProtection = loanPrincipal * (fees.creditProtectionRate / 100);
 
+    const currentTpiFee = getTpiFee(tenor);
     // Total DP calculation
-    const totalDp = dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + fees.tpiFee + creditProtection;
+    const totalDp = dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + currentTpiFee + creditProtection;
 
     // Add to data array
     tenorData.push({
