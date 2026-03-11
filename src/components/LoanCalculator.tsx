@@ -85,7 +85,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
         const provisionFee = loanPrincipal * (provisionRate / 100);
         const loanWithProvision = loanPrincipal + provisionFee;
 
-        const interestRate = getInterestRateFromTable(tenor);
+        const interestRate = getInterestRateFromTable(tenor, dpPercent, insuranceType);
 
         // Calculate interest based on loan principal plus provision
         const interestAmount = loanWithProvision * (interestRate / 100) * tenor;
@@ -204,13 +204,13 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
                 type="button"
                 onClick={() => setInsuranceType('kombinasi')}
                 className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${insuranceType === 'kombinasi'
-                    ? 'bg-primary text-white shadow-lg scale-[1.02]'
-                    : 'hover:bg-gray-200 dark:hover:bg-gray-700'
+                  ? 'bg-primary text-white shadow-lg scale-[1.02]'
+                  : 'hover:bg-gray-200 dark:hover:bg-gray-700'
                   }`}
               >
                 <span className={`relative z-10 ${insuranceType === 'kombinasi'
-                    ? 'text-white'
-                    : 'text-gray-700 dark:text-gray-300'
+                  ? 'text-white'
+                  : 'text-gray-700 dark:text-gray-300'
                   }`}>
                   Kombinasi
                 </span>
@@ -222,13 +222,13 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
                 type="button"
                 onClick={() => setInsuranceType('allrisk')}
                 className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${insuranceType === 'allrisk'
-                    ? 'bg-primary text-white shadow-lg scale-[1.02]'
-                    : 'hover:bg-gray-200 dark:hover:bg-gray-700'
+                  ? 'bg-primary text-white shadow-lg scale-[1.02]'
+                  : 'hover:bg-gray-200 dark:hover:bg-gray-700'
                   }`}
               >
                 <span className={`relative z-10 ${insuranceType === 'allrisk'
-                    ? 'text-white'
-                    : 'text-gray-700 dark:text-gray-300'
+                  ? 'text-white'
+                  : 'text-gray-700 dark:text-gray-300'
                   }`}>
                   All Risk
                 </span>
@@ -240,13 +240,13 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({
                 type="button"
                 onClick={() => setInsuranceType('allriskPerluasan')}
                 className={`relative py-2.5 text-sm font-medium transition-all duration-200 rounded-lg ${insuranceType === 'allriskPerluasan'
-                    ? 'bg-primary text-white shadow-lg scale-[1.02]'
-                    : 'hover:bg-gray-200 dark:hover:bg-gray-700'
+                  ? 'bg-primary text-white shadow-lg scale-[1.02]'
+                  : 'hover:bg-gray-200 dark:hover:bg-gray-700'
                   }`}
               >
                 <span className={`relative z-10 ${insuranceType === 'allriskPerluasan'
-                    ? 'text-white'
-                    : 'text-gray-700 dark:text-gray-300'
+                  ? 'text-white'
+                  : 'text-gray-700 dark:text-gray-300'
                   }`}>
                   AR Perluasan
                 </span>

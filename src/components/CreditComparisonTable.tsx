@@ -42,7 +42,7 @@ const CreditComparisonTable: React.FC<CreditComparisonTableProps> = ({
     const provisionFee = loanPrincipal * (provisionRate / 100);
     const loanWithProvision = loanPrincipal + provisionFee;
 
-    const interestRate = getInterestRateFromTable(tenor);
+    const interestRate = getInterestRateFromTable(tenor, dpPercent, insuranceType);
     const interestAmount = loanWithProvision * (interestRate / 100) * tenor;
 
     const totalLoanAmount = loanWithProvision + interestAmount;

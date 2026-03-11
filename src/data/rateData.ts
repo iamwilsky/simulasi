@@ -2,13 +2,13 @@
  * Sample interest rates data by tenor
  */
 export const interestRates = [
-  { tenor: 1, rate: 3.28 },
-  { tenor: 2, rate: 3.48 },
-  { tenor: 3, rate: 3.58 },
-  { tenor: 4, rate: 4.58 },
-  { tenor: 5, rate: 5.88 },
-  { tenor: 6, rate: 6.38 },
-  { tenor: 7, rate: 7.38 }
+  { tenor: 1, rate: 1.98 },
+  { tenor: 2, rate: 2.78 },
+  { tenor: 3, rate: 2.78 },
+  { tenor: 4, rate: 3.78 },
+  { tenor: 5, rate: 4.38 },
+  { tenor: 6, rate: 5.68 },
+  { tenor: 7, rate: 6.68 }
 ];
 
 /**
@@ -61,26 +61,40 @@ export const getInsuranceRateFromTable = (
 ): number => {
   // Ensure tenor is between 1-7
   const tenorIndex = Math.min(Math.max(tenorYears, 1), 7) - 1;
-  
+
   const rateTable = insuranceRates[insuranceType];
-  
+
   // Find the appropriate price range
   for (const priceRange of rateTable) {
     if (carPrice >= priceRange.minPrice && carPrice <= priceRange.maxPrice) {
       return priceRange.rates[tenorIndex];
     }
   }
-  
+
   // Default to the last price range if no match
   return rateTable[rateTable.length - 1].rates[tenorIndex];
 };
 
 /**
  * Get the interest rate based on tenor (in years)
+ * Includes special condition: tenor 1 year, DP 50%, AR Perluasan -> 0%
  */
-export const getInterestRateFromTable = (tenorYears: number): number => {
+export const getInterestRateFromTable = (
+  tenorYears: number,
+  dpPercent?: number,
+  insuranceType?: string
+): number => {
+  // Special condition check
+  if (
+    tenorYears === 1 &&
+    dpPercent === 50 &&
+    (insuranceType === 'allriskPerluasan' || insuranceType === 'All Risk Perluasan')
+  ) {
+    return 0;
+  }
+
   const matchedRate = interestRates.find(item => item.tenor === tenorYears);
-  return matchedRate ? matchedRate.rate : 4.88; // Default to 4.88% if no match
+  return matchedRate ? matchedRate.rate : 4.88; // Default fallback if no match
 };
 
 /**
