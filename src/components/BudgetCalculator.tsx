@@ -72,7 +72,8 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
 
       const creditProtection = loanPrincipal * (fees.creditProtectionRate / 100);
 
-      const totalDp = Math.round(dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + fees.tpiFee + creditProtection);
+      const currentTpiFee = getTpiFee(tenor);
+      const totalDp = Math.round(dpAmount + monthlyInstallment + insuranceAmount + totalAdminFee + currentTpiFee + creditProtection);
 
       const currentAmount = forInstallment ? monthlyInstallment : totalDp;
       const diff = Math.abs(currentAmount - targetAmount);
@@ -156,7 +157,8 @@ const BudgetCalculator: React.FC<BudgetCalculatorProps> = ({
     const creditProtection = roundedLoanPrincipal * (fees.creditProtectionRate / 100);
     const roundedCreditProtection = Math.round(creditProtection / 1000) * 1000;
 
-    const totalDp = Math.round((roundedDpAmount + monthlyInstallment + roundedInsuranceAmount + roundedTotalAdminFee + fees.tpiFee + roundedCreditProtection) / 1000) * 1000;
+    const currentTpiFee = getTpiFee(tenor);
+    const totalDp = Math.round((roundedDpAmount + monthlyInstallment + roundedInsuranceAmount + roundedTotalAdminFee + currentTpiFee + roundedCreditProtection) / 1000) * 1000;
 
     return {
       dpPercentage: calculatedDpPercent,
